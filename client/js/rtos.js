@@ -17,7 +17,6 @@ $(document).ready(function() {
     // Set uri path as #roomName
     window.location.hash = roomName
 
-    console.log("Hello, "+peerName+", check us out on github!");
     // Create WebRTC.io connection for HUGE files
     startDownloadServer(peerName, roomName)
     // Create PeerJS connection
@@ -137,12 +136,6 @@ $(document).ready(function() {
         });
     })
   }
-
-
-
-
-
-
 
   // Handle open channel between users
   function connect(c) {
