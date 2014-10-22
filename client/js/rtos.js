@@ -4,10 +4,19 @@ $(document).ready(function() {
   var peer;
   var connectedPeers = {};
 
+  // get room from path!
+
+  var uriPath = window.location.hash.split('#')[1]
+  $('#roomname-text').val(uriPath || "")
+
   // Log In
   $('#peerSubmit').on('click', function(e) {
     var peerName = $('#username-text').val();
     var roomName = $('#roomname-text').val();
+
+    // Set uri path as #roomName
+    window.location.hash = roomName
+
     console.log("Hello, "+peerName+", check us out on github!");
     // Create WebRTC.io connection for HUGE files
     startDownloadServer(peerName, roomName)

@@ -26,6 +26,8 @@
 window.requestFileSystem = window.requestFileSystem ||
                            window.webkitRequestFileSystem;
 window.URL = window.URL || window.webkitURL;
+window.storageInfo = window.storageInfo ||
+                     window.webkitStorageInfo;
 
 /* event delegation 
  * -we need to do this to form a chrome app - see https://developer.chrome.com/extensions/contentSecurityPolicy#H2-3
@@ -233,6 +235,8 @@ function accept_inbound_files() {
 }
 
 
+
+
 /* inbound - recieve binary data (from a file)
  * we are going to have an expectation that these packets arrive in order (requires reliable datachannel)
  */
@@ -245,6 +249,8 @@ function process_binary(id,message,hash) {
 		console.log("processing chunk # " + this.recieved_meta[id].chunks_recieved);
 	}
 	
+
+
 	/* We can write to a file using FileSystem! Chrome has native support, FF uses idb.filesystem.js library */
 	/* Note that decrypted file packets are passed here by file_decrypt, we don't have to do any decryption here */
 	
@@ -348,15 +354,23 @@ function download_file(id) {
 		id = str.replace("-download", "");
 	}*/
 
-	/* We can't request multiple filesystems or resize it at this time. Avoiding hacking around this ATM
-	 * and will instead display warning that only 1 file can be downloaded at a time :(
-	 */
+   // FUCK AWESOME
+   // Altered from original 
+   // Exands filesystem quota to allow multiple downloads
+
 	 if (filesysteminuse) {
-		boot_alert("Sorry, but only 1 file can be downloaded or stored in browser memory at a time, please [c]ancel or [d]elete the other download and try again.");
-		return;
+    window.storageInfo.requestQuota(
+      webkitStorageInfo.TEMPORARY,
+      recieved_meta[id].size +  100,
+      function(size_of_quota_granted){
+        console.log("File system quota expanded by: " + (size_of_quota_granted / 1024*1024) + "MB");
+      },
+      function(err){
+        console.log(err);
+      });
 	}
 
-	window.requestFileSystem(window.TEMPORARY, recieved_meta[id].size, function(filesystem) {
+	window.requestFileSystem(window.TEMPORARY, recieved_meta[id].size + 100, function(filesystem) {
 		fs[id] = filesystem;
 		filesysteminuse = true;
 		downloading[id] = true; /* accept file info from user */
