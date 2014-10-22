@@ -33,6 +33,7 @@ body {
   box-sizing: border-box; }
 
 #file_box {
+  width: 50%;
   background-color: blue;
   position: absolute;
   border: 1px solid black;
@@ -45,6 +46,7 @@ body {
   box-sizing: border-box; }
 
 #media_box {
+  width: 50%;
   background-color: green;
   position: absolute;
   border: 1px solid black;
@@ -71,6 +73,5 @@ body {
 
 .dragging_box {
   z-index: 99999; }
-  
 
 /*# sourceMappingURL=style.css.map */

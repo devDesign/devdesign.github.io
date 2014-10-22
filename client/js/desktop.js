@@ -27,16 +27,19 @@ $('document').ready(function(){
   var fileElement = document.getElementById('file_box');
   var fileWindow = new Hammer(fileElement);
   set_drags(fileElement,fileBox);
+  attack_grid(fileBox,"ls")
   //select cambox for hammertime tap events
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
   set_drags(camElement,camBox);
+  camBox.hide();
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');
   var mediaWindow = new Hammer(mediaElement);
-  set_drags(mediaElement,mediaBox);  
+  set_drags(mediaElement,mediaBox);
+  attack_grid(mediaBox,"rs")  
   //drag the chat
   function set_drags(element,jElement){
     jElement.pep({
@@ -57,8 +60,10 @@ $('document').ready(function(){
               ls = null;
             } 
           } else if (ls == jElement){
+              ls = null
+              if (horizontalGrid[0] != null){
               horizontalGrid[0].css( fullHeight ).css( placeTop );
-              ls = null 
+            }
           }
 
         }
@@ -71,8 +76,10 @@ $('document').ready(function(){
               rs = null;
             } 
           } else if(rs == jElement){
-              horizontalGrid[1].css( fullHeight ).css(placeTop);
               rs = null;
+              if ( horizontalGrid[1] != null){
+                horizontalGrid[1].css( fullHeight ).css(placeTop);
+              }
             }
 
         }
@@ -177,10 +184,10 @@ switch (side)
         } else if ( horizontalGrid[1] != null && rs != null ){
           console.log("next ATTACK!")
           jElement.css( splitHieght ).css( placeTop ).css( placeRight );
-          rs.css( splitHieght ).css( placeBottom );
+          rs.css( splitHieght ).css( placeBottom ).css( placeRight );
           nextAttack = horizontalGrid[1];
-          horizontalGrid[1] = rs;
-          rs = jElement;
+          horizontalGrid[1] = jElement;
+          rs = horizontalGrid[1];
           attack_grid(nextAttack,"ls");
           break;
         } else {
