@@ -40,6 +40,7 @@ $('document').ready(function(){
   //drag the chat
   function set_drags(element,jElement){
     jElement.pep({
+      'velocityMultiplier': 0.8,
       initiate: function() {
         zIndex++;
         jElement.css( { zIndex: zIndex } );
@@ -77,13 +78,13 @@ $('document').ready(function(){
         }
         if (element.offsetTop === 0 ) { ts = false }
         if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
-        jElement.css({'width':(get_viewpoint()[0]*2/3),'height':get_viewpoint()[1]*2/3});
+        jElement.css({'height':get_viewpoint()[1]*2/3}).css( splitWidth );
         jElement.addClass('dragging_box');
       },
       'constrainTo': 'window',
       'droppable': '.droppable',
       'useCSSTranslation': false,
-      'cssEaseDuration': 600,
+      'cssEaseDuration': 300,
       'elementsWithInteraction': '.content',
       'rest':function(){
         var dropRegion = this.activeDropRegions[0][0].id;
