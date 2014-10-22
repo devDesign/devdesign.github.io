@@ -548,11 +548,8 @@ function getReadableFileSizeString(fileSizeInBytes) {
 
 /* create a link to this file */
 function create_file_link (meta, id, username, fileEntry) {
-	//grab the file type, should probably use a pattern match...
-	var remove_base = meta.filetype.split(";");
-	var remove_data = remove_base[0].split(":");
-	var filetype = remove_data[1];
-	var debase64_data;
+	var filetype = meta.filetype;
+
 
 	//create a place to store this if it does not already
 	create_or_clear_container(id, username);
@@ -584,7 +581,7 @@ function create_file_link (meta, id, username, fileEntry) {
 	filecontainer.innerHTML = filecontainer.innerHTML+ " ";
 
 	// add play button
-	if (meta.filetype === "audio/mp3"){
+	if (filetype === "audio/mp3"){
 		var play = document.createElement('a');
 		play.download = meta.name;
 		play.id = id + '-play';
