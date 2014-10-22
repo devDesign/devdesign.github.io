@@ -22,6 +22,10 @@ left:0px;
 
 background-color:#eee;
 }
+
+#audio-player {
+  display: none;
+}
 .file{
 width:100px;
 height:100px;
