@@ -1,90 +1,57 @@
 // THANKS to github.com/peers 
 $(document).ready(function() {
 
-
-//
-//
-//       SET       UP  
-//
-//
-
-
   var peer;
   var connectedPeers = {};
-  // Create connection
+
+  // Log In
   $('#peerSubmit').on('click', function(e) {
     var peerName = $('#username-text').val();
     var roomName = $('#roomname-text').val();
-   // if (e.keyCode === 13) {
-      console.log(peerName);
-  //    peer = new Peer(peerName, {
-  //      host: 'allthetime.io',
-  //      port: 9000,
-  //      path: '/myapp'
-  //    });
-  //
+    console.log("Hello, "+peerName+", check us out on github!");
+    // Create WebRTC.io connection for HUGE files
+    startDownloadServer(peerName, roomName)
+    // Create PeerJS connection
+    peer = new Peer(peerName, {
+      host: 'allthetime.io',
+      port: 9000,
+      path: '/myapp',
+    });
 
-      startDownloadServer(peerName,roomName)
+    initUser(roomName);
 
+    // Listen for new connections
+    peer.on('connection', connect);
+    peer.on('call', function(call) {
 
-      
-      peer = new Peer(peerName, {
-          host: 'allthetime.io',
-          port: 9000,
-          path: '/myapp',
-        //    config: {'iceServers': [
-        //   { 
-         //      url: 'turn:104.131.149.75:3478', 
-         //      credential: 'test',
-         //      username: 'user'
-        //        url: 'turn:numb.viagenie.ca',
-        //        username: 'chronic88@gmail.com',
-         //       password: 'giraffE33'
-        //   
-        //   }
-      //   ]} 
-      });
-
-      showID(roomName);
-
-      // Await connections from others
-      peer.on('connection', connect);
-      peer.on('call',function(call){
-        call.answer();
-        console.log(call);
-       $('#v'+call.peer+'cam').append({'text':call.peer});
-      call.on('stream',function(remoteStream){
-        console.log("remote");
-        var v = document.querySelector("#v"+ call.peer + "cam");
+      call.answer();
+      call.on('stream', function(remoteStream) {
+        var v = document.querySelector("#v" + call.peer + "cam");
         v.src = window.URL.createObjectURL(remoteStream);
         v.play();
-
-        console.log(remoteStream);
       });
-      console.log('i have recived a call');
-      });      
-      peer.on('error', function(err) {
-        console.log(err);
-      })
-   // }
+    });
+    peer.on('error', function(err) {
+      console.log(err);
+    })
   });
 
-  // shows username
-  function showID(roomname) {
+  // Add user to room and initialize functionality
+  function initUser(roomname) {
     peer.on('open', function(id) {
       $('#username-text').hide();
       $('#peerSubmit').hide();
       $('#pid').text(id);
+      createVideoFeedButton();
       var data = {
         roomName: roomname,
         userName: id
-      }
-      createVideoFeedButton();
+      }      
       sendUserToServer(data);
     });
   }
 
-  // sends username to Node server
+  // Sends user to API userlist
   function sendUserToServer(userinfo) {
     $.ajax({
       url: 'http://allthetime.io/rtos/rooms',
@@ -95,12 +62,11 @@ $(document).ready(function() {
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         console.log('error', errorThrown);
-
       }
     });
   }
 
-  // get all connected users and connect
+  // Get connected users from API and connect to them
   function getUsersInRoom(roomname) {
     var allusers = $.get("http://allthetime.io/rtos/rooms?roomName=" + roomname, function(data) {
       data["userList"].forEach(function(user) {
@@ -109,97 +75,76 @@ $(document).ready(function() {
     });
   }
 
-  // connect to a newly connected user
-  function connectToUser(userId) {
-    var requestedPeer = userId;
+
+  function createChannel(options,requestedPeer){
+    var channel = peer.connect(requestedPeer, options);
+    channel.on('open', function() {
+      connect(channel);
+    });
+    channel.on('error', function(err) {       
+      console.log(options.label + ": " +err);
+    });
+  }
+
+  // Initialize a peer connection open necessary dataChannels and streams
+  function connectToUser(requestedPeer) {
     if (!connectedPeers[requestedPeer]) {
-      
-      var m = peer.connect(requestedPeer, {
-        label: 'mouse'
-      });
-      m.on('open', function() {
-        connect(m);
-      });
-      m.on('error', function(err) { //alert(err);
-      })
-      // Create connections
-      
-      var c = peer.connect(requestedPeer, {
-        label: 'chat',
-        serialization: 'none',
-        metadata: {
-          message: 'hi i want to chat with you!'
-        }
-      });
-      c.on('open', function() {
-        connect(c);
-      });
-      c.on('error', function(err) {
-        alert(err);
-      });
-      var videoFeed = peer.connect(requestedPeer,{
-        label: 'videoFeed',reliable:true
-      });
-      videoFeed.on('open',function(){
-        connect(videoFeed);
-        console.log("video feed data established");
-      
-      });
-    
-      var initData = peer.connect(requestedPeer, {
-        label: 'initData',
-        reliable: true
-      });
-      initData.on('open', function() {
-        connect(initData);
-      });
-      initData.on('error', function(err) {
-        alert(err);
-      });
+      // Open cursor following channel
+      createChannel({label: 'mouse'}, requestedPeer)
+      // Open chat channel
+      createChannel({label: 'chat', serialization: 'none'}, requestedPeer)
+      // Open video stream channel
+      createChannel({label: 'videoFeed', reliable: true }, requestedPeer)
+      // Open file drop channel
+      createChannel({label: 'initData', reliable: true } ,requestedPeer)
     }
     connectedPeers[requestedPeer] = 1;
   }
 
-  //call all active connections for video feed
-function createVideoFeedButton(){
-  $('<button/>',{text:'start video feed',id:'start_video_feed-button'}).appendTo('#username-div'); 
-  $('button').on('click',function(){
- 
-   // var navigator.getUserMedia = ( navigator.getUserMedia ||
-                      //        navigator.mozGetUserMedia ||
-                     //         navigator.webkitGetUserMedia ||  
-                    //          navigator.msGetUserMedia);
+  // Add send video button
+  function createVideoFeedButton() {
+    $('<button/>', {
+      text: 'start video feed',
+      id: 'start_video_feed-button'
+    }).appendTo('#username-div');
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+    // Send video to everyone
+    $('button').on('click', function() {
+      // Vendor specific madness
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+      window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 
-
-    navigator.getUserMedia({video:true,audio:true},function(stream){
-    eachActiveConnection(function(c,$c){
-      if (c.label==='videoFeed'){
-    var call = peer.call(c.peer,stream)}
+      navigator.getUserMedia({
+          video: true,
+          audio: true
+        }, function(stream) {
+          eachActiveConnection(function(c, $c) {
+            if (c.label === 'videoFeed') {
+              var call = peer.call(c.peer, stream)
+            }
+          })
+        }, function(err) {
+          console.log('videoFeed: '+err)
+        });
     })
-    },function(err){}
- 
-    ) })}
-
-//
-//
-//       RECEIVE    LOGIC
-//
-//
+  }
 
 
 
-  // Handle a connection object.
+
+
+
+
+  // Handle open channel between users
   function connect(c) {
 
     // Handle a chat connection.
     if (c.label === 'chat') {
       var globalChat = $('#global_chat');
       var chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', c.peer);
-      var header = $('<h1></h1>').html('Chat with <strong>' + c.peer + '</strong>');
+      var header = $('<h1></h1>').html('Chat with <strong>' + c.peer + '</strong>').appendTo(chatbox);
       var messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
+
       chatbox.append(header);
       globalChat.append(messages);
 
@@ -214,10 +159,13 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
       $('.filler').hide();
       $('#peerlist').append(chatbox);
 
+      // Append message to chat
       c.on('data', function(data) {
         globalChat.append('<div><span class="peer">' + c.peer + '</span>: ' + data +
           '</div>');
       });
+
+      // Fade peer out on close
       c.on('close', function() {
         $('#' + c.peer + 'mouse').fadeOut(1000, function() {
           $(this).remove();
@@ -228,25 +176,38 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
         }
         delete connectedPeers[c.peer];
       });
-    
+
+    // Send mouse position of moving mouse to user
+    } else if (c.label === 'mouse') {
+      $('<div id="' + c.peer + 'mouse" class="mouse">').appendTo('body');
+      $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
+      c.on('data', function(data) {
+        var id = '#' + c.peer + 'mouse';
+        $(id).css({
+          "top": data[1] + "px",
+          "left": data[0] + "px"
+        });
+      });
+
     // Receive filename of newly dropped file 
     } else if (c.label === 'initData') {
       c.on('data', function(data) {
         var sender = c.peer
-        // Create link to trigger upload initialization
-        $('<div/>',{ 'id':"attackData"+data.split('.')[0],'class':'file','text':data }).appendTo('#box');
-       // Draggable.create(".file",{type:"x,y", edgeResistance:0.65, bounds:"#box"});
-       
-      $('#attackData'+data.split('.')[0]).pep({constrainTo: 'window'}); 
-      $('#global_chat').append('<div><span class="file">' +
+          // Create link to trigger upload initialization
+        $('<div/>', {
+          'id': "attackData" + data.split('.')[0],
+          'class': 'file',
+          'text': data
+        }).appendTo('#box');
+        // Draggable.create(".file",{type:"x,y", edgeResistance:0.65, bounds:"#box"});
+
+        $('#attackData' + data.split('.')[0]).pep({
+          constrainTo: 'window'
+        });
+        $('#global_chat').append('<div><span class="file">' +
           c.peer + ' has dropped file: <a href="#" id="attackData' + data.split('.')[0] + '">' + data + '</a>');
-      
-      
-    
-      
-      
-      
-      // Create connection to send file name back to sender to initialze upload on click
+
+        // Create connection to send file name back to sender to initialze upload on click
         $('#attackData' + data.split('.')[0]).on('dblclick doubletap', function(e) {
 
           var attackData = peer.connect(sender, {
@@ -262,27 +223,10 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
           attackData.on('error', function(err) {
             alert(err);
           });
-
-
         });
       });
-
-    // Send mouse position of moving mouse to user
-    } else if (c.label === 'mouse') {
-      $('<div id="' + c.peer + 'mouse" class="mouse">').appendTo('body');
-      $('<video id="v'+ c.peer + 'cam" class="mousecam">').appendTo('#'+c.peer+'mouse');
-      c.on('data', function(data) {
-        var id = '#' + c.peer + 'mouse';
-        $(id).css({
-          "top": data[1] + "px",
-          "left": data[0] + "px"
-        });
-      });
-
 
     // DOWNLOADER RECEIVE FILE NAME FROM UPLOADER AS CONFIRMATION OF REQUEST
-
-
     } else if (c.label === "attackData") {
       c.on('data', function(data) {
 
@@ -290,63 +234,55 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
           label: 'fileSystemData',
           reliable: true
         });
-        fileSystemData.on('open', function(){
+        fileSystemData.on('open', function() {
           connect(fileSystemData);
           fileName = data
           fileSize = userFiles[data].size
-          fileSystemData.send([fileSize,fileName])
+          fileSystemData.send([fileSize, fileName])
         });
         fileSystemData.on('error', function(err) {
           alert(err);
         });
       });
 
-
-
-
-    ///  RECIEVED BY DOWNLOADER -- SETS UP FILE SYSTEM  
-
+    //  RECIEVED BY DOWNLOADER -- SETS UP FILE SYSTEM  
     } else if (c.label == "fileSystemData") {
-    // Receive file and begin upload  
-      c.on('data', function(data){ 
+      // Receive file and begin upload  
+      c.on('data', function(data) {
         fileSize = data[0]
         fileName = data[1]
         //REQUEST FILE SYSTEM
         //ON FILE SYSTEM SET UP CALL BACK SEND CONFIRMATION
-        function onInitFs(fs){
-          console.log(fs,"file system created with "+fileSize)
+        function onInitFs(fs) {
+          console.log(fs, "file system created with " + fileSize)
           var systemReadyData = peer.connect(c.peer, {
             label: 'systemReadyData',
             reliable: true
           });
-          systemReadyData.on('open', function(){
+          systemReadyData.on('open', function() {
             connect(systemReadyData);
             systemReadyData.send(fileName)
           });
           systemReadyData.on('error', function(err) {
-            alert(err);
+            console.log(err);
           });
         }
-        function errorHandler(err){
+
+        function errorHandler(err) {
           console.log(err)
         }
 
         if (window.webkitRequestFileSystem) {
-          window.webkitRequestFileSystem(window.TEMPORARY, fileSize + 1024, onInitFs,errorHandler);
-        } 
-         else {
+          window.webkitRequestFileSystem(window.TEMPORARY, fileSize + 1024, onInitFs, errorHandler);
+        } else {
           window.requestFileSystem(window.TEMPORARY, data + 1024, onInitFs, errorHandler);
         }
-
       });
 
-
-
-    ////// SYSTEM READY  -- RECEIVED BY UPLOADER AS INDICATION THAT FS IS READY FOR FILE
-
-    } else if (c.label === "systemReadyData"){
+    // SYSTEM READY  -- RECEIVED BY UPLOADER AS INDICATION THAT FS IS READY FOR FILE
+    } else if (c.label === "systemReadyData") {
       // SIGNAL TO UPLOADER THAT DONWLOADERS FILESYSTEM IS READ
-      c.on('data', function(data){
+      c.on('data', function(data) {
         var fireData = peer.connect(c.peer, {
           label: 'fireData',
           reliable: true
@@ -355,8 +291,8 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
           console.log(fireData)
           connect(fireData);
           var file = userFiles[data]
-          // Send stored file to receiver
-          console.log(data+' ready for filesystem')
+            // Send stored file to receiver
+          console.log(data + ' ready for filesystem')
           fireData.send([file, file.type, file.name]);
         });
         fireData.on('error', function(err) {
@@ -364,13 +300,9 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
         });
       });
 
-
-
-
-      /////// FIRE DATA -- DATA BEGINS TO SEND RECEIVED BY DOWNLOADER
-
+    // FIRE DATA -- DATA BEGINS TO SEND RECEIVED BY DOWNLOADER
     } else if (c.label === "fireData") {
-      //Listener transfer_progress manually added to library peer.js @ // FUCK
+      //Listener transfer_progress manually added to library peer.js
       c.on('transfer_progress', function(s) {
         console.log(s);
       });
@@ -391,35 +323,38 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
           // Create download link 
           $('#global_chat').append('<div><span class="file">' +
             c.peer + ' has sent you a <a target="_blank" href="' + url + '" download="' + data[2] + '">file</a>.</span></div>');
-          $('<audio/>',{'width':"320",'height':"32px",'class':'mejs-player'}).appendTo('#global_chat');
-          $('<source/>',{'type':filetype,'src':url}).appendTo('audio');
-          $('audio').mediaelementplayer({success:function(media){
-            media.play();
-          }});
+          $('<audio/>', {
+            'width': "320",
+            'height': "32px",
+            'class': 'mejs-player'
+          }).appendTo('#global_chat');
+          $('<source/>', {
+            'type': filetype,
+            'src': url
+          }).appendTo('audio');
+          $('audio').mediaelementplayer({
+            success: function(media) {
+              media.play();
+            }
+          });
         }
       });
 
-
-    // VIDEVIDEVIDEO
-
-    }else if (c.label === "videoFeed"){
-      c.on('data',function(data){
-        var call = peer.call(data,mediaStream);
-        console.log(call);
-        console.log("video feeeeeeeeed");
+    // Incoming video
+    } else if (c.label === "videoFeed") {
+      c.on('data', function(data) {
+        var call = peer.call(data, mediaStream);
+        console.log("here comes some video");
       });
-  
-  }
+    }
 
     connectedPeers[c.peer] = 1;
   }
 
 
-//
-//
-//     CONNECTION ALTERING ACTIONS
-//
-//
+
+
+  // Event handlers that open and close connections
 
   // Close a connection.
   $('#close').click(function() {
@@ -440,7 +375,7 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
     var file = e.originalEvent.dataTransfer.files[0];
     userFiles[file.name] = file
     $('#global_chat').append('<div><span class="file">You dropped ' + file.name + '.</span></div>');
-    // Send filename to all users to create download link
+    // Send filename to all users to create download link on drop
     eachActiveConnection(function(c, $c) {
       if (c.label === 'initData') {
         c.send(file.name);
@@ -448,7 +383,7 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
     });
   });
 
-  // Send a chat message to all active connections.
+  // Send a chat message to all active connections
   $('#send').submit(function(e) {
     e.preventDefault();
     var msg = $('#text').val();
@@ -473,24 +408,21 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
     });
   });
 
-//
-//
-//          HELPERS
-//
-//
+  //
+  //
+  // Helper functions
 
   function doNothing(e) {
     e.preventDefault();
     e.stopPropagation();
   }
 
-  // Goes through each active peer and calls FN on its connections.
+  // Goes through each active peer and calls fn on its connections.
   function eachActiveConnection(fn) {
     var actives = $('.active');
     var checkedIds = {};
     actives.each(function() {
       var peerId = $(this).attr('id');
-
       if (!checkedIds[peerId]) {
         var conns = peer.connections[peerId];
         for (var i = 0, ii = conns.length; i < ii; i += 1) {
@@ -498,18 +430,34 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
           fn(conn, $(this));
         }
       }
-
       checkedIds[peerId] = 1;
     });
   }
 
   // Show browser version
   $('#browsers').text(navigator.userAgent);
+
+  window.onbeforeunload = function() {
+    peer.destroy();
+    console.log(peer)
+    // KEEP FOR PRODUCTION
+    // $.ajax({
+    //   type: 'delete',
+    //   url: '/rtos/rooms?userName=' + peer.id,
+    //   async: false
+    // });
+  }
 });
 
-// Destroy peer upon quit or window close
+
 window.onunload = window.onbeforeunload = function(e) {
   if (!!peer && !peer.destroyed) {
     peer.destroy();
   }
 };
+
+
+
+
+
+

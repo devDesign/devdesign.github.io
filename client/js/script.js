@@ -1,3 +1,7 @@
+// Quite heavily altered to only utilize file-transfer capabilities!
+// See license below
+
+
 
 /***************
 	ROOM INIT & functionality
@@ -23,126 +27,22 @@
 	
 ****************/
 
-var ROOM_TITLE = "WebRTC Copy - Room "; /* constant - room title bar string */
 
-/* your username */
+
 var username = "";
-
-/* server name */
-// var rtccopy_server = "wss:rtccopy.com:8001"; /* 8001 for secure, 8000 for insecure */
 var rtccopy_server = "ws:allthetime.io:8000";  
-//var rtccopy_server = "ws:localhost:8000";
 
-/* intro function */
-// initRTCCopy();
-
-
-function display_error() {
-	/* REQUIRED SCTP data channels behind flag in 29 & 30 */
-	if ($.browser.name == "chrome" && ($.browser.versionNumber == 29 || $.browser.versionNumber == 30)) {
-		boot_alert('You are using Chrome version ' + $.browser.versionNumber + ', please turn the "Enable SCTP Data Channels" flag in: chrome://flags/#enable-sctp-data-channels');
-	} else {
-		if ($.browser.name == "chrome") {
-			boot_alert('Your browser is not supported. Please update to the latest version of Chrome to use this site. Please try Firefox 24+ or Chrome Canary 32+.');
-		}else if ($.browser.name == "firefox") {
-			boot_alert('Your browser is not supported. Please update to Firefox 24+.');
-		}else {
-			boot_alert('Your browser is not supported. Please use Chrome or Firefox, sorry :(');
-		}
-	}
-}
-
-/* intro function */
-// function initRTCCopy() {
-	
-// 	if ($.browser.name != "chrome" && $.browser.name != "firefox") {
-// 		$(".support").show();
-// 	}
-
-// 	/* initial create room/username logic */
-//   var roomInput = $("#existing") 
-
-// 	var r = window.location.hash.slice(1);
-//   // Room exists in URL, load info and ask for USER
-// 	if (r != 0){
-//     // IMPORTANT what's going on here VV
-// 		rtc.room_info(rtccopy_server, r); /* This sends a request (logic processed via 'recieve room info' cb) */
-// 		var roomName = sanitize(r);
-// 		document.title = roomName
-//     // SET roomInput to URL 
-//     roomInput.val(roomName)
-//     $("#roomprompt").show();
-//     $('#webrtc_room_form').on("submit", function(e) {
-//       e.preventDefault();
-//       transition_from_username_to_main();
-//       return false;  
-//     });
-//   // Room does not exist in URL, create one!
-// 	} else {
-// 		$("#roomprompt").show();
-// 		/* allow entering a room number */
-// 		$('#webrtc_room_form').on("submit", function(e) {
-//       e.preventDefault();
-//       window.location.hash = roomInput.val();
-//       transition_from_username_to_main();
-//       return false;
-// 		});
-// 	}
-	
-// 	/* let's run a quick check before we begin to make sure we have rtc datachannel support */
-// 	var rtc_status = rtc.checkDataChannelSupport();
-// 	if (rtc_status != reliable_true) {
-// 		display_error();
-// 	}
-// }
-
-
-/* handles the processing of the room state on the username page
- * -at this point we can assume all Chrome(Opera shows up as "Chrome") & Firefox versions can get along
- * -just throw an error if we dectect another browser
- */
 function process_room_state(data) {
 	if (data.browser != "") { /* will be blank if new room */
-		// var browser_color = 'red';
-		// if ((browser_name == "chrome" || browser_name == "firefox") && (data.browser == "chrome" || data.browser == "firefox")) { browser_color = 'green'; }
-		// 	$("#room_state").append('This room already exists and the creator used:<br /> <span style="color:'+browser_color+'">'+ sanitize(data.browser) + '</span> <span style="color:'+browser_color+'">' + sanitize(data.browserVer) + '</span> without OTR.<br /><br />');
-		
-		$("#room_state").append('This room already exists');
+		console.log("Don't worry, you'll be there soon!");
 	}
 }
 
-
-
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* handles the transition from the username prompt to main screen prompt */
 function startDownloadServer(usernameFromPeerJS,roomNameFromPeerJS) {
 	username = usernameFromPeerJS
   rtc.room_info(rtccopy_server, roomNameFromPeerJS);
 	init(roomNameFromPeerJS); 
-}
-
-
-/* adds to your chat */
-function addToChat(msg, color) {
-  var messages = document.getElementById('messages');
-  msg = sanitize(msg);
-  if(color) {
-    msg = '<span style="color: ' + color + '; padding-left: 15px">' + msg + '</span>';
-  } else {
-    msg = '<strong style="padding-left: 15px">' + msg + '</strong>';
-  }
-  messages.innerHTML = messages.innerHTML + msg + '<br>';
-  messages.scrollTop = 10000;
 }
 
 /* adds small text to chat */
@@ -200,36 +100,22 @@ var dataChannelChat = {
 	event: 'data stream data'
 };
 
-
-
-
-
-/* init - starts WebRTC connection, called after username is entered */
 function init(roomNameFromPeerJS) {
 
   if(!PeerConnection) {
-		display_error();
+		console.log('WA WA: no peers, :(');
 		return;
   }
   
-  /* the room # is taken from the url */
   var room = roomNameFromPeerJS
-  
-  /* Add an entry to the username list at id=0 with your name */
   create_or_clear_container(0,username);
   
-
   if (room != 0) {
-	  
-	  /* the important call */
-	  // rtc.connect(rtccopy_server, room, username, encryption_type);
 
     rtc.connect(rtccopy_server, room, username);
 
-	  /* fire when ready to init chat & communication! */
 	  rtc.on('ready', function(my_socket, usernames) {
 		
-			/* first, print out the usernames in the room */
 			var username_arr = [];//convert to array
 			for (var x in usernames) {
 				if (x != my_socket) {//no reason to print yourself
@@ -253,7 +139,6 @@ function init(roomNameFromPeerJS) {
 	    /* add to usernames list */
 			create_or_clear_container(id, username);
 			/* log a message (we do this in crypto.js if crypto is enabled) */
-			
 			systemMessage('now connected to ' + username);
 				/* if we have a file, send it their way */
 			send_meta(id);
@@ -266,11 +151,6 @@ function init(roomNameFromPeerJS) {
 	  });
 	  
     initChat();
-	  /* start the chat box */
-	  
-	  /* add Room Name */
-	  // var roomname = document.getElementById('roomname');
-	  // roomname.innerHTML = sanitize(room);
 	}
 };
 
@@ -280,27 +160,6 @@ function initChat() {
 
   console.log('initializing data channel chat');
   chat = dataChannelChat;
-  
-  // var input = document.getElementById("chatinput");
-  // var room = window.location.hash.slice(1);
-  // var color = hsv_random_color(Math.random(), .5, .7); /* This values appear to make all text readable - test via /test/color_tester.html */
-
-  // input.addEventListener('keydown', function(event) {
-  //   var key = event.which || event.keyCode;
-  //   if(key === 13) {
-  //     chat.broadcast(JSON.stringify({
-  //       "eventName": "chat_msg",
-  //       "data": {
-  //         "messages": input.value,
-  //         "room": room,
-  //         "color": color
-  //       }
-  //     }));
-  //     addToChat(username+": "+input.value);
-  //     input.value = "";
-  //   }
-  // }, false);
-  
   /* this function is called with every data packet recieved */
   rtc.on(chat.event, function(conn, data, id, username) {
     /* decode and append to data */
@@ -322,14 +181,8 @@ function packet_inbound(id, message) {
 		data.id = id;
 		data.username = rtc.usernames[id]; /* username lookup */
 		
-		/* pass data along */
-		if (data.messages) {
-			/* chat */
-			addToChat(data.username+": "+data.messages, data.color.toString(16));
-		} else {
-			/* metadata on file */
-			process_data(data);
-		}
+		process_data(data);
+		
 	}
 }
 
@@ -382,9 +235,3 @@ window.onresize = function(event) {
   //onresize - do nothing
 };
 
-/* bootstrap toggle userlist on smaller screens */
-$(document).ready(function() {
-	$('[data-toggle=offcanvas]').click(function() {
-		$('.row-offcanvas').toggleClass('active');
-	});
-});

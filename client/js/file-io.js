@@ -469,8 +469,7 @@ function create_upload_stop_link(filename, id, username) {
 /* create a link that will let the user start the download */
 function create_pre_file_link(meta, id, username) {
 	
-  alert("something is happening");
-	//create a place to store this if it does not already
+  //create a place to store this if it does not already
 	create_or_clear_container(id, username);
 	var filecontainer = document.getElementById(id);
 	
