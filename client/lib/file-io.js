@@ -195,13 +195,11 @@ function store_in_fs(user_id, user_username, hash) {
 function process_inbound_files(file) {
 
 	file_to_upload = file;
-	
 	this.meta.name = file.name;
 	this.meta.size = file.size;
 	this.meta.filetype = file.type;
 	this.meta.browser = $.browser.name; /* need browser name to set chunk size */
 	console.log(this.meta);
-	
 	send_meta();
 	systemMessage("file ready to send");
 	/* user 0 is this user! */
@@ -213,7 +211,6 @@ function process_inbound_files(file) {
 function accept_inbound_files() {
 
 	$(document).bind('drop dragover dragenter', function (e) {
-		// TODO: CSS signal?
 		e.preventDefault();
 	});
 

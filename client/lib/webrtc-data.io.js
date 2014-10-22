@@ -169,8 +169,6 @@ function sanitize(msg) {
   };
 
   rtc.dataChannelSupport = rtc.checkDataChannelSupport();
-
-
   /* send a request for information to the websocket server
    * ... a bit of a hack, but we're going to open a new socket to quickly grab room info
    * REQUIRED: a function called process_room_state(data) to handle cb data
