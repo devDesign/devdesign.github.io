@@ -15,6 +15,23 @@ body {
   background: linear-gradient(to bottom, #eeeeee 0%, rgba(238, 238, 238, 0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#00eeeeee',GradientType=0 ); }
 
+#nav {
+  position: relative;
+  width: 100%;
+  height: 50px; }
+
+.window_title {
+  position: relative;
+  height: 2em;
+  width: 100%;
+  background-color: #666; }
+
+#chat_box {
+  position: absolute; }
+
+#file_box {
+  position: absolute; }
+
 #splash_header {
   font: 300 18px 'light','Helvetica Neue',Arial,Helvetica,sans-serif; }
 
@@ -248,27 +265,11 @@ input[type="file"] {
   bottom: 0px;
   z-index: 9999; }
 
-#ts {
-  position: fixed;
-  width: 100%;
-  top: 0px;
-  right: 0px;
-  height: 3px;
-  z-index: 9999; }
-
 #ls {
   position: fixed;
   width: 3px;
   top: 0px;
   left: 0px;
-  bottom: 0px;
-  z-index: 9999; }
-
-#bs {
-  position: fixed;
-  width: 100%;
-  height: 3px;
-  right: 0px;
   bottom: 0px;
   z-index: 9999; }
 
