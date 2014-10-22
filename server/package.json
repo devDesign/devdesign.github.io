@@ -1,0 +1,28 @@
+{
+  "name": "RTOS",
+  "version": "0.0.1",
+  "description": "The future is real time",
+  "main": "./site/server.js",
+  "dependencies": {
+    "express": "^4.9.8",
+    "ws": "^0.4.32",
+    "webrtc.io" : "*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./site/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:allthetime/RTC.git"
+  },
+  "keywords": [
+    "real"
+  ],
+  "author": "MBC",
+  "license": "BEER",
+  "bugs": {
+    "url": "https://github.com/allthetime/RTC/issues"
+  },
+  "homepage": "https://github.com/allthetime/RTC"
+}

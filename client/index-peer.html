@@ -1,0 +1,83 @@
+<!DOCTYPE HTML> 
+<html lang="en"> 
+<head>
+<title>RTOS - the future is real time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<meta http-equiv="Content-Language" content="en-us"> 
+
+<link rel="stylesheet" href="./stylesheets/style.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<!--<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js">
+</script>-->
+
+<script type='text/javascript' src='./js/desktop-peer.js'></script>
+<script src="./lib/peer.js"></script>
+<script type="text/javascript" src="./js/rtos.js"></script>
+<script type="text/javascript" src="./js/media_element/mediaelement-and-player.min.js"></script>
+<link rel="stylesheet" href="./js/media_element/mediaelementplayer.css"/>
+
+
+<!-- FROM RTCCOPY THE OTHER SIDE -->
+
+
+  <script src="ext-js/idb.filesystem.min.js"></script>
+
+      <script src="js/webrtc-data.io.js"></script>
+
+      <!-- Go down for rest of files -->
+
+<!-- CODE TO INTEGRATE WEBRTC COPY -->
+
+
+
+
+<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" /> -->
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script> -->
+<script src="./js/desktop.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/utils/Draggable.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/plugins/CSSPlugin.min.js"></script> 
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery.pep/0.4.0/jquery.pep.min.js'></script>
+
+
+</head> 
+<body>
+<div class='window'>
+ <div class='contentwindow'>
+
+  <div id='chatbox'>
+   <div id="username-div"> 
+    
+    <input type="text" id="username-text" placeholder="Enter Username"><button id=peerSubmit>go</button><br>
+    <input type="text" id="roomname-text" placeholder="Enter RoomName">
+
+  </div> 
+  <div id="actions">
+    Your ID is <span id="pid"></span><br>
+  </div>
+  <div id="wrap"><div id="global_chat"><span class="filler">You have not yet
+        made any connections.</span></div>
+    <div class="clear"></div></div>
+    <div id='send-div'>
+    <form id="send">
+      <input type="text" id="text" placeholder="Enter message"><input class="button" type="submit" value="Send to selected peers">
+    </form>
+  </div>
+</div>
+</div>
+</div>
+  <div id="box">
+    Drag file here to send to active connections.
+  </div>
+  <div class='window'>
+  <div id="peerlist"></div>
+  </div>
+
+<!-- FROM WEBRTC COPY -->
+    <script src="js/file-io.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>
+
