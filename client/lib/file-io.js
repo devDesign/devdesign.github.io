@@ -394,11 +394,14 @@ function cancel_file(id) {
 
 /* Play media */
 function play_file(id) {
-	$('<audio/>',{'width':"320",'height':"32px",'class':'mejs-player'}).appendTo('#chatbox');
-  $('<source/>',{'type':filetype,'src':id}).appendTo('audio');
+	var url = $('#' + id).children('a').first().attr('href');
+	var type = $('#' + id).children('a').last().attr('type')
+
+  $('<audio/>',{'width':"320",'height':"32px",'class':'mejs-player'}).appendTo('#music-player');
+  $('<source/>',{'type': type,'src':url}).appendTo('audio');
   $('audio').mediaelementplayer({success:function(media){
-		media.play();
-	}});
+    media.play();
+  }});
 }
 
 /* creates an entry in our filelist for a user, if it doesn't exist already - TODO: move this to script.js? */
@@ -529,7 +532,7 @@ function create_file_link (meta, id, username, fileEntry) {
 	var remove_data = remove_base[0].split(":");
 	var filetype = remove_data[1];
 	var debase64_data;
-	
+
 	//create a place to store this if it does not already
 	create_or_clear_container(id, username);
 	var filecontainer = document.getElementById(id);
@@ -558,27 +561,20 @@ function create_file_link (meta, id, username, fileEntry) {
 	
 	/* make delete button */
 	filecontainer.innerHTML = filecontainer.innerHTML+ " ";
-	/* add cancel button */
-	// var can = document.createElement('a');
-	// can.download = meta.name;
-	// can.id = id + '-cancel';
-	// can.href = 'javascript:void(0);';
-	// can.style.cssText = 'color:red;';
-	// can.textContent = '[cancel]';
-	// can.draggable = true;
-	// //append link!
-	// filecontainer.appendChild(can);
-
 
 	// add play button
-	var play = document.createElement('a');
-	play.download = meta.name;
-	play.id = id + '-play';
-	play.href = 'javascript:void(0);';
-	play.style.cssText = 'color:red;';
-	play.textContent = '[play]';
-	play.draggable = true;
-	filecontainer.appendChild(play);
+	if (meta.filetype === "audio/mp3"){
+		var play = document.createElement('a');
+		play.download = meta.name;
+		play.id = id + '-play';
+		play.href = 'javascript:void(0);';
+		play.style.cssText = 'color:red;';
+		play.textContent = '[play]';
+		play.draggable = true;
+		play.type = meta.filetype;
+		filecontainer.appendChild(play);
+	}
+
 
 	
 	//append to chat
