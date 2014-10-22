@@ -30,8 +30,8 @@ var username = "";
 
 /* server name */
 // var rtccopy_server = "wss:rtccopy.com:8001"; /* 8001 for secure, 8000 for insecure */
-var rtccopy_server = "ws:localhost:8000";  
-
+var rtccopy_server = "ws:allthetime.io:8000";  
+//var rtccopy_server = "ws:localhost:8000";
 
 /* intro function */
 // initRTCCopy();
