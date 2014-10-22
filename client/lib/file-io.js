@@ -31,8 +31,7 @@ window.URL = window.URL || window.webkitURL;
  * -we need to do this to form a chrome app - see https://developer.chrome.com/extensions/contentSecurityPolicy#H2-3
  * -huge thanks to http://stackoverflow.com/questions/13142664/are-multiple-elements-each-with-an-addeventlistener-allowed 
  */
-function fileEventHandler(e)
-{
+function fileEventHandler(e) {
 	e = e || window.event;
 	var target = e.target || e.srcElement;
 	if (target.id.search('-download') != -1) {
@@ -41,6 +40,8 @@ function fileEventHandler(e)
 		cancel_file(target.id.replace("-cancel", ""));
 	} else if (target.id == 'upload_stop') {
 		upload_stop();
+	} else if (target.id.search('-play') != -1){
+		play_file(target.id.replace("-play", ""));
 	}
 }
 document.body.addEventListener('click',fileEventHandler,false);
@@ -391,6 +392,15 @@ function cancel_file(id) {
 	create_pre_file_link(this.recieved_meta[id], id, rtc.usernames[id]);
 }
 
+/* Play media */
+function play_file(id) {
+	$('<audio/>',{'width':"320",'height':"32px",'class':'mejs-player'}).appendTo('#chatbox');
+  $('<source/>',{'type':filetype,'src':id}).appendTo('audio');
+  $('audio').mediaelementplayer({success:function(media){
+		media.play();
+	}});
+}
+
 /* creates an entry in our filelist for a user, if it doesn't exist already - TODO: move this to script.js? */
 function create_or_clear_container(id, username) {
 	var filelist = document.getElementById('filelist');
@@ -408,7 +418,7 @@ function create_or_clear_container(id, username) {
 			a.id = id + '-cancel';
 			a.href = 'javascript:void(0);';
 			a.style.cssText = 'color:red;';
-			a.textContent = '[c]';
+			a.textContent = '[cancel]';
 			a.draggable = true;
 			//append link!
 			filecontainer.appendChild(a);
@@ -549,15 +559,27 @@ function create_file_link (meta, id, username, fileEntry) {
 	/* make delete button */
 	filecontainer.innerHTML = filecontainer.innerHTML+ " ";
 	/* add cancel button */
-	var can = document.createElement('a');
-	can.download = meta.name;
-	can.id = id + '-cancel';
-	can.href = 'javascript:void(0);';
-	can.style.cssText = 'color:red;';
-	can.textContent = '[d]';
-	can.draggable = true;
-	//append link!
-	filecontainer.appendChild(can);
+	// var can = document.createElement('a');
+	// can.download = meta.name;
+	// can.id = id + '-cancel';
+	// can.href = 'javascript:void(0);';
+	// can.style.cssText = 'color:red;';
+	// can.textContent = '[cancel]';
+	// can.draggable = true;
+	// //append link!
+	// filecontainer.appendChild(can);
+
+
+	// add play button
+	var play = document.createElement('a');
+	play.download = meta.name;
+	play.id = id + '-play';
+	play.href = 'javascript:void(0);';
+	play.style.cssText = 'color:red;';
+	play.textContent = '[play]';
+	play.draggable = true;
+	filecontainer.appendChild(play);
+
 	
 	//append to chat
 	systemMessage(username +"'s file " + meta.name + " is ready to save locally");
