@@ -1,6 +1,12 @@
 // THANKS to github.com/peers 
 $(document).ready(function() {
-
+  function pastelColors(){
+    var r = (Math.round(Math.random()* 127) + 127).toString(16);
+    var g = (Math.round(Math.random()* 127) + 127).toString(16);
+    var b = (Math.round(Math.random()* 127) + 127).toString(16);
+    return '#' + r + g + b;
+  }
+  var color = pastelColors();
   var peer;
   var connectedPeers = {};
 
@@ -100,7 +106,7 @@ $(document).ready(function() {
       // Open cursor following channel
       createChannel({label: 'mouse'}, requestedPeer)
       // Open chat channel
-      createChannel({label: 'chat', serialization: 'none'}, requestedPeer)
+      createChannel({label: 'chat'}, requestedPeer)
       // Open video stream channel
       createChannel({label: 'videoFeed', reliable: true }, requestedPeer)
       // Open file drop channel
@@ -163,8 +169,11 @@ $(document).ready(function() {
 
       // Append message to chat
       c.on('data', function(data) {
-        globalChat.append('<div><span class="peer">' + c.peer + '</span>: ' + data +
+        console.log(data);
+     
+        globalChat.append('<div><span class="peer" style="color:'+data[1]+'">' + c.peer + '</span>: ' + data[0] +
           '</div>');
+        globalChat.scrollTop(globalChat.prop("scrollHeight"));
       });
 
       // Fade peer out on close
@@ -389,10 +398,14 @@ $(document).ready(function() {
   $('#send').submit(function(e) {
     e.preventDefault();
     var msg = $('#text').val();
-    $('#global_chat').append('<div><span class="you">You: </span>' + msg + '</div>');
+    msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    console.log(msg);
+    $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span>' + msg + '</div>');
+    $('#global_chat').scrollTop($('#global_chat').prop("scrollHeight"));
     eachActiveConnection(function(c, $c) {
       if (c.label === 'chat') {
-        c.send(msg);
+        c.send([msg,color]);
       }
     });
     $('#text').val('');

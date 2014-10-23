@@ -15,6 +15,9 @@ $('document').ready(function(){
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
   var zIndex = 100;
+  //login
+
+
   //select chat for hammertime tap events
   var chatBox = $('#chat_box');
   var chatElement = document.getElementById('chat_box');
@@ -56,7 +59,7 @@ $('document').ready(function(){
             horizontalGrid[0] = null
             if ( ls != null){
               ls.css( fullHeight ).css( placeTop );
-              horizontalGrid[0] = rs;
+              horizontalGrid[0] = ls;
               ls = null;
             } 
           } else if (ls == jElement){
@@ -187,7 +190,6 @@ switch (side)
           rs.css( splitHieght ).css( placeBottom ).css( placeRight );
           nextAttack = horizontalGrid[1];
           horizontalGrid[1] = jElement;
-          rs = horizontalGrid[1];
           attack_grid(nextAttack,"ls");
           break;
         } else {
@@ -229,9 +231,7 @@ switch (side)
           jElement.css( splitHieght ).css( placeTop ).css( placeLeft );
           ls.css( splitHieght ).css( placeBottom ).css( placeLeft );
           nextAttack = horizontalGrid[0];
-          horizontalGrid[0] = ls;
-          ls = jElement;
-          nextAttack.css( placeRight );
+          horizontalGrid[0] = jElement;
           attack_grid(nextAttack,"rs");
           break;
         } else {

@@ -1,8 +1,5 @@
-html, body {
-  height: 100%; }
-
 html {
-  overflow-y: scroll; }
+  overflow-y: hidden; }
 
 body {
   padding: 0;
@@ -19,7 +16,7 @@ body {
   box-sizing: border-box;
   padding: 1px;
   position: relative;
-  height: 2em;
+  height: 1.3em;
   width: 100%;
   background-color: #333; }
 
@@ -28,9 +25,11 @@ body {
   width: 50%;
   flex-direction: column;
   position: absolute;
-  background-color: #eee;
+  color: white;
+  background-color: black;
   border: 1px solid black;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  z-index: 9999; }
 
 #file_box {
   width: 50%;
@@ -69,9 +68,45 @@ body {
   z-index: 9999; }
 
 #global_chat {
-  width: 100%; }
+  font-family: "Courier New", Courier, monospace;
+  position: absolute;
+  width: 100%;
+  top: 1.3em;
+  z-index: -1;
+  bottom: 1.3em;
+  overflow-y: hidden;
+  overflow-x: hidden; }
 
 .dragging_box {
   z-index: 99999; }
+
+#send {
+  width: 100%;
+  position: absolute;
+  bottom: 0px; }
+  #send #text {
+    border: 0;
+    height: 1.9em;
+    font-family: "Courier New", Courier, monospace;
+    font-style: 1.9em;
+    color: #00FF00;
+    background-color: black;
+    width: 100%; }
+
+.chat_text-input input[type="text"] {
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s; }
+
+.chat_text-input input[type="text"]:focus,
+.chat_text-input input[type="text"].focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #FF0000; }
+
+.mouse {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  color: red; }
 
 /*# sourceMappingURL=style.css.map */
