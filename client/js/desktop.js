@@ -16,6 +16,12 @@ $('document').ready(function(){
   var fullHeight = { 'height': height - barHeight }
   var zIndex = 100;
   //login
+  $('#peerSubmit').on('click',function(){
+    chatBox.show();
+    fileBox.show();
+    mediaBox.show();
+    $('#login_box').hide();
+  });
 
 
   //select chat for hammertime tap events
@@ -25,12 +31,14 @@ $('document').ready(function(){
   var chatWindow = new Hammer(chatElement);
   set_drags(chatElement,chatBox);
   attack_grid(chatBox,"rs")
+  chatBox.hide();
   //select filebox for hammertime tap events
   var fileBox = $('#file_box');
   var fileElement = document.getElementById('file_box');
   var fileWindow = new Hammer(fileElement);
   set_drags(fileElement,fileBox);
   attack_grid(fileBox,"ls")
+  fileBox.hide();
   //select cambox for hammertime tap events
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
@@ -42,7 +50,8 @@ $('document').ready(function(){
   var mediaElement = document.getElementById('media_box');
   var mediaWindow = new Hammer(mediaElement);
   set_drags(mediaElement,mediaBox);
-  attack_grid(mediaBox,"rs")  
+  attack_grid(mediaBox,"rs")
+  mediaBox.hide(); 
   //drag the chat
   function set_drags(element,jElement){
     jElement.pep({

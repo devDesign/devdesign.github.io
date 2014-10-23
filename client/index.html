@@ -15,11 +15,12 @@
   <script src="ext-js/idb.filesystem.min.js"></script>
   <script src="lib/webrtc-data.io.js"></script>
   <script src="./js/desktop.js"></script>
-  <script src='lib/pep.js'></script>
-  <script src='lib/hammer.min.js'></script>
+  <script src='./lib/pep.js'></script>
+  <script src='./lib/hammer.min.js'></script>
 </head>
 
 <body>
+  <div id='nav'><div id="rtos"><h2>RTOS</h2></div></div>
   <div id="login_box">
     <div id="username-div">
       <input type="text" id="username-text" placeholder="Enter Username" />
@@ -27,16 +28,19 @@
       <br>
       <input type="text" id="roomname-text" placeholder="Enter RoomName" />
     </div>
-
-    <div id="actions">
-      Your ID is
-      <span id="pid"></span>
-      <br>
-    </div>
+    
+   
   </div>
+  <div id='id'>
+      <div id="actions">
+        Your ID is
+        <span id="pid"></span>
+        <br>
+      </div>
+   </div> 
   <div id='rs' class='droppable'></div>
   <div id='ls' class='droppable'></div>
-  <div id='nav'></div>
+
 
   <div id="file_box">
     <div class="window_title">files</div>
