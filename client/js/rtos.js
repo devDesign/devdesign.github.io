@@ -17,7 +17,6 @@ $(document).ready(function() {
     // Set uri path as #roomName
     window.location.hash = roomName
 
-    console.log("Hello, "+peerName+", check us out on github!");
     // Create WebRTC.io connection for HUGE files
     startDownloadServer(peerName, roomName)
     // Create PeerJS connection
@@ -137,12 +136,6 @@ $(document).ready(function() {
         });
     })
   }
-
-
-
-
-
-
 
   // Handle open channel between users
   function connect(c) {
@@ -447,8 +440,13 @@ $(document).ready(function() {
   $('#browsers').text(navigator.userAgent);
 
   window.onbeforeunload = function() {
-    peer.destroy();
-    console.log(peer)
+    try {
+      peer.destroy();
+      console.log(peer)
+    }
+    catch(err){
+      console.log(err);
+    }
     // KEEP FOR PRODUCTION
     // $.ajax({
     //   type: 'delete',
@@ -458,10 +456,14 @@ $(document).ready(function() {
   }
 });
 
-
 window.onunload = window.onbeforeunload = function(e) {
-  if (!!peer && !peer.destroyed) {
+  try {
+    if (!!peer && !peer.destroyed) {
     peer.destroy();
+    }
+  }
+  catch(err) {
+    console.log(err);
   }
 };
 
