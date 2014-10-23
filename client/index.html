@@ -55,10 +55,19 @@
       <div class="window_title">cam</div>
     </div>
 
-    <div id="media_box" class='split_left'>
+    <div id="media_box">
       <div class="window_title">media</div>
+      <div class="content">
+        <div id="music-player">
+            <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mp3">
+              <source type="audio/mp3" src="">
+            </audio>
+             
+            <ul id="playlist">
+            </ul>
+        </div>
+      </div>
     </div>
-
     <div id="chat_box" class='split_right'>
       <div class="window_title">chat</div>
 
@@ -78,9 +87,6 @@
           <form id="send">
             <input type="text" id="text" class="chat_text-input" placeholder="Enter message" />
           </form>
-        </div>
-
-        <div id="music-player">
         </div>
       </div>
 
