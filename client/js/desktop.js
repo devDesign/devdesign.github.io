@@ -8,7 +8,7 @@ $('document').ready(function(){
   var barHeight = document.getElementById('nav').offsetHeight;
   var splitWidth = { 'width':width/2 }
   var splitHieght = { 'height':(height-barHeight)/2 }
-  var placeTop = { 'top': barHeight }
+  var placeTop = { 'top': 0 }
   var placeBottom = { 'top': (height-barHeight)/2 }
   var placeRight = { 'left': width/2 }
   var placeLeft = { 'left': 0 }
@@ -48,11 +48,17 @@ $('document').ready(function(){
   var mediaWindow = new Hammer(mediaElement);
   set_drags(mediaElement,mediaBox);
   attack_grid(mediaBox,"ls")
-  mediaBox.hide(); 
+  mediaBox.hide();
+  //set content click handler to change z-index
+  $('.content').on('click',function(){
+    zIndex++;
+    $(this).parent().css({zIndex:zIndex});
+  });
+  
   //drag the chat
   function set_drags(element,jElement){
     jElement.pep({
-      'constrainTo': 'window',
+      'constrainTo': '#desktop',
       'droppable': '.droppable',
       'useCSSTranslation': false,
       'cssEaseDuration': 200,
@@ -108,17 +114,18 @@ $('document').ready(function(){
         //}
         //if (element.offsetTop === 0 ) { ts = false }
         //if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
-        jElement.css({'height':get_viewpoint()[1]*2/3}).css( splitWidth );
+        jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
         jElement.addClass('dragging_box');
       },
       'rest':function(){
+        if(timeout == false){
         var dropRegion = this.activeDropRegions[0][0].id;
         if (dropRegion.length > 0){
           if( dropRegion === "rs" ){ attack_grid(jElement,"rs") }
           else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") } 
          // else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") } 
          // else if (dropRegion==="ts"){ attack_grid(jElement,"ts") }
-        }
+        }}
       },
       'easing':function(){
         var dropRegion = this.activeDropRegions[0][0].id;
@@ -147,8 +154,8 @@ function attack_grid(jElement,side){
   var barHeight = document.getElementById('nav').offsetHeight;
   var splitWidth = { 'width':width/2 }
   var splitHieght = { 'height':(height-barHeight)/2 }
-  var placeTop = { 'top': barHeight }
-  var placeBottom = { 'top': (height-barHeight)/2 + barHeight }
+  var placeTop = { 'top': 0 }
+  var placeBottom = { 'top': (height-barHeight)/2  }
   var placeRight = { 'left': width/2 }
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
@@ -243,6 +250,49 @@ switch (side)
           break;
         }
     }
+}
+var rtime = new Date(1, 1, 2000, 12,00,00);
+var timeout = false;
+var delta = 200;
+$(window).resize(function() {
+    rtime = new Date();
+    if (timeout === false) {
+        timeout = true;
+        setTimeout(resizeend, delta);
+    }
+});
+
+function resizeend() {
+    if (new Date() - rtime < delta) {
+        setTimeout(resizeend, delta);
+    } else {
+        timeout = false;
+        var viewpoint = get_viewpoint();
+        var height = viewpoint[1];
+        var width = viewpoint[0];
+        var barHeight = document.getElementById('nav').offsetHeight;
+        var splitWidth = { 'width':width/2 }
+        var splitHieght = { 'height':(height-barHeight)/2 }
+        var placeTop = { 'top': 0 }
+        var placeBottom = { 'top': (height-barHeight)/2 }
+        var placeRight = { 'left': width/2 }
+        var placeLeft = { 'left': 0 }
+        var fullHeight = { 'height': height - barHeight }
+        var zIndex = 100;
+        $('.dragging_box').css(splitWidth);
+        if(horizontalGrid[0] && ls == null){
+          horizontalGrid[0].css( fullHeight ).css( splitWidth).css( placeLeft ).css( placeTop );
+        } else { 
+          horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
+          ls.css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeBottom );
+        }
+        if(horizontalGrid[1] && rs == null){
+          horizontalGrid[1].css( fullHeight ).css( splitWidth).css( placeRight ).css( placeTop );
+        } else { 
+          horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
+          rs.css( splitHieght ).css( splitWidth).css( placeRight ).css( placeBottom );
+        }
+    }               
 }
 
 //find user viewpoint

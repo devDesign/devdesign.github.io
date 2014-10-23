@@ -150,7 +150,7 @@ $(document).ready(function() {
     if (c.label === 'chat') {
       var globalChat = $('#global_chat');
       var chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', c.peer);
-      var header = $('<h1></h1>').html('Chat with <strong>' + c.peer + '</strong>').appendTo(chatbox);
+      var header = $('<div></div>').html('<strong>' + c.peer + '</strong>').appendTo(chatbox);
       var messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
 
       chatbox.append(header);
@@ -165,7 +165,7 @@ $(document).ready(function() {
         }
       });
       $('.filler').hide();
-      $('#peerlist').append(chatbox);
+      $('#chat_user_list').append(chatbox);
 
       // Append message to chat
       c.on('data', function(data) {
