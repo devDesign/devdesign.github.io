@@ -41,6 +41,7 @@ $('document').ready(function(){
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
   set_drags(camElement,camBox);
+  camBox.hide();
   //attack_grid(camBox,'ls');
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
@@ -253,7 +254,7 @@ switch (side)
 }
 var rtime = new Date(1, 1, 2000, 12,00,00);
 var timeout = false;
-var delta = 200;
+var delta = 300;
 $(window).resize(function() {
     rtime = new Date();
     if (timeout === false) {
