@@ -55,29 +55,19 @@
       <div class="window_title">cam</div>
     </div>
 
-    <div id="media_box" class='split_left'>
+    <div id="media_box">
       <div class="window_title">media</div>
+      <div class="content">
+        <div id="music-player">
+            <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mp3">
+              <source type="audio/mp3" src="">
+            </audio>
+             
+            <ul id="playlist">
+            </ul>
+        </div>
+      </div>
     </div>
-
-  <div id="media_box">
-    <div class="window_title">media</div>
-    <div id="music-player">
-       <!--  <audio controls="controls" autoplay="autoplay">
-          <source src="media/AirReview-Landmarks-02-ChasingCorporate.mp3" title="Chasing Corporate" type="audio/mpeg"/>
-          <source src="media/framing.mp3" title="Framing" type="audio/mpeg"/>
-        </audio> -->
-        <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mpeg">
-          <source type="audio/mp3" src="http://www.archive.org/download/bolero_69/Bolero.mp3">
-        </audio>
-         
-        <ul id="playlist">
-          <li class="active"><a href="http://www.archive.org/download/bolero_69/Bolero.mp3">Ravel Bolero</a></li>
-          <li><a href="http://www.archive.org/download/MoonlightSonata_755/Beethoven-MoonlightSonata.mp3">Moonlight Sonata - Beethoven</a></li>
-          <li><a href="http://www.archive.org/download/CanonInD_261/CanoninD.mp3">Canon in D Pachabel</a></li>
-          <li><a href="http://www.archive.org/download/PatrikbkarlChamberSymph/PatrikbkarlChamberSymph_vbr_mp3.zip">patrikbkarl chamber symph</a></li>
-        </ul>
-    </div>
-  </div>
     <div id="chat_box" class='split_right'>
       <div class="window_title">chat</div>
 
@@ -97,9 +87,6 @@
           <form id="send">
             <input type="text" id="text" class="chat_text-input" placeholder="Enter message" />
           </form>
-        </div>
-
-        <div id="music-player">
         </div>
       </div>
 
