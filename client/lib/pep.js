@@ -48,7 +48,7 @@
     stopEvents:                     '',
     hardwareAccelerate:             true,
     useCSSTranslation:              true,
-    disableSelect:                  true,
+    disableSelect:                  false,
     cssEaseString:                  "cubic-bezier(0.190, 1.000, 0.220, 1.000)",
     cssEaseDuration:                1000,
     shouldEase:                     true,
