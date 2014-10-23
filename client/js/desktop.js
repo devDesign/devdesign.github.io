@@ -1,7 +1,6 @@
 var rs,ls,ts,bs,nextAttack;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
-
 $('document').ready(function(){
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
@@ -9,7 +8,7 @@ $('document').ready(function(){
   var barHeight = document.getElementById('nav').offsetHeight;
   var splitWidth = { 'width':width/2 }
   var splitHieght = { 'height':(height-barHeight)/2 }
-  var placeTop = { 'top': barHeight }
+  var placeTop = { 'top': 0 }
   var placeBottom = { 'top': (height-barHeight)/2 }
   var placeRight = { 'left': width/2 }
   var placeLeft = { 'left': 0 }
@@ -22,8 +21,6 @@ $('document').ready(function(){
     mediaBox.show();
     $('#login_box').hide();
   });
-
-
   //select chat for hammertime tap events
   var chatBox = $('#chat_box');
   var chatElement = document.getElementById('chat_box');
@@ -44,110 +41,112 @@ $('document').ready(function(){
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
   set_drags(camElement,camBox);
-  camBox.hide();
+  //attack_grid(camBox,'ls');
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');
   var mediaWindow = new Hammer(mediaElement);
   set_drags(mediaElement,mediaBox);
-  attack_grid(mediaBox,"rs")
-  mediaBox.hide(); 
+  attack_grid(mediaBox,"ls")
+  mediaBox.hide();
+  //set content click handler to change z-index
+  $('.content').on('click',function(){
+    zIndex++;
+    $(this).parent().css({zIndex:zIndex});
+  });
+  
   //drag the chat
   function set_drags(element,jElement){
     jElement.pep({
+      'constrainTo': '#desktop',
+      'droppable': '.droppable',
+      'useCSSTranslation': false,
+      'cssEaseDuration': 200,
+      'elementsWithInteraction': '.content',
       'velocityMultiplier': 0.8,
       initiate: function() {
         zIndex++;
         jElement.css( { zIndex: zIndex } );
-      },
-      'start':function(){
-        zIndex++;
-        jElement.css( { zIndex: zIndex } );
-        if (element.offsetLeft === 0) { 
+
+        // left side is dragged from snap
+        //if (element.offsetLeft === 0) { 
           if (horizontalGrid[0]==jElement){
             horizontalGrid[0] = null
             if ( ls != null){
               ls.css( fullHeight ).css( placeTop );
               horizontalGrid[0] = ls;
               ls = null;
-            } 
+            } else {
+              if( rs != null && horizontalGrid[1] !=null ){
+                attack_grid(rs,'ls');
+                horizontalGrid[1].css( fullHeight ).css( placeTop );
+                rs = null;
+              } 
+            }
           } else if (ls == jElement){
               ls = null
               if (horizontalGrid[0] != null){
               horizontalGrid[0].css( fullHeight ).css( placeTop );
             }
           }
-
-        }
-        if (element.offsetLeft === Math.round(get_viewpoint()[0]/2) ) { 
+        //}
+        // right side is dragged from snap
+        //if (element.offsetLeft === Math.round(get_viewpoint()[0]/2) ) { 
           if (horizontalGrid[1]==jElement){
             horizontalGrid[1] = null
             if ( rs != null){
               rs.css( fullHeight ).css( placeTop );
               horizontalGrid[1] = rs;
               rs = null;
-            } 
-          } else if(rs == jElement){
-              rs = null;
-              if ( horizontalGrid[1] != null){
-                horizontalGrid[1].css( fullHeight ).css(placeTop);
+            } else {
+              if ( ls != null && horizontalGrid[0] != null ){
+                attack_grid(ls,'rs');
+                horizontalGrid[0].css( fullHeight ).css( placeTop);
+                ls = null
               }
             }
-
-        }
-        if (element.offsetTop === 0 ) { ts = false }
-        if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
-        jElement.css({'height':get_viewpoint()[1]*2/3}).css( splitWidth );
+          } else if(rs == jElement){
+            rs = null;
+            if ( horizontalGrid[1] != null){
+              horizontalGrid[1].css( fullHeight ).css(placeTop);
+            } 
+          }  
+        //}
+        //if (element.offsetTop === 0 ) { ts = false }
+        //if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
+        jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
         jElement.addClass('dragging_box');
       },
-      'constrainTo': 'window',
-      'droppable': '.droppable',
-      'useCSSTranslation': false,
-      'cssEaseDuration': 300,
-      'elementsWithInteraction': '.content',
       'rest':function(){
+        if(timeout == false){
         var dropRegion = this.activeDropRegions[0][0].id;
         if (dropRegion.length > 0){
           if( dropRegion === "rs" ){ attack_grid(jElement,"rs") }
           else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") } 
          // else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") } 
          // else if (dropRegion==="ts"){ attack_grid(jElement,"ts") }
-        }
-
+        }}
       },
       'easing':function(){
         var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
-        var viewpoint = get_viewpoint();
-        var offset = jElement.offset();
-
         if (dropRegion.length > 0){
           jElement.css({"z-index":1})
           jElement.removeClass('dragging_box')
-          if(dropRegion === "rs"){
-            
+  /*        if(dropRegion === "rs"){
             jElement.css(splitWidth).css( placeRight );
-           
           } else if (dropRegion==="ls"){
-            
             jElement.css(splitWidth).css( placeLeft );
-
           } else if (dropRegion==="bs"){
-            
             jElement.css(splitHieght);
-     
           } else if (dropRegion==="ts"){
-            
             jElement.css(splitHieght);
-
-          }
+          }*/
         }
       }
     });
   }
-  
 });
-
 function attack_grid(jElement,side){
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
@@ -155,17 +154,17 @@ function attack_grid(jElement,side){
   var barHeight = document.getElementById('nav').offsetHeight;
   var splitWidth = { 'width':width/2 }
   var splitHieght = { 'height':(height-barHeight)/2 }
-  var placeTop = { 'top': barHeight }
-  var placeBottom = { 'top': (height-barHeight)/2 + barHeight }
+  var placeTop = { 'top': 0 }
+  var placeBottom = { 'top': (height-barHeight)/2  }
   var placeRight = { 'left': width/2 }
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
-  
 switch (side)
     {
       case "rs":
         if ( verticalGrid[0] != null ){
           verticalGrid[0].css( splitWidth ).css( placeLeft );
+          verticalGrid[0].addClass('split_left')
           if ( horizontalGrid[0] != null){
             horizontalGrid[0].css( splitHieght ).css( placeBottom );
             if ( verticalGrid[1] != null ){
@@ -189,8 +188,10 @@ switch (side)
           }
         }
         if ( horizontalGrid[1] != null && rs == null){
+          horizontalGrid[1].addClass('.split_top_right');
           horizontalGrid[1].css( splitHieght ).css( placeBottom ).css( placeRight );
           rs = jElement;
+          rs.addClass('.split_bottom_right')
           rs.css( splitHieght ).css( placeTop ).css( placeRight );
           break;
         } else if ( horizontalGrid[1] != null && rs != null ){
@@ -250,21 +251,49 @@ switch (side)
         }
     }
 }
+var rtime = new Date(1, 1, 2000, 12,00,00);
+var timeout = false;
+var delta = 200;
+$(window).resize(function() {
+    rtime = new Date();
+    if (timeout === false) {
+        timeout = true;
+        setTimeout(resizeend, delta);
+    }
+});
 
-//refresh desktop
-function refresh_desktop(viewpoint){
-  var height = viewpoint[1];
-  var width = viewpoint[0];
-  var elemental = [$('#chat_box'),$('#file_box'),$('#cam_box'),$('#media_box')];
-  if (elemental[0].class != 'window dragging_box'){
-    elemental[0].css({'height':height})
-  }
+function resizeend() {
+    if (new Date() - rtime < delta) {
+        setTimeout(resizeend, delta);
+    } else {
+        timeout = false;
+        var viewpoint = get_viewpoint();
+        var height = viewpoint[1];
+        var width = viewpoint[0];
+        var barHeight = document.getElementById('nav').offsetHeight;
+        var splitWidth = { 'width':width/2 }
+        var splitHieght = { 'height':(height-barHeight)/2 }
+        var placeTop = { 'top': 0 }
+        var placeBottom = { 'top': (height-barHeight)/2 }
+        var placeRight = { 'left': width/2 }
+        var placeLeft = { 'left': 0 }
+        var fullHeight = { 'height': height - barHeight }
+        var zIndex = 100;
+        $('.dragging_box').css(splitWidth);
+        if(horizontalGrid[0] && ls == null){
+          horizontalGrid[0].css( fullHeight ).css( splitWidth).css( placeLeft ).css( placeTop );
+        } else { 
+          horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
+          ls.css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeBottom );
+        }
+        if(horizontalGrid[1] && rs == null){
+          horizontalGrid[1].css( fullHeight ).css( splitWidth).css( placeRight ).css( placeTop );
+        } else { 
+          horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
+          rs.css( splitHieght ).css( splitWidth).css( placeRight ).css( placeBottom );
+        }
+    }               
 }
-
-//resize window event
-window.addEventListener('resize', function(event){
-  refresh_desktop(get_viewpoint());
-}); 
 
 //find user viewpoint
 function get_viewpoint(){

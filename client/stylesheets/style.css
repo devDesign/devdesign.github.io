@@ -1,10 +1,14 @@
 html {
-  overflow-y: hidden; }
+  overflow-y: hidden;
+  overflow-x: hidden;
+  height: 100%; }
 
 body {
   padding: 0;
   margin: 0;
   background-color: #666; }
+  body h2 {
+    margin: 0; }
 
 #login_box {
   position: absolute;
@@ -22,7 +26,7 @@ body {
 #nav {
   position: relative;
   width: 100%;
-  height: 3em; }
+  height: 2em; }
 
 .window_title {
   display: flex;
@@ -38,14 +42,17 @@ body {
   display: flex;
   width: 50%;
   flex-direction: column;
-  position: absolute;
+  flex: 1 50%;
   color: white;
+  z-index: 99;
   background-color: black;
   border: 1px solid black;
   box-sizing: border-box;
-  z-index: 9999; }
+  top: 0px;
+  bottom: 0px; }
 
 #file_box {
+  flex: 1 50%;
   width: 50%;
   background-color: blue;
   position: absolute;
@@ -67,7 +74,7 @@ body {
 
 #rs {
   position: fixed;
-  width: 10px;
+  width: 1px;
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -75,7 +82,7 @@ body {
 
 #ls {
   position: fixed;
-  width: 10px;
+  width: 1px;
   top: 0px;
   left: 0px;
   bottom: 0px;
@@ -87,7 +94,7 @@ body {
   width: 100%;
   top: 1.3em;
   z-index: -1;
-  bottom: 1.3em;
+  bottom: 3em;
   overflow-y: hidden;
   overflow-x: hidden; }
 
@@ -107,6 +114,20 @@ body {
     background-color: black;
     width: 100%; }
 
+#chat_user_list {
+  text-align: right;
+  position: absolute;
+  bottom: 3em;
+  background-color: #010101;
+  right: 0px;
+  width: 130px;
+  top: 1.3em;
+  padding-right: 0.5em; }
+  #chat_user_list .users {
+    text-align: center;
+    padding-top: 2em;
+    margin: 0; }
+
 .chat_text-input input[type="text"] {
   padding: 10px;
   border: solid 1px #dcdcdc;
@@ -122,5 +143,19 @@ body {
   width: 10px;
   height: 10px;
   color: red; }
+
+#desktop {
+  background-color: purple;
+  position: absolute;
+  top: 2em;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  align-content: flex-start;
+  justify-content: flex-end; }
+
+.split_left .split_right {
+  flex: 1 50%; }
 
 /*# sourceMappingURL=style.css.map */
