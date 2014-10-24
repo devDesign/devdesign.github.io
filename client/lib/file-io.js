@@ -211,26 +211,8 @@ var filesDropped = 0
 /* Document bind's to accept files copied. Don't accept until we have a connection */
 function accept_inbound_files() {
 
-	$(document).bind('drop dragover dragenter', function (e) {
-		e.preventDefault();
-	});
+  console.log("ready for big")
 
-	/* drop a file on the page! */
-	// $(document).bind('drop', function (e) {
-	// 	var file = e.originalEvent.dataTransfer.files[0];
-	// 	filesDropped ++;
-	// 	document.getElementById('select_file').value='';
-	
-	// 	process_inbound_files(file);
-	// });
-	
-	document.getElementById('select_file').addEventListener('change', function(e) {
-		if (e.target.files.length == 1) {
-			var file = e.target.files[0];
-      filesDropped += 1;
-			process_inbound_files(file);
-		}
-	}, false);
 }
 
 
@@ -462,13 +444,12 @@ function create_or_clear_container(id, username) {
 	var filelist = document.getElementById('filelist');
 	var filecontainer = document.getElementById(id);
 	username = sanitize(username);
-  console.log(id,username)
 	
 	/* if the user is downloading something from this person, we should only clear the inside span to save the cancel button */
 	if (this.downloading[id] == true) {
 		var span = document.getElementById(id + "-span");
 		if (!span) {
-			filecontainer.innerHTML = username+': <span id="'+id+'-span"></span>';
+			filecontainer.innerHTML = '<span id="'+id+'-span"></span>';
 			/* add cancel button */
 			var a = document.createElement('a');
 			a.download = meta.name;
@@ -487,11 +468,11 @@ function create_or_clear_container(id, username) {
 	
 	if (!filecontainer) {
 		/* if filecontainer doesn't exist, create it */
-		var fs = '<div id="' + id + '">' + username + '</div>';
+		var fs = '<div id="' + id + '"></div>';
 		filelist.innerHTML = filelist.innerHTML + fs;
 	} else {
 		/* if filecontainer does exist, clear it */
-		filecontainer.innerHTML = username;
+		filecontainer.innerHTML = '';
 	}
 }
 
@@ -519,7 +500,7 @@ function create_upload_stop_link(filename, id, username) {
 	
 	//create the link
 	var span = document.createElement('span');
-	span.textContent = ': '+filename + ' ';
+	span.textContent = filename + ' ';
 	
 	var a = document.createElement('a');
 	a.download = meta.name;
@@ -543,13 +524,13 @@ function create_pre_file_link(meta, id, username) {
 	
 	//create the link
 	var span = document.createElement('span');
-	span.textContent = ': ';
+	span.textContent = '';
 	
 	var a = document.createElement('a');
 	a.download = meta.name;
 	a.id = id + '-download';
 	a.href = 'javascript:void(0);';
-	a.textContent = 'download ' + meta.name + ' ' + getReadableFileSizeString(meta.size);
+	a.textContent = meta.name + ' ' + getReadableFileSizeString(meta.size);
 	a.draggable = true;
 	
 	//append link!

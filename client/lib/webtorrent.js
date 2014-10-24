@@ -46,17 +46,16 @@ download = function(infoHash) {
 
 onTorrent = function(torrent) {
   
-  logAppend('Torrent info hash: ' + torrent.infoHash + ' <a href="/#'+torrent.infoHash+'">(link)</a><br>')
-  logAppend('Downloading from ' + torrent.swarm.wires.length + ' peers<br>')
-  logAppend('progress: starting...')
+
+  var progressSpan = $('#'+torrent.infoHash+'-progress');
 
   torrent.swarm.on('download', function () {
     var progress = (100 * torrent.downloaded / torrent.parsedTorrent.length).toFixed(1)
-    logReplace('progress: ' + progress + '% -- download speed: ' + prettysize(torrent.swarm.downloadSpeed()) + '/s<br>')
+    progressSpan.html(progress+"% "+prettysize(torrent.swarm.downloadSpeed()));
   })
 
   torrent.swarm.on('upload', function () {
-    logReplace('upload speed:' + prettysize(client.uploadSpeed()) + '/s<br>')
+    progressSpan.html(prettysize(client.uploadSpeed()))
   })
 
   torrent.files.forEach(function (file) {
@@ -68,21 +67,20 @@ onTorrent = function(torrent) {
     //   file.createReadStream().pipe(video)
     // } else {
       file.createReadStream().pipe(concat(function (buf) {
-        var a = document.createElement('a')
-        a.download = file.name
-        a.href = URL.createObjectURL(new Blob([ buf ]))
-        a.textContent = 'download ' + file.name
-        log.innerHTML += a.outerHTML + '<br>'
 
-        play_file(a.href, file.name, file.type);
-
+         var a = document.getElementById(torrent.infoHash+'-torrent') 
+         a.download = file.name
+         a.href = URL.createObjectURL(new Blob([ buf ]))
+         a.innerHTML = file.name
+ 
+         play_torrent_file(a.href, file.name, file.type);
 
       }))
     // }
   })
 }
 
-function play_file(url, title, type) {
+function play_torrent_file(url, title, type) {
   
   var audio;
   var playlist;

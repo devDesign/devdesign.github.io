@@ -1,6 +1,6 @@
 var sendToRTCio = false;
 
-var dropzone = document.getElementById('dropzone');
+var dropzone = document.querySelector('body');
 
 // Allow dropping and style dropzone
 (function() {
@@ -60,12 +60,25 @@ function fileRouter(e){
   }
 }
 
-dragDrop('#dropzone', function(files){
+dragDrop('body', function(files){
   // does nothing if file is too big
   // see //FUCK in webtorrent.js
   // add error readout for user!
-  logAppend('Creating .torrent file...<br>')
+  // logAppend('Creating .torrent file...<br>')
   client.seed(files, function(torrent){
+
+    var newTorrentDiv = $('<div id="'+torrent.infoHash+'">').appendTo('#filelist');
+    var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
+    newTorrentFile.attr('href','javascript:void(0);');
+    $('<span id="'+torrent.infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+    newTorrentFile.appendTo(newTorrentDiv)
+    newTorrentDiv.appendTo('#filelist')
+    newTorrentFile.on('click', function(e){
+      download(e.target.id.split('-torrent')[0]);
+    });
+
+
+
 
     eachActiveConnection(function(c, $c) {
       if (c.label === 'torrentz') {

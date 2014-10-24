@@ -47,11 +47,7 @@ function startDownloadServer(usernameFromPeerJS,roomNameFromPeerJS) {
 
 /* adds small text to chat */
 function systemMessage(msg) {
-  var messages = document.getElementById('messages');
-  msg = sanitize(msg);
-  msg = '<strong class="small" style="padding-left: 15px">' + msg + '</strong>';
-  messages.innerHTML = messages.innerHTML + msg + '<br>';
-  messages.scrollTop = 10000;
+  console.log(msg);
 }
 
 /* Use this to avoid xss
