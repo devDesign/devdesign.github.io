@@ -2,6 +2,11 @@ var rs,ls,ts,bs,nextAttack;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
 $('document').ready(function(){
+  $("#audio").bind('ended', function(){
+    setTimeout(function(){$('.nowplaying').remove()},200);
+ 
+});
+
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
   var width = viewpoint[0];
@@ -14,6 +19,8 @@ $('document').ready(function(){
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
   var zIndex = 100;
+  // media player
+/*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
   //login
   $('#peerSubmit').on('click',function(){
     chatBox.show();
@@ -120,7 +127,7 @@ $('document').ready(function(){
       },
       'rest':function(){
         if(timeout == false){
-        var dropRegion = this.activeDropRegions[0][0].id;
+        if(this.activeDropRegions[0][0].id){var dropRegion = this.activeDropRegions[0][0].id};
         if (dropRegion.length > 0){
           if( dropRegion === "rs" ){ attack_grid(jElement,"rs") }
           else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") } 
@@ -268,18 +275,19 @@ function resizeend() {
         setTimeout(resizeend, delta);
     } else {
         timeout = false;
-        var viewpoint = get_viewpoint();
-        var height = viewpoint[1];
-        var width = viewpoint[0];
-        var barHeight = document.getElementById('nav').offsetHeight;
-        var splitWidth = { 'width':width/2 }
-        var splitHieght = { 'height':(height-barHeight)/2 }
-        var placeTop = { 'top': 0 }
-        var placeBottom = { 'top': (height-barHeight)/2 }
-        var placeRight = { 'left': width/2 }
-        var placeLeft = { 'left': 0 }
-        var fullHeight = { 'height': height - barHeight }
-        var zIndex = 100;
+        viewpoint = get_viewpoint();
+        height = viewpoint[1];
+        width = viewpoint[0];
+        barHeight = document.getElementById('nav').offsetHeight;
+        splitWidth = { 'width':width/2 }
+        splitHieght = { 'height':(height-barHeight)/2 }
+        placeTop = { 'top': 0 }
+        placeBottom = { 'top': (height-barHeight)/2 }
+        placeRight = { 'left': width/2 }
+        placeLeft = { 'left': 0 }
+        fullHeight = { 'height': height - barHeight }
+        zIndex = 100;
+
         $('.dragging_box').css(splitWidth);
         if(horizontalGrid[0] && ls == null){
           horizontalGrid[0].css( fullHeight ).css( splitWidth).css( placeLeft ).css( placeTop );
@@ -290,7 +298,7 @@ function resizeend() {
         if(horizontalGrid[1] && rs == null){
           horizontalGrid[1].css( fullHeight ).css( splitWidth).css( placeRight ).css( placeTop );
         } else { 
-          horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
+          horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
           rs.css( splitHieght ).css( splitWidth).css( placeRight ).css( placeBottom );
         }
     }               

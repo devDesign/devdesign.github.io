@@ -191,7 +191,7 @@ $(document).ready(function() {
     // Send mouse position of moving mouse to user
     } else if (c.label === 'mouse') {
       $('<div id="' + c.peer + 'mouse" class="mouse">').appendTo('body');
-      $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
+     // $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
       c.on('data', function(data) {
         var id = '#' + c.peer + 'mouse';
         $(id).css({
@@ -202,7 +202,7 @@ $(document).ready(function() {
 
     // Receive filename of newly dropped file 
     } else if (c.label === 'initData') {
-      c.on('data', function(data) {
+     /* c.on('data', function(data) {
         var sender = c.peer
           // Create link to trigger upload initialization
         $('<div/>', {
@@ -235,7 +235,7 @@ $(document).ready(function() {
             alert(err);
           });
         });
-      });
+      });*/
 
     // DOWNLOADER RECEIVE FILE NAME FROM UPLOADER AS CONFIRMATION OF REQUEST
     } else if (c.label === "attackData") {
@@ -332,7 +332,7 @@ $(document).ready(function() {
           });
           var url = window.URL.createObjectURL(dataBlob);
           // Create download link 
-          $('#global_chat').append('<div><span class="file">' +
+         /* $('#global_chat').append('<div><span class="file">' +
             c.peer + ' has sent you a <a target="_blank" href="' + url + '" download="' + data[2] + '">file</a>.</span></div>');
           $('<audio/>', {
             'width': "320",
@@ -347,7 +347,7 @@ $(document).ready(function() {
             success: function(media) {
               media.play();
             }
-          });
+          });*/
         }
       });
 

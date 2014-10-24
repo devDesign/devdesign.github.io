@@ -17,6 +17,7 @@
   <script src="./js/desktop.js"></script>
   <script src='./lib/pep.js'></script>
   <script src='./lib/hammer.min.js'></script>
+  <script src='./lib/id3v2.js'></script>
 </head>
 
 <body>
@@ -59,12 +60,13 @@
       <div class="window_title">media</div>
       <div class="content">
         <div id="music-player">
-            <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mp3">
-              <source type="audio/mp3" src="">
+            <audio id="audio" preload="auto" tabindex="0" controls="">
+              <source id="song" type="audio/mp3" src="">
             </audio>
-             
+          <div id="playlist_box">
             <ul id="playlist">
             </ul>
+          </div>
         </div>
       </div>
     </div>

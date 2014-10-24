@@ -10,6 +10,19 @@ body {
   body h2 {
     margin: 0; }
 
+audio {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  z-index: 9999; }
+
+#visualizer {
+  top: 1.3em;
+  position: absolute;
+  height: 33%;
+  width: 100%;
+  background-color: black; }
+
 #login_box {
   position: absolute;
   top: 50%;
@@ -67,10 +80,13 @@ body {
 
 #media_box {
   width: 50%;
-  background-color: green;
+  color: white;
+  background-color: black;
   position: absolute;
   border: 1px solid black;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden; }
 
 #rs {
   position: fixed;
@@ -157,5 +173,43 @@ body {
 
 .split_left .split_right {
   flex: 1 50%; }
+
+#playlist_box {
+  position: absolute;
+  background-color: #040404;
+  width: 100%;
+  top: 1.3em;
+  bottom: 0px; }
+
+#playlist {
+  position: absolute;
+  background-color: black;
+  top: 0px;
+  margin: 0px;
+  list-style: none;
+  width: 100%;
+  border: 1px;
+  border-width: 1px;
+  padding: 0; }
+  #playlist a {
+    color: white; }
+  #playlist ul {
+    margin: 0;
+    padding: 0; }
+  #playlist li {
+    background-color: #101010;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em; }
+
+#playlist li:nth-child(odd) {
+  background: #0f0f0f; }
+
+.nowplaying {
+  position: absolute;
+  bottom: 1.9em;
+  color: red;
+  opacity: 0;
+  right: 6em;
+  transition: all 5s; }
 
 /*# sourceMappingURL=style.css.map */

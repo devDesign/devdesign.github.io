@@ -406,15 +406,16 @@ function cancel_file(id) {
 }
 
 /* Play media */
-function play_file(id, title, type) {
+function play_file(id, title, type,file) {
   var url = $('#' + id).children('a').first().attr('href');
+  var filez = file;
 
   var audio;
   var playlist;
   var tracks;
   var current;
 
-  $('<li><a href=' + url + '>' + title + '</a></li>').appendTo('#playlist');
+  $('<li id="'+title+'"><a href=' + url + '>' + title + '</a></li>').appendTo('#playlist');
 
   initPlaylist();
   function initPlaylist(){
@@ -447,9 +448,12 @@ function play_file(id, title, type) {
   function run(link, player){
           player.src = link.attr('href');
           par = link.parent();
-          par.addClass('active').siblings().removeClass('active');
+          par.addClass('active-file').siblings().removeClass('active-file');
           audio[0].load();
           audio[0].play();
+          $('.nowplaying').remove();
+ 					$('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
+ 					$('.nowplaying').css({opacity:1,left:"1em"})
   }
 }
 
@@ -596,6 +600,7 @@ function create_file_link (meta, id, username, fileEntry) {
 	/* One difference with Chrome & FF :( */
 	if (is_chrome) {
 		/* we are going to link to our local file system */
+		var filez = fileEntry.toURL();
 		a.href = fileEntry.toURL();
 	} else {
 		/* fileEntry is actually not a FileEntry, but a blob in Chrome */
@@ -618,7 +623,7 @@ function create_file_link (meta, id, username, fileEntry) {
 	  var name = meta.name;
 	  var name = name.substr(0, name.lastIndexOf('.'));
 
-	  play_file(id, name, filetype);
+	  play_file(id, name, filetype,filez);
 	}
 
 
