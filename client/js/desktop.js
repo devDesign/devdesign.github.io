@@ -1,6 +1,7 @@
 var rs,ls,ts,bs,nextAttack;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
+
 $('document').ready(function(){
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
@@ -15,7 +16,36 @@ $('document').ready(function(){
   var fullHeight = { 'height': height - barHeight }
   var zIndex = 100;
   //login
-  $('#peerSubmit').on('click',function(){
+  $('#username-text').on('keyup', function(){
+    var isValid = /[a-z0-9]/
+    var data = $(this).val();
+
+    if (data.match(isValid)){
+      $('#username-text').css("box-shadow", "inset 0 0 5px green");
+    } else {
+      $('#username-text').css("box-shadow", "inset 0 0 5px red");
+    }
+  })
+
+  $('#roomname-text').on('keyup', function(){
+    var isValid = /[a-z0-9]/
+    var data = $(this).val();
+
+    if (data.match(isValid)){
+      $('#roomname-text').css("box-shadow", "inset 0 0 5px green");
+    } else {
+      $('#roomname-text').css("box-shadow", "inset 0 0 5px red");
+    }
+  })
+
+  $('#peerSubmit').on('click', function(){
+    var peerName = $('#username-text').val();
+    var roomName = $('#roomname-text').val();
+
+    if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
+      return false;
+    }
+
     chatBox.show();
     fileBox.show();
     mediaBox.show();

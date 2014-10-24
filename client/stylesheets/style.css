@@ -1,4 +1,12 @@
+@font-face {
+  font-family: "Aller";
+  src: url("../fonts/Aller_Rg.ttf"); }
+@font-face {
+  font-family: "Aller";
+  src: url("../fonts/Aller_Bd.ttf");
+  font-weight: bold; }
 html {
+  font-family: "Aller";
   overflow-y: hidden;
   overflow-x: hidden;
   height: 100%; }
@@ -6,9 +14,14 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background-color: #666; }
+  background-color: #25292C; }
   body h2 {
-    margin: 0; }
+    color: #da3c28;
+    margin-left: 0.3em;
+    margin-top: 0; }
+    body h2 a {
+      text-decoration: none;
+      color: #da3c28; }
 
 #login_box {
   position: absolute;
@@ -16,12 +29,44 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
-  background-color: #333; }
+  background-color: #121317;
+  padding: 2em; }
+  #login_box input {
+    display: flex;
+    margin: auto auto;
+    width: 100%;
+    margin-bottom: 2em;
+    padding: .5em .5em .6em .5em;
+    border: none;
+    background-color: #41454E;
+    color: white;
+    outline: none;
+    box-sizing: border-box; }
+  #login_box button {
+    width: 100%;
+    height: 3em;
+    border-radius: 7px;
+    background-color: #da3c28;
+    border-color: #d83925;
+    font-weight: bold;
+    color: #99281b; }
+  #login_box button:hover {
+    background-color: #e05a49;
+    border-color: #df5645; }
+
+#mesh-logo {
+  text-align: center;
+  margin-bottom: 2em; }
 
 #id {
-  position: absolute;
-  right: 5em;
-  top: 2em; }
+  display: inline-flex;
+  float: right;
+  margin-right: 1em;
+  display: none; }
+
+#rtos {
+  display: inline-flex;
+  text-align: left; }
 
 #nav {
   position: relative;
@@ -145,7 +190,6 @@ body {
   color: red; }
 
 #desktop {
-  background-color: purple;
   position: absolute;
   top: 2em;
   bottom: 0px;
