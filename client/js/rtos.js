@@ -22,8 +22,9 @@ $(document).ready(function() {
     var roomName = $('#roomname-text').val();
 
     var isValid = /^[a-zA-Z0-9]+$/
+    var peerNameLength = peerName.split('').length;
 
-    if ((!peerName.match(isValid)) || (!roomName.match(isValid))) {
+    if ((!peerName.match(isValid)) || (!roomName.match(isValid)) || (peerNameLength > 16)) {
       return false;
     }
 
