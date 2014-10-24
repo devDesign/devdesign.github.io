@@ -1,5 +1,6 @@
 // THANKS to github.com/peers 
 $(document).ready(function() {
+
   function pastelColors(){
     var r = (Math.round(Math.random()* 127) + 127).toString(16);
     var g = (Math.round(Math.random()* 127) + 127).toString(16);
@@ -9,7 +10,6 @@ $(document).ready(function() {
   var color = pastelColors();
   var peer;
   var connectedPeers = {};
-
   // get room from path!
 
   var uriPath = window.location.hash.split('#')[1]
@@ -20,8 +20,12 @@ $(document).ready(function() {
     var peerName = $('#username-text').val();
     var roomName = $('#roomname-text').val();
 
+    if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
+      return false;
+    }
+
     // Set uri path as #roomName
-    window.location.hash = roomName
+    window.location.hash = roomName;
 
     // Create WebRTC.io connection for HUGE files
     startDownloadServer(peerName, roomName)
@@ -55,6 +59,7 @@ $(document).ready(function() {
     peer.on('open', function(id) {
       $('#username-text').hide();
       $('#peerSubmit').hide();
+      $('#id').show();
       $('#pid').text(id);
       createVideoFeedButton();
       var data = {
@@ -117,13 +122,8 @@ $(document).ready(function() {
 
   // Add send video button
   function createVideoFeedButton() {
-    $('<button/>', {
-      text: 'start video feed',
-      id: 'start_video_feed-button'
-    }).appendTo('#username-div');
-
     // Send video to everyone
-    $('button').on('click', function() {
+    $('#start-video-feed').on('click', function() {
       // Vendor specific madness
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
       window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;

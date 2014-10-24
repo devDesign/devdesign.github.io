@@ -1,0 +1,25 @@
+/*
+Errno::ENOENT: No such file or directory @ rb_sysopen - path/sass-directory
+
+Backtrace:
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:481:in `read'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:481:in `update_stylesheet'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:209:in `each'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:293:in `watch'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/plugin.rb:108:in `method_missing'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/exec/sass_scss.rb:370:in `watch_or_update'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/exec/sass_scss.rb:50:in `process_result'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/exec/base.rb:52:in `parse'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/lib/sass/exec/base.rb:19:in `parse!'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/gems/sass-3.4.5/bin/sass:13:in `<top (required)>'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/bin/sass:23:in `load'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/bin/sass:23:in `<main>'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/bin/ruby_executable_hooks:15:in `eval'
+/Users/benvisser/.rvm/gems/ruby-2.1.3/bin/ruby_executable_hooks:15:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Errno::ENOENT: No such file or directory @ rb_sysopen - path/sass-directory"; }

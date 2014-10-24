@@ -21,24 +21,28 @@
 </head>
 
 <body>
-  <div id='nav'><div id="rtos"><h2>RTOS</h2></div></div>
-  <div id="login_box">
-    <div id="username-div">
-      <input type="text" id="username-text" placeholder="Enter Username" />
-      <button id="peerSubmit">go</button>
-      <br>
-      <input type="text" id="roomname-text" placeholder="Enter RoomName" />
+  <div id='nav'>
+    <div id="rtos">
+      <h2><a href="/">RTOS</a></h2>
     </div>
-    
-   
-  </div>
-  <div id='id'>
-      <div id="actions">
-        Your ID is
+
+    <div id='id'>
+        ID:
         <span id="pid"></span>
-        <br>
+    </div>
+  </div>
+
+  <div id="login_box">
+    <div>
+      <div id="mesh-logo"> 
+        <img width="80px" height="80px" src="./images/mesh-logo.png"/>
       </div>
-   </div> 
+        <input type="text" id="username-text" placeholder="Nickname: "/>
+        <input type="text" id="roomname-text" placeholder="Room:"/>
+        <button id="peerSubmit">CONNECT</button>
+    </div>
+  </div>
+  
   <div id='rs' class='droppable'></div>
   <div id='ls' class='droppable'></div>
 
@@ -68,6 +72,7 @@
             </ul>
           </div>
         </div>
+        <button id="start-video-feed">Start Video Feed</button>
       </div>
     </div>
     <div id="chat_box" class='split_right'>
