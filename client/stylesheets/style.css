@@ -5,6 +5,11 @@
   font-family: "Aller";
   src: url("../fonts/Aller_Bd.ttf");
   font-weight: bold; }
+.border-module, #login_box, #chat_box, #file_box, #chat_user_list {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
+
 html {
   font-family: "Aller";
   overflow-y: hidden;
@@ -92,11 +97,11 @@ audio {
 .window_title {
   display: flex;
   box-sizing: border-box;
-  padding: 1px;
-  position: relative;
-  height: 1.3em;
   width: 100%;
   background-color: #da3c28; }
+  .window_title span {
+    padding: 3px;
+    margin-left: 5px; }
 
 #chat_box {
   display: flex;
@@ -150,13 +155,13 @@ audio {
 
 #global_chat {
   position: absolute;
-  width: 100%;
-  top: 1.3em;
+  width: 82%;
+  height: 94%;
   z-index: -1;
-  bottom: 3em;
   overflow-y: scroll; }
   #global_chat div {
-    padding: 0px 0px 1px 8px; }
+    padding: 0px 0px 1px 8px;
+    width: 98%; }
   #global_chat div:first-child {
     padding: 5px 0px 1px 8px; }
   #global_chat .messages em {
@@ -186,7 +191,7 @@ audio {
   background-color: #333;
   right: 0px;
   width: 18%;
-  height: 95%; }
+  height: 94%; }
   #chat_user_list .users {
     text-align: center;
     padding-top: 0.4em; }
@@ -225,9 +230,7 @@ audio {
 #playlist_box {
   position: absolute;
   background-color: #040404;
-  width: 100%;
-  top: 1.3em;
-  bottom: 0px; }
+  width: 95%; }
 
 #playlist {
   position: absolute;
