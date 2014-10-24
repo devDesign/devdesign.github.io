@@ -68,6 +68,7 @@ $(document).ready(function() {
       $('#username-text').hide();
       $('#peerSubmit').hide();
       $('#id').show();
+      $('#start-video-feed').show();
       $('#pid').text(id);
       createVideoFeedButton();
       var data = {
@@ -160,7 +161,7 @@ $(document).ready(function() {
     if (c.label === 'chat') {
       var globalChat = $('#global_chat');
       var chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', c.peer);
-      var header = $('<div></div>').html('<strong>' + c.peer + '</strong>').appendTo(chatbox);
+      var header = $('<div></div>').html(c.peer).appendTo(chatbox);
       var messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
 
       chatbox.append(header);
@@ -422,9 +423,13 @@ $(document).ready(function() {
   $('#send').submit(function(e) {
     e.preventDefault();
     var msg = $('#text').val();
+
+    if (msg === ''){
+      return false;
+    }
+    
     msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-    console.log(msg);
     $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span>' + msg + '</div>');
     $('#global_chat').scrollTop($('#global_chat').prop("scrollHeight"));
     eachActiveConnection(function(c, $c) {
