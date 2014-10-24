@@ -24,7 +24,7 @@ $('document').ready(function(){
 /*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
   //login
   $('#username-text').on('keyup', function(){
-    var isValid = /^[a-z0-9]+$/
+    var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
 
     if (data.match(isValid)){
@@ -35,7 +35,7 @@ $('document').ready(function(){
   })
 
   $('#roomname-text').on('keyup', function(){
-    var isValid = /^[a-z0-9]+$/
+    var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
 
     if (data.match(isValid)){
