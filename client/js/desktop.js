@@ -17,22 +17,22 @@ $('document').ready(function(){
   var zIndex = 100;
   //login
   $('#username-text').on('keyup', function(){
-    var isValid = /[a-z0-9]/
+    var isValid = /^[a-z0-9]+$/
     var data = $(this).val();
 
     if (data.match(isValid)){
-      $('#username-text').css("box-shadow", "inset 0 0 5px green");
+      $('#username-text').css("box-shadow", "none");
     } else {
       $('#username-text').css("box-shadow", "inset 0 0 5px red");
     }
   })
 
   $('#roomname-text').on('keyup', function(){
-    var isValid = /[a-z0-9]/
+    var isValid = /^[a-z0-9]+$/
     var data = $(this).val();
 
     if (data.match(isValid)){
-      $('#roomname-text').css("box-shadow", "inset 0 0 5px green");
+      $('#roomname-text').css("box-shadow", "none");
     } else {
       $('#roomname-text').css("box-shadow", "inset 0 0 5px red");
     }
