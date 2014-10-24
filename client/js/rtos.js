@@ -203,12 +203,34 @@ $(document).ready(function() {
       c.on('data', function(data) {
         var infoHash = data[0]
         var fileName = data[1]
-        newTorrentFile = $('<a id="'+infoHash+'">').text(fileName);
-        newTorrentFile.attr('href','javascript:void(0);');
-        newTorrentFile.appendTo('#filelist')
-        newTorrentFile.on('click', function(e){
-          download(e.target.id);
-        });
+
+
+
+        // newTorrentFile = $('<a id="'+infoHash+'">').text(fileName);
+        // newTorrentFile.attr('href','javascript:void(0);');
+        // newTorrentFile.appendTo('#filelist')
+        // newTorrentFile.on('click', function(e){
+        //   download(e.target.id);
+        // });
+
+
+          var newTorrentDiv = $('<div id="'+infoHash+'">')
+        
+          var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
+          newTorrentFile.attr('href','javascript:void(0);');
+          
+          $('<span id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+          newTorrentFile.appendTo(newTorrentDiv)
+
+          newTorrentDiv.appendTo('#filelist');
+
+          newTorrentFile.on('click', function(e){
+            download(e.target.id.split('-torrent')[0]);
+          });
+
+
+
+
       });
 
     // Send mouse position of moving mouse to user
