@@ -216,14 +216,13 @@ function accept_inbound_files() {
 	});
 
 	/* drop a file on the page! */
-	$(document).bind('drop', function (e) {
-		var file = e.originalEvent.dataTransfer.files[0];
-		filesDropped ++;
-		/* firefox and chrome specific I think, but clear the file input */
-		document.getElementById('select_file').value='';
+	// $(document).bind('drop', function (e) {
+	// 	var file = e.originalEvent.dataTransfer.files[0];
+	// 	filesDropped ++;
+	// 	document.getElementById('select_file').value='';
 	
-		process_inbound_files(file);
-	});
+	// 	process_inbound_files(file);
+	// });
 	
 	document.getElementById('select_file').addEventListener('change', function(e) {
 		if (e.target.files.length == 1) {

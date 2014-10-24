@@ -1,7 +1,7 @@
 $black: #121317;
-$black-shade: #25292C;
+$black-shade: #26282C;
 $grey-shade: #41454E;
-$red-shade: #da3c28;
+$orange-shade: #F18160;
 $blue-shade: #5699C2;
 
 // might kill this font. I don't think I like it.
@@ -26,6 +26,8 @@ html {
   overflow-y: hidden;
   overflow-x: hidden;
   height: 100%;
+  // background: url('../images/stardust.png');
+  // background-size: cover;
 }
 
 input {
@@ -36,19 +38,20 @@ body {
   padding: 0;
   margin: 0;
   background-color: $black-shade;
+  // background: url('images/stardust.png');
   h2{
-    color: #F18160;
+    color: $orange-shade;
     margin-left: 0.3em;
-    margin-top: 0;
-
+    margin-top: 10px;
     a {
       text-decoration: none;
-      color: #F18160;
+      color: $orange-shade;
     }
   }
 
 }
-audio{
+
+audio {
   position: absolute;
   bottom:0px;
   width: 100%;
@@ -62,13 +65,13 @@ audio{
   width: 100%;
   background-color: $black;
 }
-#login_box{
+#login-box{
   position: absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   z-index: 99999;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.6);
   padding: 2em;
   @extend .border-module;
     input {
@@ -87,9 +90,8 @@ audio{
       width: 100%;
       height: 3em;
       border-radius: 7px;
-      background-color: $red-shade;
-      border-color: darken($red-shade
-      , 1%);
+      background-color: $orange-shade;
+      border-color: darken($orange-shade, 1%);
       font-weight: bold;
       color: #882418;
     }
@@ -105,24 +107,54 @@ audio{
   margin-bottom: 2em;
 }
 
-#id {
+// Nav // 
+
+#nav {
+  position: relative;
+  width: 100%;
+  height: 3em;
+  text-align: right;
   display: inline-flex;
-  float: right;
-  margin: 2px 5px 0px 0px;
-  display: none;
-  color: #F18160;
+  justify-content: flex-end;
 }
 
 #rtos {
   display: inline-flex;
   text-align: left;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-#nav{
-  position: relative;
-  width: 100%;
-  height: 3em;
+#id {
+  margin: 1em 10px 0px 10px;
+  display: none;
+  color: $orange-shade;
 }
+
+#pid {
+  color: white;
+  padding: auto;
+}
+
+#start-video-feed {
+  margin: 10px 10px 0px 10px;
+  color: black;
+  display: none;
+
+  button {
+    width: 100%;
+    height: 2.6em;
+    border-radius: 7px;
+    background-color: $orange-shade;
+    border-color: darken($orange-shade, 1%);
+    font-weight: bold;
+    color: #882418;
+  }
+}
+
+// Windows // 
+
 
 .window_title{
   display: flex;
@@ -135,6 +167,7 @@ audio{
     span {
       padding: 3px;
       margin-left: 5px;
+      color: $orange-shade;
     }
 }
 
@@ -144,9 +177,9 @@ audio{
   width: 50%;
   flex-direction: column;
   flex: 1 50%;
-  color: #F18160;
+  color: white;
   z-index: 99;
-  background-color: #26282C;
+  background-color: $black-shade;
   box-sizing: border-box;
   top:0px;
   bottom: 0px;
@@ -156,7 +189,7 @@ audio{
   flex: 1 50%;
   width: 50%;
   color: white;
-  background-color: blue;
+  background-color: $black-shade;
   position: absolute;
   box-sizing: border-box;
   @extend .border-module;
@@ -174,6 +207,7 @@ audio{
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
+  @extend .border-module;
 }
 #rs{
   position:fixed;
@@ -203,13 +237,15 @@ audio{
 #global_chat{
   // font-family: "Courier New", Courier, monospace;
   position: absolute;
-  width: 82%;
-  height: 94%;
+  right: 10em;
+  left: 0;
+  bottom: 1.8em;
   z-index: -1;
   overflow-y: hidden;
+  top: 1.6em;
     div {
-      padding: 0px 0px 1px 8px;
       width: 98%;
+      padding: 0px 0px 1px 8px;
     }
 
     div:first-child {
@@ -255,7 +291,14 @@ audio{
   @extend .border-module;
     .users {
       text-align: center;
-      
+      padding-top: 0.4em;
+      color: $orange-shade;
+    }
+    .self {
+      padding: 0px 8px 1px 0px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
     }
     .active {
       padding: 0px 8px 1px 0px;
@@ -344,7 +387,6 @@ audio{
   transition: all 5s;
 }
 
-
 #pointcloud{
   position: fixed;
   top: 0;
@@ -353,10 +395,12 @@ audio{
   right: 0;
   z-index: -3;
 }
+
 .files{
   bottom:0;
   top:1.3em;
   right:0;
+
 }
 .hide_users{
   position: absolute;

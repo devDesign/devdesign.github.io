@@ -5,7 +5,7 @@
   font-family: "Aller";
   src: url("../fonts/Aller_Bd.ttf");
   font-weight: bold; }
-.border-module, #login_box, #chat_box, #file_box, #chat_user_list, #users {
+.border-module, #login-box, #chat_box, #file_box, #media_box, #chat_user_list, #users {
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
 
@@ -21,11 +21,11 @@ input {
 body {
   padding: 0;
   margin: 0;
-  background-color: #25292C; }
+  background-color: #26282C; }
   body h2 {
     color: #F18160;
     margin-left: 0.3em;
-    margin-top: 0; }
+    margin-top: 10px; }
     body h2 a {
       text-decoration: none;
       color: #F18160; }
@@ -43,15 +43,15 @@ audio {
   width: 100%;
   background-color: #121317; }
 
-#login_box {
+#login-box {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 2em; }
-  #login_box input {
+  #login-box input {
     display: flex;
     margin: auto auto;
     width: 100%;
@@ -61,15 +61,15 @@ audio {
     background-color: #41454E;
     color: white;
     box-sizing: border-box; }
-  #login_box button {
+  #login-box button {
     width: 100%;
     height: 3em;
     border-radius: 7px;
-    background-color: #da3c28;
-    border-color: #d83925;
+    background-color: #F18160;
+    border-color: #f17d5b;
     font-weight: bold;
     color: #882418; }
-  #login_box button:hover {
+  #login-box button:hover {
     background-color: #e05a49;
     border-color: #df5645; }
 
@@ -77,21 +77,42 @@ audio {
   text-align: center;
   margin-bottom: 2em; }
 
-#id {
-  display: inline-flex;
-  float: right;
-  margin: 2px 5px 0px 0px;
-  display: none;
-  color: #F18160; }
-
-#rtos {
-  display: inline-flex;
-  text-align: left; }
-
 #nav {
   position: relative;
   width: 100%;
-  height: 3em; }
+  height: 3em;
+  text-align: right;
+  display: inline-flex;
+  justify-content: flex-end; }
+
+#rtos {
+  display: inline-flex;
+  text-align: left;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+#id {
+  margin: 1em 10px 0px 10px;
+  display: none;
+  color: #F18160; }
+
+#pid {
+  color: white;
+  padding: auto; }
+
+#start-video-feed {
+  margin: 10px 10px 0px 10px;
+  color: black;
+  display: none; }
+  #start-video-feed button {
+    width: 100%;
+    height: 2.6em;
+    border-radius: 7px;
+    background-color: #F18160;
+    border-color: #f17d5b;
+    font-weight: bold;
+    color: #882418; }
 
 .window_title {
   display: flex;
@@ -101,14 +122,15 @@ audio {
   background-color: #4B4F53; }
   .window_title span {
     padding: 3px;
-    margin-left: 5px; }
+    margin-left: 5px;
+    color: #F18160; }
 
 #chat_box {
   display: flex;
   width: 50%;
   flex-direction: column;
   flex: 1 50%;
-  color: #F18160;
+  color: white;
   z-index: 99;
   background-color: #26282C;
   box-sizing: border-box;
@@ -119,7 +141,7 @@ audio {
   flex: 1 50%;
   width: 50%;
   color: white;
-  background-color: blue;
+  background-color: #26282C;
   position: absolute;
   box-sizing: border-box; }
 
@@ -131,7 +153,7 @@ audio {
 #media_box {
   width: 50%;
   color: white;
-  background-color: #25292C;
+  background-color: #26282C;
   position: absolute;
   box-sizing: border-box;
   overflow-y: auto;
@@ -164,13 +186,15 @@ audio {
 
 #global_chat {
   position: absolute;
-  width: 82%;
-  height: 94%;
+  right: 10em;
+  left: 0;
+  bottom: 1.8em;
   z-index: -1;
-  overflow-y: hidden; }
+  overflow-y: hidden;
+  top: 1.6em; }
   #global_chat div {
-    padding: 0px 0px 1px 8px;
-    width: 98%; }
+    width: 98%;
+    padding: 0px 0px 1px 8px; }
   #global_chat div:first-child {
     padding: 5px 0px 1px 8px; }
   #global_chat .messages em {
@@ -203,7 +227,14 @@ audio {
   top: 2.6em;
   bottom: 1.3em; }
   #chat_user_list .users {
-    text-align: center; }
+    text-align: center;
+    padding-top: 0.4em;
+    color: #F18160; }
+  #chat_user_list .self {
+    padding: 0px 8px 1px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end; }
   #chat_user_list .active {
     padding: 0px 8px 1px 0px; }
 

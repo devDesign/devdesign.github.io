@@ -94,7 +94,7 @@ $('document').ready(function(){
     chatBox.show();
     fileBox.show();
     mediaBox.show();
-    $('#login_box').hide();
+    $('#login-box').hide();
   });
   //select chat for hammertime tap events
   var chatBox = $('#chat_box');
