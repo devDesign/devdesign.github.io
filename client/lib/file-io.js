@@ -211,27 +211,30 @@ var filesDropped = 0
 /* Document bind's to accept files copied. Don't accept until we have a connection */
 function accept_inbound_files() {
 
-	$(document).bind('drop dragover dragenter', function (e) {
-		e.preventDefault();
-	});
+  console.log("ready for big")
 
-	/* drop a file on the page! */
-	$(document).bind('drop', function (e) {
-		var file = e.originalEvent.dataTransfer.files[0];
-		filesDropped ++;
-		/* firefox and chrome specific I think, but clear the file input */
-		document.getElementById('select_file').value='';
+	// $(document).bind('drop dragover dragenter', function (e) {
+	// 	e.preventDefault();
+	// });
+
+	// /* drop a file on the page! */
+	// $(document).bind('drop', function (e) {
+	// 	var file = e.originalEvent.dataTransfer.files[0];
+	// 	filesDropped ++;
+	// 	/* firefox and chrome specific I think, but clear the file input */
+	// 	document.getElementById('select_file').value='';
 	
-		process_inbound_files(file);
-	});
+	// 	process_inbound_files(file);
+	// });
 	
-	document.getElementById('select_file').addEventListener('change', function(e) {
-		if (e.target.files.length == 1) {
-			var file = e.target.files[0];
-      filesDropped += 1;
-			process_inbound_files(file);
-		}
-	}, false);
+	// document.getElementById('select_file').addEventListener('change', function(e) {
+	// 	if (e.target.files.length == 1) {
+	// 		var file = e.target.files[0];
+ //      filesDropped += 1;
+	// 		process_inbound_files(file);
+	// 	}
+	// }, false);
+
 }
 
 

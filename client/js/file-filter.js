@@ -1,6 +1,6 @@
 var sendToRTCio = false;
 
-var dropzone = document.getElementById('dropzone');
+var dropzone = document.querySelector('body');
 
 // Allow dropping and style dropzone
 (function() {
@@ -60,7 +60,7 @@ function fileRouter(e){
   }
 }
 
-dragDrop('#dropzone', function(files){
+dragDrop('body', function(files){
   // does nothing if file is too big
   // see //FUCK in webtorrent.js
   // add error readout for user!
