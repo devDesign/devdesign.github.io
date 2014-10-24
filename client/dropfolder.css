@@ -1,11 +1,12 @@
 #dropzone{
   position:absolute;
-  width:300px;
-  height:300px;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  border:10px dashed #ded;
+  top:6em;
+  bottom:0;
+  right: 0;
+  left:0;
+  display: flex;
+  box-sizing: border-box;
+  border:10px dashed rgba(255,255,255,0.4);
 }
 
 .dropping{

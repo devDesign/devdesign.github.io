@@ -311,6 +311,7 @@ function resizeend() {
         setTimeout(resizeend, delta);
     } else {
         timeout = false;
+
         viewpoint = get_viewpoint();
         height = viewpoint[1];
         width = viewpoint[0];
@@ -322,6 +323,7 @@ function resizeend() {
         placeRight = { 'left': width/2 }
         placeLeft = { 'left': 0 }
         fullHeight = { 'height': height - barHeight }
+        $('canvas').css( fullHeight ).css( viewpoint[0] );
         zIndex = 100;
 
         $('.dragging_box').css(splitWidth);
