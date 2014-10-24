@@ -407,6 +407,7 @@ function cancel_file(id) {
 
 /* Play media */
 function play_file(id, title, type,file) {
+
   var url = $('#' + id).children('a').first().attr('href');
   var filez = file;
 

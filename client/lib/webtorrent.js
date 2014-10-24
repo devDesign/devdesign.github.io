@@ -73,9 +73,62 @@ onTorrent = function(torrent) {
         a.href = URL.createObjectURL(new Blob([ buf ]))
         a.textContent = 'download ' + file.name
         log.innerHTML += a.outerHTML + '<br>'
+
+        play_file(a.href, file.name, file.type);
+
+
       }))
     // }
   })
+}
+
+function play_file(url, title, type) {
+  
+  var audio;
+  var playlist;
+  var tracks;
+  var current;
+
+  $('<li id="'+title+'"><a href=' + url + '>' + title + '</a></li>').appendTo('#playlist');
+
+  initPlaylist();
+  function initPlaylist(){
+    current = 0;
+    audio = $('audio');
+    playlist = $('#playlist');
+    tracks = playlist.find('li a');
+    console.log(tracks);
+    len = tracks.length - 1;
+    audio[0].volume = .70;
+    audio[0].play();
+    playlist.find('a').click(function(e){
+        e.preventDefault();
+        link = $(this);
+        current = link.parent().index();
+        run(link, audio[0]);
+    });
+    audio[0].addEventListener('ended',function(e){
+        current++;
+        if(current == len){
+            current = 0;
+            link = playlist.find('a')[0];
+        }else{
+            link = playlist.find('a')[current];    
+        }
+        run($(link),audio[0]);
+    });
+  }
+  
+  function run(link, player){
+          player.src = link.attr('href');
+          par = link.parent();
+          par.addClass('active-file').siblings().removeClass('active-file');
+          audio[0].load();
+          audio[0].play();
+          $('.nowplaying').remove();
+          $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
+          $('.nowplaying').css({opacity:1,left:"1em"})
+  }
 }
 
 var log = document.querySelector('.log')
