@@ -5,23 +5,31 @@
   font-family: "Aller";
   src: url("../fonts/Aller_Bd.ttf");
   font-weight: bold; }
+.border-module, #login_box, #chat_box, #file_box, #chat_user_list {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
+
 html {
   font-family: "Aller";
   overflow-y: hidden;
   overflow-x: hidden;
   height: 100%; }
 
+input {
+  outline: none; }
+
 body {
   padding: 0;
   margin: 0;
-  background-color: #010101; }
+  background-color: #25292C; }
   body h2 {
-    color: #da3c28;
+    color: #F18160;
     margin-left: 0.3em;
     margin-top: 0; }
     body h2 a {
       text-decoration: none;
-      color: #da3c28; }
+      color: #F18160; }
 
 audio {
   position: absolute;
@@ -34,7 +42,7 @@ audio {
   position: absolute;
   height: 33%;
   width: 100%;
-  background-color: black; }
+  background-color: #121317; }
 
 #login_box {
   position: absolute;
@@ -53,7 +61,6 @@ audio {
     border: none;
     background-color: #41454E;
     color: white;
-    outline: none;
     box-sizing: border-box; }
   #login_box button {
     width: 100%;
@@ -74,8 +81,9 @@ audio {
 #id {
   display: inline-flex;
   float: right;
-  margin-right: 1em;
-  display: none; }
+  margin: 2px 5px 0px 0px;
+  display: none;
+  color: #F18160; }
 
 #rtos {
   display: inline-flex;
@@ -88,23 +96,21 @@ audio {
 
 .window_title {
   display: flex;
-  border-bottom: 1px solid black;
   box-sizing: border-box;
-  padding: 1px;
-  position: relative;
-  height: 1.3em;
   width: 100%;
-  background-color: #333; }
+  background-color: #4B4F53; }
+  .window_title span {
+    padding: 3px;
+    margin-left: 5px; }
 
 #chat_box {
   display: flex;
   width: 50%;
   flex-direction: column;
   flex: 1 50%;
-  color: white;
+  color: #F18160;
   z-index: 99;
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 1px solid black;
+  background-color: #26282C;
   box-sizing: border-box;
   top: 0px;
   bottom: 0px; }
@@ -113,23 +119,20 @@ audio {
   flex: 1 50%;
   width: 50%;
   color: white;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: blue;
   position: absolute;
-  border: 1px solid black;
   box-sizing: border-box; }
 
 #cam_box {
   background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
-  border: 1px solid black;
   box-sizing: border-box; }
 
 #media_box {
   width: 50%;
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #25292C;
   position: absolute;
-  border: 1px solid black;
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden; }
@@ -158,14 +161,18 @@ audio {
   height: 1px; }
 
 #global_chat {
-  font-family: "Courier New", Courier, monospace;
   position: absolute;
-  width: 100%;
-  top: 1.3em;
+  width: 82%;
+  height: 94%;
   z-index: -1;
-  bottom: 3em;
-  overflow-y: hidden;
-  overflow-x: hidden; }
+  overflow-y: scroll; }
+  #global_chat div {
+    padding: 0px 0px 1px 8px;
+    width: 98%; }
+  #global_chat div:first-child {
+    padding: 5px 0px 1px 8px; }
+  #global_chat .messages em {
+    font-size: small; }
 
 .dragging_box {
   z-index: 99999; }
@@ -173,33 +180,31 @@ audio {
 #send {
   width: 100%;
   position: absolute;
-  bottom: 0px; }
+  bottom: 0px;
+  box-sizing: border-box; }
   #send #text {
     border: 0;
-    height: 1.9em;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 1.5em;
-    color: #00FF00;
-    background-color: black;
-    width: 100%; }
+    height: 1.5em;
+    box-sizing: border-box;
+    font-size: 1.2em;
+    color: white;
+    background-color: #121317;
+    width: 100%;
+    padding: 1px 0px 1px 8px; }
 
 #chat_user_list {
   text-align: right;
   position: absolute;
-  bottom: 3em;
-  background-color: #010101;
+  background-color: #333;
   right: 0px;
-  width: 130px;
-  top: 1.3em;
-  padding-right: 0.5em; }
-  #chat_user_list #users {
-    position: absolute;
-    width: 3em;
-    cursor: pointer;
+  width: 10em;
+  top: 1.6em;
+  bottom: 1.3em; }
+  #chat_user_list .users {
     text-align: center;
-    top: 0;
-    right: 0;
-    margin: 0; }
+    padding-top: 0.4em; }
+  #chat_user_list .active {
+    padding: 0px 8px 1px 0px; }
 
 .chat_text-input input[type="text"] {
   padding: 10px;
@@ -232,14 +237,12 @@ audio {
 
 #playlist_box {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  top: 1.3em;
-  bottom: 0px; }
+  background-color: #040404;
+  width: 95%; }
 
 #playlist {
   position: absolute;
-  background-color: black;
+  background-color: #121317;
   top: 0px;
   margin: 0px;
   list-style: none;

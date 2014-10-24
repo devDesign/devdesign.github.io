@@ -42,11 +42,12 @@ $('document').ready(function(){
   $('#username-text').on('keyup', function(){
     var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
+    var dataLength = data.split('').length;
 
-    if (data.match(isValid)){
-      $('#username-text').css("box-shadow", "none");
-    } else {
+    if ((!data.match(isValid)) || (dataLength > 16)) {
       $('#username-text').css("box-shadow", "inset 0 0 5px red");
+    } else {
+      $('#username-text').css("box-shadow", "none");
     }
   })
 
@@ -66,8 +67,9 @@ $('document').ready(function(){
     var roomName = $('#roomname-text').val();
 
     var isValid = /^[a-zA-Z0-9]+$/
+    var peerNameLength = peerName.split('').length;
 
-    if ((!peerName.match(isValid)) || (!roomName.match(isValid))) {
+    if ((!peerName.match(isValid)) || (!roomName.match(isValid)) || (peerNameLength > 16)) {
       return false;
     }
 
