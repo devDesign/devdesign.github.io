@@ -24,12 +24,12 @@ body {
   margin: 0;
   background-color: #25292C; }
   body h2 {
-    color: #da3c28;
+    color: #F18160;
     margin-left: 0.3em;
     margin-top: 0; }
     body h2 a {
       text-decoration: none;
-      color: #da3c28; }
+      color: #F18160; }
 
 audio {
   position: absolute;
@@ -83,7 +83,7 @@ audio {
   float: right;
   margin: 2px 5px 0px 0px;
   display: none;
-  color: white; }
+  color: #F18160; }
 
 #rtos {
   display: inline-flex;
@@ -98,7 +98,7 @@ audio {
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  background-color: #da3c28; }
+  background-color: #4B4F53; }
   .window_title span {
     padding: 3px;
     margin-left: 5px; }
@@ -108,9 +108,9 @@ audio {
   width: 50%;
   flex-direction: column;
   flex: 1 50%;
-  color: white;
+  color: #F18160;
   z-index: 99;
-  background-color: #25292C;
+  background-color: #26282C;
   box-sizing: border-box;
   top: 0px;
   bottom: 0px; }
@@ -190,8 +190,9 @@ audio {
   position: absolute;
   background-color: #333;
   right: 0px;
-  width: 18%;
-  height: 94%; }
+  width: 10em;
+  top: 1.6em;
+  bottom: 1.3em; }
   #chat_user_list .users {
     text-align: center;
     padding-top: 0.4em; }
