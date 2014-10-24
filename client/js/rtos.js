@@ -1,3 +1,4 @@
+var eachActiveConnection;
 // THANKS to github.com/peers 
 $(document).ready(function() {
 
@@ -112,6 +113,8 @@ $(document).ready(function() {
       createChannel({label: 'mouse'}, requestedPeer)
       // Open chat channel
       createChannel({label: 'chat'}, requestedPeer)
+      // Open torrent hash sending channel
+      createChannel({label: 'torrentz'}, requestedPeer)      
       // Open video stream channel
       createChannel({label: 'videoFeed', reliable: true }, requestedPeer)
       // Open file drop channel
@@ -186,6 +189,20 @@ $(document).ready(function() {
           $('.filler').show();
         }
         delete connectedPeers[c.peer];
+      });
+
+    // when info hash is received!  
+    } else if (c.label === 'torrentz') {
+
+      c.on('data', function(data) {
+        var infoHash = data[0]
+        var fileName = data[1]
+        newTorrentFile = $('<a id="'+infoHash+'">').text(fileName);
+        newTorrentFile.attr('href','javascript:void(0);');
+        newTorrentFile.appendTo('#filelist')
+        newTorrentFile.on('click', function(e){
+          download(e.target.id);
+        });
       });
 
     // Send mouse position of moving mouse to user
@@ -433,7 +450,7 @@ $(document).ready(function() {
   }
 
   // Goes through each active peer and calls fn on its connections.
-  function eachActiveConnection(fn) {
+  eachActiveConnection = function(fn) {
     var actives = $('.active');
     var checkedIds = {};
     actives.each(function() {
