@@ -92,20 +92,20 @@ function play_torrent_file(url, title, type) {
   initPlaylist();
   function initPlaylist(){
     current = 0;
-    audio = $('audio');
+    audio = $('#audio')[0];
     playlist = $('#playlist');
     tracks = playlist.find('li a');
     console.log(tracks);
     len = tracks.length - 1;
-    audio[0].volume = .70;
-    audio[0].play();
+    audio.volume = .70;
+    audio.play();
     playlist.find('a').click(function(e){
         e.preventDefault();
         link = $(this);
         current = link.parent().index();
-        run(link, audio[0]);
+        run(link, audio);
     });
-    audio[0].addEventListener('ended',function(e){
+    audio.addEventListener('ended',function(e){
         current++;
         if(current == len){
             current = 0;
@@ -113,7 +113,7 @@ function play_torrent_file(url, title, type) {
         }else{
             link = playlist.find('a')[current];    
         }
-        run($(link),audio[0]);
+        run($(link),audio);
     });
   }
   
@@ -121,8 +121,8 @@ function play_torrent_file(url, title, type) {
           player.src = link.attr('href');
           par = link.parent();
           par.addClass('active-file').siblings().removeClass('active-file');
-          audio[0].load();
-          audio[0].play();
+          player.load();
+          player.play();
           $('.nowplaying').remove();
           $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
           $('.nowplaying').css({opacity:1,left:"1em"})
