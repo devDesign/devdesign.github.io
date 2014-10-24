@@ -21,6 +21,12 @@ $(document).ready(function() {
     var peerName = $('#username-text').val();
     var roomName = $('#roomname-text').val();
 
+    var isValid = /^[a-zA-Z0-9]+$/
+
+    if ((!peerName.match(isValid)) || (!roomName.match(isValid))) {
+      return false;
+    }
+
     if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
       return false;
     }
