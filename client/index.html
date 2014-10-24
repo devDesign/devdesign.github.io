@@ -6,9 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Language" content="en-us">
-
+ 
   <link rel="stylesheet" href="./stylesheets/style.css" />
-  <link rel="stylesheet" href="./dropfolder.css" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   <script src="./lib/peer.js"></script>
   <script type="text/javascript" src="./js/rtos.js"></script>
@@ -52,19 +51,18 @@
         <input type="text" id="roomname-text" placeholder="Room:"/>
         <button id="peerSubmit">CONNECT</button>
     </div>
-  </div>r
+  </div>
   
   <div id='rs' class='droppable'></div>
   <div id='ls' class='droppable'></div>
 
   <div id='desktop'>
     <div id="file_box" class="files">
-      <div class="window_title">files</div>
+      <div class="window_title"><span>files</span></div>
       <div class="content">
         <div id="filelist"></div>
         <input type="file" id="select_file">
         <div id="messages"></div>
-        <div id="dropzone" dropzone="link"></div>
         <div class="log"></div>
       </div>
     </div>
