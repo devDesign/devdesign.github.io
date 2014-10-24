@@ -32,10 +32,24 @@ $('document').ready(function(){
   // event toggle userlist in chat
   var users = document.getElementById('users')
   var usertime = new Hammer(users);
-
+  var toggleUsers = true
   usertime.on('tap', function(event) {
-    $('#chat_user_list').toggleClass('.hide_users');
+    
+    toggleUserlist(document.getElementById('chat_user_list').offsetHeight);
+
   });
+  function toggleUserlist(boxheight){
+    var boxHieght = boxheight
+    if(toggleUsers) {
+      $(".chat_user_list").hide();
+      $('.peerUsername').hide();
+      toggleUsers = false;
+    } else {
+      $(".chat_user_list").show();
+      $('.peerUsername').show();
+      toggleUsers = true;
+    }
+  }
   // media player
 /*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
   //login
@@ -127,9 +141,28 @@ $('document').ready(function(){
       'elementsWithInteraction': '.content',
       'velocityMultiplier': 0.8,
       initiate: function() {
+        $('.droppable').detach();
         zIndex++;
+        console.log(element.id);
         jElement.css( { zIndex: zIndex } );
 
+
+        
+        if( element.id == "chat_box" ){
+          
+          toggleUsers = !toggleUsers;
+          toggleUserlist({'height':get_viewpoint()[1]*2/3});
+        }
+      },
+      'start':function(){
+        jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
+        jElement.addClass('dragging_box');
+        setTimeout(function(){
+          $('<div/>',{id:'rs',class:'droppable'}).prependTo('body');
+          $('<div/>',{id:'ls',class:'droppable'}).prependTo('body');
+          $('<div/>',{id:'bs',class:'droppable'}).prependTo('body');
+          
+        },300);
         // left side is dragged from snap
         //if (element.offsetLeft === 0) { 
           if (horizontalGrid[0]==jElement){
@@ -176,15 +209,15 @@ $('document').ready(function(){
         //}
         //if (element.offsetTop === 0 ) { ts = false }
         //if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
-        jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
-        jElement.addClass('dragging_box');
+
       },
       'rest':function(){
         if(timeout == false){
         if(this.activeDropRegions[0][0].id){var dropRegion = this.activeDropRegions[0][0].id};
         if (dropRegion.length > 0){
           if( dropRegion === "rs" ){ attack_grid(jElement,"rs") }
-          else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") } 
+          else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") }
+          else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") }  
          // else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") } 
          // else if (dropRegion==="ts"){ attack_grid(jElement,"ts") }
         }}
@@ -224,32 +257,7 @@ function attack_grid(jElement,side){
 switch (side)
     {
       case "rs":
-        if ( verticalGrid[0] != null ){
-          verticalGrid[0].css( splitWidth ).css( placeLeft );
-          verticalGrid[0].addClass('split_left')
-          if ( horizontalGrid[0] != null){
-            horizontalGrid[0].css( splitHieght ).css( placeBottom );
-            if ( verticalGrid[1] != null ){
-              horizontalGrid[1] = jElement;
-              verticalGrid[1].css( splitWidth ).css( placeRight );
-              horizontalGrid[1].css( splitHieght ).css( placeTop ).css( placeRight );
-              break;
-            }  
-          } 
-        }
-        if ( verticalGrid[1] != null ){
-          verticalGrid[1].css( splitWidth ).css( placeLeft );
-          if ( horizontalGrid[0] != null ){
-            horizontalGrid[0].css( splitHieght ).css( placeTop ).css( placeRight )
-            if ( verticalGrid[0] != null ){
-              horizontalGrid[1] = jElement;
-              verticalGrid[0].css( splitWidth ).css( placeLeft )
-              horizontalGrid[1].css( splitHieght ).css( placeTop);
-              break; 
-            }
-          }
-        }
-        if ( horizontalGrid[1] != null && rs == null){
+        if ( horizontalGrid[1] != null && rs == null && bs == null){
           horizontalGrid[1].addClass('.split_top_right');
           horizontalGrid[1].css( splitHieght ).css( placeBottom ).css( placeRight );
           rs = jElement;

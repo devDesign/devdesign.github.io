@@ -159,7 +159,7 @@ $(document).ready(function() {
     // Handle a chat connection.
     if (c.label === 'chat') {
       var globalChat = $('#global_chat');
-      var chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', c.peer);
+      var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
       var header = $('<div></div>').html('<strong>' + c.peer + '</strong>').appendTo(chatbox);
       var messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
 

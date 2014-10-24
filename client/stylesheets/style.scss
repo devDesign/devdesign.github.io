@@ -18,7 +18,6 @@ $blue-shade: #5699C2;
 
 .border-module {
   border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 6px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.25);
 }
 
@@ -130,7 +129,7 @@ audio{
   box-sizing: border-box;
   // padding: 1px;
   // position: relative;
-  // height: 1.3em;
+  height: 1.3em;
   width: 100%;
   background-color: #4B4F53;
     span {
@@ -194,10 +193,12 @@ audio{
 }
 #bs{
   position: fixed;
-  width: 50px;
+  width: 10px;
   bottom:0px;
   left:50%;
   height: 1px;
+  margin: auto;
+  background-color:red;
 }
 #global_chat{
   // font-family: "Courier New", Courier, monospace;
@@ -205,7 +206,7 @@ audio{
   width: 82%;
   height: 94%;
   z-index: -1;
-  overflow-y: scroll;
+  overflow-y: hidden;
     div {
       padding: 0px 0px 1px 8px;
       width: 98%;
@@ -241,6 +242,7 @@ audio{
     padding: 1px 0px 1px 8px;
   }
 }
+
 #chat_user_list{
   text-align: right;
   position: absolute;
@@ -248,17 +250,28 @@ audio{
   right:0px;
   width: 10em;
   // height: 94%;
-  top: 1.6em;
+  top: 2.6em;
   bottom: 1.3em;
   @extend .border-module;
     .users {
       text-align: center;
-      padding-top: 0.4em;
+      
     }
     .active {
       padding: 0px 8px 1px 0px;
     }
-
+}
+#users{
+  text-align: right;
+  position: absolute;
+  background-color:#4B4F53;
+  right:0px;
+  width: 10em;
+  // height: 94%;
+  top: 1.3em;
+  height: 1.3em;
+  z-index: 3;
+    @extend .border-module;
 }
 .chat_text-input input[type="text"] {
   padding: 10px;
@@ -347,6 +360,7 @@ audio{
 }
 .hide_users{
   position: absolute;
-  bottom:1.3em;
+  top:1.6em;
+  bottom:3em;
 }
 

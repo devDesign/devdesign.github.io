@@ -5,9 +5,8 @@
   font-family: "Aller";
   src: url("../fonts/Aller_Bd.ttf");
   font-weight: bold; }
-.border-module, #login_box, #chat_box, #file_box, #chat_user_list {
+.border-module, #login_box, #chat_box, #file_box, #chat_user_list, #users {
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
 
 html {
@@ -97,6 +96,7 @@ audio {
 .window_title {
   display: flex;
   box-sizing: border-box;
+  height: 1.3em;
   width: 100%;
   background-color: #4B4F53; }
   .window_title span {
@@ -155,17 +155,19 @@ audio {
 
 #bs {
   position: fixed;
-  width: 50px;
+  width: 10px;
   bottom: 0px;
   left: 50%;
-  height: 1px; }
+  height: 1px;
+  margin: auto;
+  background-color: red; }
 
 #global_chat {
   position: absolute;
   width: 82%;
   height: 94%;
   z-index: -1;
-  overflow-y: scroll; }
+  overflow-y: hidden; }
   #global_chat div {
     padding: 0px 0px 1px 8px;
     width: 98%; }
@@ -198,13 +200,22 @@ audio {
   background-color: #333;
   right: 0px;
   width: 10em;
-  top: 1.6em;
+  top: 2.6em;
   bottom: 1.3em; }
   #chat_user_list .users {
-    text-align: center;
-    padding-top: 0.4em; }
+    text-align: center; }
   #chat_user_list .active {
     padding: 0px 8px 1px 0px; }
+
+#users {
+  text-align: right;
+  position: absolute;
+  background-color: #4B4F53;
+  right: 0px;
+  width: 10em;
+  top: 1.3em;
+  height: 1.3em;
+  z-index: 3; }
 
 .chat_text-input input[type="text"] {
   padding: 10px;
@@ -286,6 +297,7 @@ audio {
 
 .hide_users {
   position: absolute;
-  bottom: 1.3em; }
+  top: 1.6em;
+  bottom: 3em; }
 
 /*# sourceMappingURL=style.css.map */
