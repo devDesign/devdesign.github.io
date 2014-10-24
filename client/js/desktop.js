@@ -7,6 +7,15 @@ $('document').ready(function(){
     setTimeout(function(){$('.nowplaying').remove()},200);
  
 });
+  //ultimate hammer
+  var inputfield = document.getElementsByTagName('*');
+
+  [].slice.call(inputfield).forEach(function(element) {
+      var hammertime = new Hammer(element);
+      hammertime.on('tap', function(event) {
+          $(element).focus();
+      });
+  });
 
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
@@ -20,6 +29,13 @@ $('document').ready(function(){
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
   var zIndex = 100;
+  // event toggle userlist in chat
+  var users = document.getElementById('users')
+  var usertime = new Hammer(users);
+
+  usertime.on('tap', function(event) {
+    $('#chat_user_list').toggleClass('.hide_users');
+  });
   // media player
 /*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
   //login
@@ -295,9 +311,10 @@ switch (side)
         }
     }
 }
-var rtime = new Date(1, 1, 2000, 12,00,00);
+var rtime = new Date(23, 4, 1985, 12,00,00);
 var timeout = false;
 var delta = 300;
+
 $(window).resize(function() {
     rtime = new Date();
     if (timeout === false) {
@@ -311,7 +328,7 @@ function resizeend() {
         setTimeout(resizeend, delta);
     } else {
         timeout = false;
-
+        console.log("rezise!")
         viewpoint = get_viewpoint();
         height = viewpoint[1];
         width = viewpoint[0];
@@ -322,8 +339,7 @@ function resizeend() {
         placeBottom = { 'top': (height-barHeight)/2 }
         placeRight = { 'left': width/2 }
         placeLeft = { 'left': 0 }
-        fullHeight = { 'height': height - barHeight }
-        $('canvas').css( fullHeight ).css( viewpoint[0] );
+        fullHeight = { 'height': height - barHeight };
         zIndex = 100;
 
         $('.dragging_box').css(splitWidth);
@@ -344,9 +360,13 @@ function resizeend() {
 
 //find user viewpoint
 function get_viewpoint(){
+  console.log("whats the height?");
   var vpw = $(window).width();
   var vph = $(window).height();
-  var viewpoint = [vpw,vph];
-  return viewpoint;
+  console.log(vph);
+  console.log("whats the width");
+  console.log(vpw);
+  var viewpointz = [vpw,vph];
+  return viewpointz;
 }
 

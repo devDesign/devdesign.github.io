@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 var allusers = $.get("http://allthetime.io/rtos/users", function(data) {
 
-        startCloud(Object.keys(data).length);
+        startCloud(Object.keys(data).length/3);
     });
      function startCloud(users){
 var container;
@@ -22,7 +22,7 @@ var container;
 
 
                 camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 3000 );
-                camera.position.z = 2500;
+                camera.position.z = 1000;
                 camera.position.x = 3000;
                 camera.position.y = 3000;
 

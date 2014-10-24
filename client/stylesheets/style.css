@@ -150,6 +150,13 @@ audio {
   bottom: 0px;
   z-index: 9999; }
 
+#bs {
+  position: fixed;
+  width: 50px;
+  bottom: 0px;
+  left: 50%;
+  height: 1px; }
+
 #global_chat {
   font-family: "Courier New", Courier, monospace;
   position: absolute;
@@ -185,9 +192,13 @@ audio {
   width: 130px;
   top: 1.3em;
   padding-right: 0.5em; }
-  #chat_user_list .users {
+  #chat_user_list #users {
+    position: absolute;
+    width: 3em;
+    cursor: pointer;
     text-align: center;
-    padding-top: 2em;
+    top: 0;
+    right: 0;
     margin: 0; }
 
 .chat_text-input input[type="text"] {
@@ -269,5 +280,9 @@ audio {
   bottom: 0;
   top: 1.3em;
   right: 0; }
+
+.hide_users {
+  position: absolute;
+  bottom: 1.3em; }
 
 /*# sourceMappingURL=style.css.map */
