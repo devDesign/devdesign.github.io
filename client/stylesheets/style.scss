@@ -186,8 +186,7 @@ audio{
   top: 1.3em;
   z-index: -1;
   bottom:3em;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow-y: scroll;
     div {
       padding: 0px 0px 1px 8px;
     }
@@ -209,9 +208,11 @@ audio{
   width: 100%;
   position: absolute;
   bottom: 0px;
+  box-sizing: border-box;
   #text{
     border: 0;
     height: 1.5em;
+    box-sizing: border-box;
     // font-family: "Courier New", Courier, monospace;
     font-size: 1.2em;
     color: white;
@@ -226,7 +227,7 @@ audio{
   background-color: #333;
   right:0px;
   width: 18%;
-  height: 100%;
+  height: 95%;
     .users {
       text-align: center;
       padding-top: 0.4em;
