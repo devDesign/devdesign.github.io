@@ -142,8 +142,10 @@ audio{
 #file_box{
   flex: 1 50%;
   width: 50%;
+
   color:white;
   background-color: rgba(0,0,0,0.9);
+
   position: absolute;
   border: 1px solid black;
   box-sizing: border-box
@@ -294,6 +296,7 @@ audio{
   transition: all 5s;
 }
 
+
 #pointcloud{
   position: fixed;
   top: 0;
@@ -307,3 +310,4 @@ audio{
   top:1.3em;
   right:0;
 }
+
