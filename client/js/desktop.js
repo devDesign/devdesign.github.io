@@ -1,4 +1,4 @@
-var rs,ls,ts,bs,nextAttack;
+var rs,ls,ts,bs,maxWindow,nextAttack;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
 
@@ -7,6 +7,12 @@ $('document').ready(function(){
     setTimeout(function(){$('.nowplaying').remove()},200);
  
 });
+  // maximize
+  $("#maximize").on("click",function(){
+    thisWindow = $( this ).parent();
+    thisWindow = thisWindow.parent();
+    console.log(thisWindow);
+  });
 
 
   //ultimate hammer
@@ -225,7 +231,7 @@ $('document').ready(function(){
           else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") }
           else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") }  
         }
-       if (this.activeDropRegions.length>= 2){
+       if (this.activeDropRegions.length >= 2){
        attack_grid(jElement,"bs")
       }}},
       'easing':function(){

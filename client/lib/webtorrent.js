@@ -8221,17 +8221,17 @@ function onDrop(elem, cb, e) {
   e.stopPropagation()
   e.preventDefault()
   elem.classList.remove('drag')
-
-  console.log(e.dataTransfer.files);
-
     var totalSize = 0 
     var files = e.dataTransfer.files;
     for (var i = 0; i < files.length; i++) {
       totalSize += files[i].size
     }
     if ( totalSize > 104857600 ) {
-      // ERROR!
-      console.log("Too Big!")
+      if ( files.length > 1 ) {
+        errorMessage('No multiple uploads over 150MB')
+      } else {
+        // Goes to webrtc.io
+      }
     } else {
       cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
     }

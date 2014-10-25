@@ -11,7 +11,13 @@ $(document).ready(function() {
   var color = pastelColors();
   var peer;
   var connectedPeers = {};
+
+  var sessionMessages = [{brown: "rice"}];
+  var sessionTorrents = [{hello: "sir"}];
+
+  var isRoomLoaded = false;
   // get room from path!
+
 
   var uriPath = window.location.hash.split('#')[1]
   $('#roomname-text').val(uriPath || "")
@@ -47,7 +53,18 @@ $(document).ready(function() {
     initUser(roomName);
 
     // Listen for new connections
-    peer.on('connection', connect);
+    // SEND ROOM TO NEW USER!!!!!!!!!!!!!!!!!
+    // FUCK
+    peer.on('connection', function(c){
+      connect(c);
+      if ( c.label === "loadRoom" ) {
+        console.log("fUUUUUUCCCCCCKKKKK here comes someone")
+        setTimeout(function(){
+          c.send([sessionMessages,sessionTorrents]);
+        },1000)
+      }
+    });
+
     peer.on('call', function(call) {
 
       call.answer();
@@ -113,6 +130,12 @@ $(document).ready(function() {
     });
   }
 
+
+
+
+
+
+
   // Initialize a peer connection open necessary dataChannels and streams
   function connectToUser(requestedPeer) {
     if (!connectedPeers[requestedPeer]) {
@@ -120,6 +143,17 @@ $(document).ready(function() {
       createChannel({label: 'mouse'}, requestedPeer)
       // Open chat channel
       createChannel({label: 'chat'}, requestedPeer)
+      // Pass room history (chat and torrents) to new user
+      // createChannel({label: 'loadRoom'}, requestedPeer);
+
+      var loadRoom = peer.connect(requestedPeer, {label: 'loadRoom'});
+      loadRoom.on('open', function() {
+        connect(loadRoom);
+      });
+      loadRoom.on('error', function(err) {       
+        console.log(options.label + ": " +err);
+      });
+
       // Open torrent hash sending channel
       createChannel({label: 'torrentz'}, requestedPeer)      
       // Open video stream channel
@@ -156,12 +190,39 @@ $(document).ready(function() {
   // Handle open channel between users
   function connect(c) {
 
+
+    var globalChat = $('#global_chat');
+
+    if(c.label === 'loadRoom') {
+
+      c.on('data', function(data){
+        // messageList = data[0]
+        // torrentList = data[1]
+        // FUCK
+        if ( isRoomLoaded ){
+          c.close()
+        } else {
+          console.log(data);
+          isRoomLoaded = true;
+        }
+      
+
+        // messageList.forEach(function(message,index){
+        //   console.log(message);
+        // });
+
+        // torrentList.forEach(function(torrent,index){
+        //   console.log(torrent);
+        // });
+      });
+
     // Handle a chat connection.
-    if (c.label === 'chat') {
-      var globalChat = $('#global_chat');
-      var chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', c.peer);
-      var header = $('<div></div>').html('<strong>' + c.peer + '</strong>').appendTo(chatbox);
-      var messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
+    } else if (c.label === 'chat') {
+      var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
+      var header = $('<div></div>').html(c.peer).appendTo(chatbox);
+      var messages = $('<div><em>'+c.peer+' connected.</em></div>').addClass('messages');
+
+
 
       chatbox.append(header);
       globalChat.append(messages);
@@ -214,8 +275,9 @@ $(document).ready(function() {
 
     // Send mouse position of moving mouse to user
     } else if (c.label === 'mouse') {
+
       $('<div id="' + c.peer + 'mouse" class="mouse">').appendTo('body');
-     // $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
+      $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
       c.on('data', function(data) {
         var id = '#' + c.peer + 'mouse';
         $(id).css({
@@ -485,11 +547,11 @@ $(document).ready(function() {
       console.log(err);
     }
     // KEEP FOR PRODUCTION
-    // $.ajax({
-    //   type: 'delete',
-    //   url: '/rtos/rooms?userName=' + peer.id,
-    //   async: false
-    // });
+     $.ajax({
+       type: 'delete',
+       url: '/rtos/rooms?userName=' + peer.id,
+       async: false
+     });
   }
 });
 
