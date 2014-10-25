@@ -1,96 +1,99 @@
-var rs,ls,ts,bs,nextAttack;
-var verticalGrid = [null,null];
-var horizontalGrid = [null,null];
-
-$('document').ready(function(){
-  $("#audio").bind('ended', function(){
-    setTimeout(function(){$('.nowplaying').remove()},200);
- 
-});
+var rs, ls, ts, bs, nextAttack;
+var verticalGrid = [null, null];
+var horizontalGrid = [null, null];
+$('document').ready(function() {
+  $("#audio").bind('ended', function() {
+    setTimeout(function() {
+      $('.nowplaying').remove()
+    }, 200);
+  });
   //ultimate hammer
   var inputfield = document.getElementsByTagName('*');
-
   [].slice.call(inputfield).forEach(function(element) {
-      var hammertime = new Hammer(element);
-      hammertime.on('tap', function(event) {
-          $(element).focus();
-      });
+    var hammertime = new Hammer(element);
+    hammertime.on('tap', function(event) {
+      $(element).focus();
+    });
   });
-
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
   var width = viewpoint[0];
   var barHeight = document.getElementById('nav').offsetHeight;
-  var splitWidth = { 'width':width/2 }
-  var splitHieght = { 'height':(height-barHeight)/2 }
-  var placeTop = { 'top': 0 }
-  var placeBottom = { 'top': (height-barHeight)/2 }
-  var placeRight = { 'left': width/2 }
-  var placeLeft = { 'left': 0 }
-  var fullHeight = { 'height': height - barHeight }
+  var splitWidth = {
+    'width': width / 2
+  }
+  var splitHieght = {
+    'height': (height - barHeight) / 2
+  }
+  var placeTop = {
+    'top': 0
+  }
+  var placeBottom = {
+    'top': (height - barHeight) / 2
+  }
+  var placeRight = {
+    'left': width / 2
+  }
+  var placeLeft = {
+    'left': 0
+  }
+  var fullHeight = {
+    'height': height - barHeight
+  }
   var zIndex = 100;
   // event toggle userlist in chat
-  var users = document.getElementById('users')
-  var usertime = new Hammer(users);
-  var toggleUsers = true
-  usertime.on('tap', function(event) {
-    
-    toggleUserlist(document.getElementById('chat_user_list').offsetHeight);
+  // var users = document.getElementById('users')
+  // var usertime = new Hammer(users);
+  // var toggleUsers = true
+  // usertime.on('tap', function(event) {
+  //   toggleUserlist(document.getElementById('chat_user_list').offsetHeight);
+  // });
 
-  });
-  function toggleUserlist(boxheight){
-    var boxHieght = boxheight
-    if(toggleUsers) {
-      $(".chat_user_list").hide();
-      $('.peerUsername').hide();
-      toggleUsers = false;
-    } else {
-      $(".chat_user_list").show();
-      $('.peerUsername').show();
-      toggleUsers = true;
-    }
-  }
-  // media player
-/*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
-  //login
-  $('#username-text').on('keyup', function(){
+  // function toggleUserlist(boxheight) {
+  //     var boxHieght = boxheight
+  //     if (toggleUsers) {
+  //       $(".chat_user_list").hide();
+  //       $('.peerUsername').hide();
+  //       toggleUsers = false;
+  //     } else {
+  //       $(".chat_user_list").show();
+  //       $('.peerUsername').show();
+  //       toggleUsers = true;
+  //     }
+  //   }
+    // media player
+    /*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
+    //login
+  $('#username-text').on('keyup', function() {
     var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
     var dataLength = data.split('').length;
-
     if ((!data.match(isValid)) || (dataLength > 16)) {
       $('#username-text').css("box-shadow", "inset 0 0 5px red");
     } else {
       $('#username-text').css("box-shadow", "none");
     }
   })
-
-  $('#roomname-text').on('keyup', function(){
+  $('#roomname-text').on('keyup', function() {
     var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
-
-    if (data.match(isValid)){
+    if (data.match(isValid)) {
       $('#roomname-text').css("box-shadow", "none");
     } else {
       $('#roomname-text').css("box-shadow", "inset 0 0 5px red");
     }
   })
-
-  $('#peerSubmit').on('click', function(){
+  $('#peerSubmit').on('click', function() {
     var peerName = $('#username-text').val();
     var roomName = $('#roomname-text').val();
-
     var isValid = /^[a-zA-Z0-9]+$/
     var peerNameLength = peerName.split('').length;
-
     if ((!peerName.match(isValid)) || (!roomName.match(isValid)) || (peerNameLength > 16)) {
       return false;
     }
-
     if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
       return false;
     }
-
     chatBox.show();
     fileBox.show();
     mediaBox.show();
@@ -99,40 +102,41 @@ $('document').ready(function(){
   //select chat for hammertime tap events
   var chatBox = $('#chat_box');
   var chatElement = document.getElementById('chat_box');
-  chatBox.css( splitHieght ).css( fullHeight ).css( placeRight );
+  chatBox.css(splitHieght).css(fullHeight).css(placeRight);
   var chatWindow = new Hammer(chatElement);
-  set_drags(chatElement,chatBox);
-  attack_grid(chatBox,"rs")
+  set_drags(chatElement, chatBox);
+  attack_grid(chatBox, "rs")
   chatBox.hide();
   //select filebox for hammertime tap events
   var fileBox = $('#file_box');
   var fileElement = document.getElementById('file_box');
   var fileWindow = new Hammer(fileElement);
-  set_drags(fileElement,fileBox);
-  attack_grid(fileBox,"ls")
+  set_drags(fileElement, fileBox);
+  attack_grid(fileBox, "ls")
   fileBox.hide();
   //select cambox for hammertime tap events
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
-  set_drags(camElement,camBox);
+  set_drags(camElement, camBox);
   camBox.hide();
   //attack_grid(camBox,'ls');
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');
   var mediaWindow = new Hammer(mediaElement);
-  set_drags(mediaElement,mediaBox);
-  attack_grid(mediaBox,"ls")
+  set_drags(mediaElement, mediaBox);
+  attack_grid(mediaBox, "ls")
   mediaBox.hide();
   //set content click handler to change z-index
-  $('.content').on('click',function(){
+  $('.content').on('click', function() {
     zIndex++;
-    $(this).parent().css({zIndex:zIndex});
+    $(this).parent().css({
+      zIndex: zIndex
+    });
   });
-  
   //drag the chat
-  function set_drags(element,jElement){
+  function set_drags(element, jElement) {
     jElement.pep({
       'constrainTo': '#desktop',
       'droppable': '.droppable',
@@ -144,25 +148,31 @@ $('document').ready(function(){
         $('.droppable').detach();
         zIndex++;
         console.log(element.id);
-        jElement.css( { zIndex: zIndex } );
-
-
-        
-        if( element.id == "chat_box" ){
-          
-          toggleUsers = !toggleUsers;
-          toggleUserlist({'height':get_viewpoint()[1]*2/3});
-        }
+        jElement.css({
+          zIndex: zIndex
+        });
       },
-      'start':function(){
-        jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
+      'start': function() {
+        jElement.css({
+          'height': get_viewpoint()[1] * 2 / 3
+        }).css({
+          width: get_viewpoint()[0] / 2
+        });
         jElement.addClass('dragging_box');
-        setTimeout(function(){
-          $('<div/>',{id:'rs',class:'droppable'}).prependTo('body');
-          $('<div/>',{id:'ls',class:'droppable'}).prependTo('body');
-          $('<div/>',{id:'bs',class:'droppable'}).prependTo('body');
-          
-        },300);
+        setTimeout(function() {
+          $('<div/>', {
+            id: 'rs',
+            class: 'droppable'
+          }).prependTo('body');
+          $('<div/>', {
+            id: 'ls',
+            class: 'droppable'
+          }).prependTo('body');
+          $('<div/>', {
+            id: 'bs',
+            class: 'droppable'
+          }).prependTo('body');
+        }, 300);
         // left side is dragged from snap
           if (horizontalGrid[0]==jElement){
             horizontalGrid[0] = null
@@ -216,40 +226,51 @@ $('document').ready(function(){
           }
         //if (element.offsetTop === 0 ) { ts = false }
         //if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
-
       },
-      'rest':function(){
-        if(timeout == false){
-        if(this.activeDropRegions[0][0].id){var dropRegion = this.activeDropRegions[0][0].id};
-        if (dropRegion.length > 0){
-          if( dropRegion === "rs" ){ attack_grid(jElement,"rs") }
-          else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") }
-          else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") }  
-         // else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") } 
-         // else if (dropRegion==="ts"){ attack_grid(jElement,"ts") }
-        }}
+      'rest': function() {
+        if (timeout == false) {
+          if (this.activeDropRegions[0][0].id) {
+            var dropRegion = this.activeDropRegions[0][0].id
+          };
+          if (dropRegion.length > 0) {
+            if (dropRegion === "rs") {
+              attack_grid(jElement, "rs")
+            } else if (dropRegion === "ls") {
+              attack_grid(jElement, "ls")
+            } else if (dropRegion === "bs") {
+              attack_grid(jElement, "bs")
+            }
+            // else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") }
+            // else if (dropRegion==="ts"){ attack_grid(jElement,"ts") }
+          }
+        }
       },
-      'easing':function(){
+      'easing': function() {
         var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
         if (dropRegion.length == 1){
-          jElement.css({"z-index":1})
+          jElement.css({"z-index": 1})
           jElement.removeClass('dragging_box')
-  /*        if(dropRegion === "rs"){
+            /*        if(dropRegion === "rs"){
             jElement.css(splitWidth).css( placeRight );
-          } else if (dropRegion==="ls"){
+            } else if (dropRegion==="ls"){
             jElement.css(splitWidth).css( placeLeft );
-          } else if (dropRegion==="bs"){
+            } else if (dropRegion==="bs"){
             jElement.css(splitHieght);
-          } else if (dropRegion==="ts"){
+            } else if (dropRegion==="ts"){
             jElement.css(splitHieght);
-          }*/
+            }*/
         }
       }
     });
   }
+  $('#user-button').bind('click touchstart', function(e) {
+    e.preventDefault();
+    $('#chat_user_list').toggle();
+  });
 });
-function attack_grid(jElement,side){
+
+function attack_grid(jElement, side) {
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
   var width = viewpoint[0];
@@ -333,22 +354,17 @@ switch (side)
             }
           }
         }
-        if ( horizontalGrid[0] != null && ls == null ){
-          horizontalGrid[0].css( splitHieght ).css( placeBottom ).css( placeLeft );
-          ls = jElement;
-          ls.css( splitHieght ).css( placeTop ).css( placeLeft );
-          break;
-        } else if ( horizontalGrid[0] != null && ls != null ){
-          jElement.css( splitHieght ).css( placeTop ).css( placeLeft );
-          ls.css( splitHieght ).css( placeBottom ).css( placeLeft );
-          nextAttack = horizontalGrid[0];
-          horizontalGrid[0] = jElement;
-          attack_grid(nextAttack,"rs");
-          break;
-        } else {
-          horizontalGrid[0] = jElement;
-          horizontalGrid[0].css( placeLeft ).css( placeTop ).css( fullHeight );
-          break;
+      }
+      if (verticalGrid[1] != null) {
+        verticalGrid[1].css(splitWidth).css(placeRight);
+        if (horizontalGrid[1] != null) {
+          horizontalGrid[1].css(splitHieght).css(placeTop)
+          if (verticalGrid[0] != null) {
+            horizontalGrid[0] = jElement;
+            verticalGrid[0].css(splitWidth).css(placeRight)
+            horizontalGrid[0].css(splitHieght).css(placeTop).css(placeRight);
+            break;
+          }
         }
       // user has thrown window to the bottom  
       case "bs":{
@@ -374,21 +390,20 @@ switch (side)
       }
     }
 }
-var rtime = new Date(23, 4, 1985, 12,00,00);
+var rtime = new Date(23, 4, 1985, 12, 00, 00);
 var timeout = false;
 var delta = 300;
-
 $(window).resize(function() {
-    rtime = new Date();
-    if (timeout === false) {
-        timeout = true;
-        setTimeout(resizeend, delta);
-    }
+  rtime = new Date();
+  if (timeout === false) {
+    timeout = true;
+    setTimeout(resizeend, delta);
+  }
 });
 
 function resizeend() {
     if (new Date() - rtime < delta) {
-        setTimeout(resizeend, delta);
+      setTimeout(resizeend, delta);
     } else {
         timeout = false;
         console.log("rezise!")
@@ -435,7 +450,6 @@ function get_viewpoint(){
   console.log(vph);
   console.log("whats the width");
   console.log(vpw);
-  var viewpointz = [vpw,vph];
+  var viewpointz = [vpw, vph];
   return viewpointz;
 }
-
