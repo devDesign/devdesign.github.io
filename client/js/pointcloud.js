@@ -17,8 +17,8 @@ var container;
 
             function init() {
 
-                container = document.getElementById( 'pointcloud' );
-                document.body.appendChild( container );
+                container = document.getElementById( 'media_box' );
+  
 
 
                 camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 3000 );
@@ -69,7 +69,7 @@ var container;
 
                 renderer = new THREE.WebGLRenderer();
                 renderer.setClearColor(0x000000)
-                renderer.setSize( window.innerWidth, window.innerHeight );
+                renderer.setSize(  parseInt(document.getElementById( 'media_box' ).offsetWidth), parseInt(document.getElementById( 'media_box' ).offsetHeight); );
                 container.appendChild( renderer.domElement );
 
              
@@ -92,7 +92,7 @@ var container;
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
 
-                renderer.setSize( window.innerWidth, window.innerHeight -80 );
+                renderer.setSize( parseInt(document.getElementById( 'media_box' ).clientWidth), parseInt(document.getElementById( 'media_box' ).clientHeight );
 
             }
 

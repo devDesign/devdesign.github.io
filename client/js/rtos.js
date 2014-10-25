@@ -48,7 +48,6 @@ $(document).ready(function() {
 
     // Listen for new connections
     peer.on('connection', connect);
-
     peer.on('call', function(call) {
 
       call.answer();
@@ -69,7 +68,6 @@ $(document).ready(function() {
       $('#username-text').hide();
       $('#peerSubmit').hide();
       $('#id').show();
-      $('#start-video-feed').show();
       $('#pid').text(id);
       createVideoFeedButton();
       var data = {
@@ -158,13 +156,12 @@ $(document).ready(function() {
   // Handle open channel between users
   function connect(c) {
 
-    var globalChat = $('#global_chat');
-
     // Handle a chat connection.
     if (c.label === 'chat') {
-      var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
-      var header = $('<div></div>').html(c.peer).appendTo(chatbox);
-      var messages = $('<div><em>'+c.peer+' connected.</em></div>').addClass('messages');
+      var globalChat = $('#global_chat');
+      var chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', c.peer);
+      var header = $('<div></div>').html('<strong>' + c.peer + '</strong>').appendTo(chatbox);
+      var messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
 
       chatbox.append(header);
       globalChat.append(messages);
@@ -199,12 +196,6 @@ $(document).ready(function() {
           $('.filler').show();
         }
         delete connectedPeers[c.peer];
-
-        var globalChat = $('#global_chat');
-        var close_message = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
-
-        globalChat.append(close_message);
-
       });
 
     // when info hash is received!  
@@ -213,40 +204,12 @@ $(document).ready(function() {
       c.on('data', function(data) {
         var infoHash = data[0]
         var fileName = data[1]
-        var numberOfFiles = data[2]
-
-
-
-        // newTorrentFile = $('<a id="'+infoHash+'">').text(fileName);
-        // newTorrentFile.attr('href','javascript:void(0);');
-        // newTorrentFile.appendTo('#filelist')
-        // newTorrentFile.on('click', function(e){
-        //   download(e.target.id);
-        // });
-
-
-          var newTorrentDiv = $('<div class="file-entry" id="'+infoHash+'">')
-        
-          if (numberOfFiles == 1){
-            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
-          } else {
-            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text("torrent ("+numberOfFiles+" files)");            
-          }
-
-          newTorrentFile.attr('href','javascript:void(0);');
-          
-          $('<span class="progress-bar" id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
-          newTorrentFile.appendTo(newTorrentDiv)
-
-          newTorrentDiv.appendTo('#filelist');
-
-          newTorrentFile.on('click', function(e){
-            download(e.target.id.split('-torrent')[0]);
-          });
-
-
-
-
+        newTorrentFile = $('<a id="'+infoHash+'">').text(fileName);
+        newTorrentFile.attr('href','javascript:void(0);');
+        newTorrentFile.appendTo('#filelist')
+        newTorrentFile.on('click', function(e){
+          download(e.target.id);
+        });
       });
 
     // Send mouse position of moving mouse to user
@@ -459,13 +422,9 @@ $(document).ready(function() {
   $('#send').submit(function(e) {
     e.preventDefault();
     var msg = $('#text').val();
-
-    if (msg === ''){
-      return false;
-    }
-    
     msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+    console.log(msg);
     $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span>' + msg + '</div>');
     $('#global_chat').scrollTop($('#global_chat').prop("scrollHeight"));
     eachActiveConnection(function(c, $c) {

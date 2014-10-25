@@ -7,6 +7,8 @@ $('document').ready(function(){
     setTimeout(function(){$('.nowplaying').remove()},200);
  
 });
+
+
   //ultimate hammer
   var inputfield = document.getElementsByTagName('*');
 
@@ -117,7 +119,6 @@ $('document').ready(function(){
   var camWindow = new Hammer(camElement);
   set_drags(camElement,camBox);
   camBox.hide();
-  //attack_grid(camBox,'ls');
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');
@@ -137,7 +138,7 @@ $('document').ready(function(){
       'constrainTo': '#desktop',
       'droppable': '.droppable',
       'useCSSTranslation': false,
-      'cssEaseDuration': 200,
+      'cssEaseDuration': 400,
       'elementsWithInteraction': '.content',
       'velocityMultiplier': 0.8,
       initiate: function() {
@@ -214,36 +215,25 @@ $('document').ready(function(){
             horizontalGrid[0].css(fullHeight).css(placeLeft).css(placeTop);
             horizontalGrid[1].css(fullHeight).css(placeRight).css(placeTop);
           }
-        //if (element.offsetTop === 0 ) { ts = false }
-        //if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
 
       },
       'rest':function(){
         if(timeout == false){
         if(this.activeDropRegions[0][0].id){var dropRegion = this.activeDropRegions[0][0].id};
-        if (dropRegion.length > 0){
+        if (this.activeDropRegions.length== 1){
           if( dropRegion === "rs" ){ attack_grid(jElement,"rs") }
           else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") }
           else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") }  
-         // else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") } 
-         // else if (dropRegion==="ts"){ attack_grid(jElement,"ts") }
-        }}
-      },
+        }
+       if (this.activeDropRegions.length>= 2){
+       attack_grid(jElement,"bs")
+      }}},
       'easing':function(){
         var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
         if (dropRegion.length == 1){
           jElement.css({"z-index":1})
           jElement.removeClass('dragging_box')
-  /*        if(dropRegion === "rs"){
-            jElement.css(splitWidth).css( placeRight );
-          } else if (dropRegion==="ls"){
-            jElement.css(splitWidth).css( placeLeft );
-          } else if (dropRegion==="bs"){
-            jElement.css(splitHieght);
-          } else if (dropRegion==="ts"){
-            jElement.css(splitHieght);
-          }*/
         }
       }
     });
@@ -262,7 +252,7 @@ function attack_grid(jElement,side){
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
   var fullWidth = { 'width': width }
-//needs heavy refactoring!!! very naive and wet * 3
+
 switch (side)
     {
     // user has thrown a window to right
@@ -429,11 +419,9 @@ function resizeend() {
 
 //find user viewpoint
 function get_viewpoint(){
-  console.log("whats the height?");
   var vpw = $(window).width();
   var vph = $(window).height();
   console.log(vph);
-  console.log("whats the width");
   console.log(vpw);
   var viewpointz = [vpw,vph];
   return viewpointz;

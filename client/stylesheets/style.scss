@@ -213,7 +213,7 @@ audio {
 }
 #rs{
   position:fixed;
-  width:1px;
+  width:33%;
   top:0px;
   right:0px;
   bottom:0px;
@@ -221,7 +221,7 @@ audio {
 }
 #ls{
   position:fixed;
-  width:1px;
+  width:33%;
   top:0px;
   left:0px;
   bottom:0px;
@@ -434,5 +434,35 @@ audio {
   position: absolute;
   top:1.6em;
   bottom:3em;
+}
+
+.demo{
+  background: #444;
+  width: 100%;
+  height: 500px;
+ 
+  border:1px solid; 
+  overflow:hidden;
+  padding: 0;
+  position:relative!important; 
+  
+  line-height: 1.5;
+  
+  .pep{
+    cursor: pointer;
+    margin: 0;
+    padding: 10px; 
+  }
+  
+  .loading, .pull{
+    text-align: center;
+    position: absolute; 
+    top: -30px;
+    width: 100%;
+    /* @include transition(all 100ms); */
+    
+    &.shown{ top: 10px }
+  }
+  
 }
 
