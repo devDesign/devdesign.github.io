@@ -87,7 +87,6 @@ $(document).ready(function() {
       $('#peerSubmit').hide();
       $('#id').show();
       $('#user-button').show();
-      $('#video-button').show();
       $('#start-video-feed').show();
       $('#pid').text(id);
       createVideoFeedButton();

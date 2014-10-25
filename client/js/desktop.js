@@ -249,7 +249,7 @@ $('document').ready(function() {
         var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
         if (dropRegion.length == 1){
-          jElement.css({"z-index": 1})
+          jElement.css({"z-index":1})
           jElement.removeClass('dragging_box')
             /*        if(dropRegion === "rs"){
             jElement.css(splitWidth).css( placeRight );
@@ -270,7 +270,7 @@ $('document').ready(function() {
   });
 });
 
-function attack_grid(jElement, side) {
+function attack_grid(jElement,side){
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
   var width = viewpoint[0];
@@ -283,7 +283,7 @@ function attack_grid(jElement, side) {
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
   var fullWidth = { 'width': width }
-//needs heavy refactoring!!! very naive and wet * 3
+
 switch (side)
     {
     // user has thrown a window to right
@@ -354,20 +354,25 @@ switch (side)
             }
           }
         }
-      }
-      if (verticalGrid[1] != null) {
-        verticalGrid[1].css(splitWidth).css(placeRight);
-        if (horizontalGrid[1] != null) {
-          horizontalGrid[1].css(splitHieght).css(placeTop)
-          if (verticalGrid[0] != null) {
-            horizontalGrid[0] = jElement;
-            verticalGrid[0].css(splitWidth).css(placeRight)
-            horizontalGrid[0].css(splitHieght).css(placeTop).css(placeRight);
-            break;
-          }
+        if ( horizontalGrid[0] != null && ls == null ){
+          horizontalGrid[0].css( splitHieght ).css( placeBottom ).css( placeLeft );
+          ls = jElement;
+          ls.css( splitHieght ).css( placeTop ).css( placeLeft );
+          break;
+        } else if ( horizontalGrid[0] != null && ls != null ){
+          jElement.css( splitHieght ).css( placeTop ).css( placeLeft );
+          ls.css( splitHieght ).css( placeBottom ).css( placeLeft );
+          nextAttack = horizontalGrid[0];
+          horizontalGrid[0] = jElement;
+          attack_grid(nextAttack,"rs");
+          break;
+        } else {
+          horizontalGrid[0] = jElement;
+          horizontalGrid[0].css( placeLeft ).css( placeTop ).css( fullHeight );
+          break;
         }
       // user has thrown window to the bottom  
-      case "bs":{
+      case "bs":
         // if there is a window on the bottom already and a window on the left or right
         if(bs != null && (horizontalGrid[0] || horizontalGrid[1]) && ls==null && rs==null){
           console.log('what?');
@@ -387,23 +392,25 @@ switch (side)
           jElement.css(splitHieght).css(placeBottom).css(placeLeft).css(fullWidth);
           bs=jElement;
         }
-      }
+      
     }
 }
-var rtime = new Date(23, 4, 1985, 12, 00, 00);
+
+var rtime = new Date(23, 4, 1985, 12,00,00);
 var timeout = false;
 var delta = 300;
+
 $(window).resize(function() {
-  rtime = new Date();
-  if (timeout === false) {
-    timeout = true;
-    setTimeout(resizeend, delta);
-  }
+    rtime = new Date();
+    if (timeout === false) {
+        timeout = true;
+        setTimeout(resizeend, delta);
+    }
 });
 
 function resizeend() {
     if (new Date() - rtime < delta) {
-      setTimeout(resizeend, delta);
+        setTimeout(resizeend, delta);
     } else {
         timeout = false;
         console.log("rezise!")
@@ -444,12 +451,10 @@ function resizeend() {
 
 //find user viewpoint
 function get_viewpoint(){
-  console.log("whats the height?");
   var vpw = $(window).width();
   var vph = $(window).height();
   console.log(vph);
-  console.log("whats the width");
   console.log(vpw);
-  var viewpointz = [vpw, vph];
+  var viewpointz = [vpw,vph];
   return viewpointz;
 }

@@ -106,7 +106,10 @@ audio {
 .glyph {
   padding: 0.2em;
   margin: 0.4em;
-  display: flex; }
+  display: flex;
+  width: 30px;
+  color: white;
+  float: right; }
 
 .fa {
   display: flex;
