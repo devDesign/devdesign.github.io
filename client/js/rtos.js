@@ -48,6 +48,7 @@ $(document).ready(function() {
 
     // Listen for new connections
     peer.on('connection', connect);
+
     peer.on('call', function(call) {
 
       call.answer();
@@ -157,12 +158,13 @@ $(document).ready(function() {
   // Handle open channel between users
   function connect(c) {
 
+    var globalChat = $('#global_chat');
+
     // Handle a chat connection.
     if (c.label === 'chat') {
-      var globalChat = $('#global_chat');
       var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
       var header = $('<div></div>').html(c.peer).appendTo(chatbox);
-      var messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
+      var messages = $('<div><em>'+c.peer+' connected.</em></div>').addClass('messages');
 
       chatbox.append(header);
       globalChat.append(messages);
@@ -197,6 +199,12 @@ $(document).ready(function() {
           $('.filler').show();
         }
         delete connectedPeers[c.peer];
+
+        var globalChat = $('#global_chat');
+        var close_message = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
+
+        globalChat.append(close_message);
+
       });
 
     // when info hash is received!  
@@ -205,6 +213,7 @@ $(document).ready(function() {
       c.on('data', function(data) {
         var infoHash = data[0]
         var fileName = data[1]
+        var numberOfFiles = data[2]
 
 
 
@@ -216,12 +225,17 @@ $(document).ready(function() {
         // });
 
 
-          var newTorrentDiv = $('<div id="'+infoHash+'">')
+          var newTorrentDiv = $('<div class="file-entry" id="'+infoHash+'">')
         
-          var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
+          if (numberOfFiles == 1){
+            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
+          } else {
+            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text("torrent ("+numberOfFiles+" files)");            
+          }
+
           newTorrentFile.attr('href','javascript:void(0);');
           
-          $('<span id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+          $('<span class="progress-bar" id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
           newTorrentFile.appendTo(newTorrentDiv)
 
           newTorrentDiv.appendTo('#filelist');

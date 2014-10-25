@@ -67,10 +67,13 @@ dragDrop('body', function(files){
   // logAppend('Creating .torrent file...<br>')
   client.seed(files, function(torrent){
 
-    var newTorrentDiv = $('<div id="'+torrent.infoHash+'">').appendTo('#filelist');
+      
+
+
+    var newTorrentDiv = $('<div class="file-entry" id="'+torrent.infoHash+'">').appendTo('#filelist');
     var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
     newTorrentFile.attr('href','javascript:void(0);');
-    $('<span id="'+torrent.infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+    $('<span class="progress-bar" id="'+torrent.infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
     newTorrentFile.appendTo(newTorrentDiv)
     newTorrentDiv.appendTo('#filelist')
     newTorrentFile.on('click', function(e){
@@ -82,7 +85,7 @@ dragDrop('body', function(files){
 
     eachActiveConnection(function(c, $c) {
       if (c.label === 'torrentz') {
-        c.send([torrent.infoHash,torrent.name]);
+        c.send([torrent.infoHash,torrent.name,torrent.files.length]);
       }
     });
 

@@ -58,7 +58,10 @@ onTorrent = function(torrent) {
     progressSpan.html(prettysize(client.uploadSpeed()))
   })
 
-  torrent.files.forEach(function (file) {
+
+
+
+  torrent.files.forEach(function (file,index) {
     var extname = path.extname(file.name)
     // if (extname === '.mp4' || extname === '.webm') {
     //   var video = document.createElement('video')
@@ -67,8 +70,16 @@ onTorrent = function(torrent) {
     //   file.createReadStream().pipe(video)
     // } else {
       file.createReadStream().pipe(concat(function (buf) {
-
-         var a = document.getElementById(torrent.infoHash+'-torrent') 
+        console.log(index);
+        if (index == 0) {
+          var a = document.getElementById(torrent.infoHash+'-torrent') 
+        } else {
+          var a = $('<a>')
+          var li = $('<div class="file-entry">')
+          a.appendTo(li)
+          li.appendTo('#filelist');
+          a = a[0]
+        }
          a.download = file.name
          a.href = URL.createObjectURL(new Blob([ buf ]))
          a.innerHTML = file.name
@@ -87,7 +98,7 @@ function play_torrent_file(url, title, type) {
   var tracks;
   var current;
 
-  $('<li id="'+title+'"><a href=' + url + '>' + title + '</a></li>').appendTo('#playlist');
+  $('<a href=' + url + '><li class="playlist-entry" id="'+title+'">' + title + '</li></a>').appendTo('#playlist');
 
   initPlaylist();
   function initPlaylist(){
