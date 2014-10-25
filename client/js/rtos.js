@@ -14,7 +14,10 @@ $(document).ready(function() {
 
   var sessionMessages = [{brown: "rice"}];
   var sessionTorrents = [{hello: "sir"}];
+
+  var isRoomLoaded = false;
   // get room from path!
+
 
   var uriPath = window.location.hash.split('#')[1]
   $('#roomname-text').val(uriPath || "")
@@ -50,7 +53,16 @@ $(document).ready(function() {
     initUser(roomName);
 
     // Listen for new connections
-    peer.on('connection', connect);
+    // SEND ROOM TO NEW USER!!!!!!!!!!!!!!!!!
+    // FUCK
+    peer.on('connection', function(c){
+      if ( c.label === "loadRoom" ) {
+        console.log("fUUUUUUCCCCCCKKKKK here comes someone")
+        setTimeout(function(){
+          c.send([sessionMessages,sessionTorrents]);
+        },1000)
+      }
+    });
 
     peer.on('call', function(call) {
 
@@ -118,6 +130,12 @@ $(document).ready(function() {
     });
   }
 
+
+
+
+
+
+
   // Initialize a peer connection open necessary dataChannels and streams
   function connectToUser(requestedPeer) {
     if (!connectedPeers[requestedPeer]) {
@@ -126,7 +144,16 @@ $(document).ready(function() {
       // Open chat channel
       createChannel({label: 'chat'}, requestedPeer)
       // Pass room history (chat and torrents) to new user
-      createChannel({label: 'loadRoom'}, requestedPeer);
+      // createChannel({label: 'loadRoom'}, requestedPeer);
+
+      var loadRoom = peer.connect(requestedPeer, {label: 'loadRoom'});
+      loadRoom.on('open', function() {
+        connect(loadRoom);
+      });
+      loadRoom.on('error', function(err) {       
+        console.log(options.label + ": " +err);
+      });
+
       // Open torrent hash sending channel
       createChannel({label: 'torrentz'}, requestedPeer)      
       // Open video stream channel
@@ -166,25 +193,34 @@ $(document).ready(function() {
     var globalChat = $('#global_chat');
 
     if(c.label === 'loadRoom') {
-      c.send([sessionMessages,sessionTorrents])
+
       c.on('data', function(data){
-        messageList = data[0]
-        torrentList = data[1]
-
-        messageList.forEach(function(message,index){
-          console.log(message);
-        });
-
-        torrentList.forEach(function(torrent,index){
-          console.log(torrent);
-        });
-      });
+        // messageList = data[0]
+        // torrentList = data[1]
+        // FUCK
+        if ( isRoomLoaded ){
+          c.close()
+        } else {
+          console.log(data);
+          isRoomLoaded = true;
+        }
       
+
+        // messageList.forEach(function(message,index){
+        //   console.log(message);
+        // });
+
+        // torrentList.forEach(function(torrent,index){
+        //   console.log(torrent);
+        // });
+      });
+
     // Handle a chat connection.
     } else if (c.label === 'chat') {
       var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
       var header = $('<div></div>').html(c.peer).appendTo(chatbox);
       var messages = $('<div><em>'+c.peer+' connected.</em></div>').addClass('messages');
+
 
       chatbox.append(header);
       globalChat.append(messages);
