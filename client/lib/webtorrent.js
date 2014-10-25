@@ -51,14 +51,17 @@ onTorrent = function(torrent) {
 
   torrent.swarm.on('download', function () {
     var progress = (100 * torrent.downloaded / torrent.parsedTorrent.length).toFixed(1)
-    progressSpan.html(progress+"% "+prettysize(torrent.swarm.downloadSpeed()));
+    progressSpan.html(progress+"% "+prettysize(torrent.swarm.downloadSpeed())+"/s");
   })
 
   torrent.swarm.on('upload', function () {
-    progressSpan.html(prettysize(client.uploadSpeed()))
+    progressSpan.html(prettysize(client.uploadSpeed())+"/s")
   })
 
-  torrent.files.forEach(function (file) {
+
+
+
+  torrent.files.forEach(function (file,index) {
     var extname = path.extname(file.name)
     // if (extname === '.mp4' || extname === '.webm') {
     //   var video = document.createElement('video')
@@ -67,8 +70,16 @@ onTorrent = function(torrent) {
     //   file.createReadStream().pipe(video)
     // } else {
       file.createReadStream().pipe(concat(function (buf) {
-
-         var a = document.getElementById(torrent.infoHash+'-torrent') 
+        console.log(index);
+        if (index == 0) {
+          var a = document.getElementById(torrent.infoHash+'-torrent') 
+        } else {
+          var a = $('<a>')
+          var li = $('<div class="file-entry">')
+          a.appendTo(li)
+          li.appendTo('#filelist');
+          a = a[0]
+        }
          a.download = file.name
          a.href = URL.createObjectURL(new Blob([ buf ]))
          a.innerHTML = file.name
@@ -87,25 +98,25 @@ function play_torrent_file(url, title, type) {
   var tracks;
   var current;
 
-  $('<li id="'+title+'"><a href=' + url + '>' + title + '</a></li>').appendTo('#playlist');
+  $('<a href=' + url + '><li class="playlist-entry" id="'+title+'">' + title + '</li></a>').appendTo('#playlist');
 
   initPlaylist();
   function initPlaylist(){
     current = 0;
-    audio = $('audio');
+    audio = $('#audio')[0];
     playlist = $('#playlist');
     tracks = playlist.find('li a');
     console.log(tracks);
     len = tracks.length - 1;
-    audio[0].volume = .70;
-    audio[0].play();
+    audio.volume = .70;
+    audio.play();
     playlist.find('a').click(function(e){
         e.preventDefault();
         link = $(this);
         current = link.parent().index();
-        run(link, audio[0]);
+        run(link, audio);
     });
-    audio[0].addEventListener('ended',function(e){
+    audio.addEventListener('ended',function(e){
         current++;
         if(current == len){
             current = 0;
@@ -113,7 +124,7 @@ function play_torrent_file(url, title, type) {
         }else{
             link = playlist.find('a')[current];    
         }
-        run($(link),audio[0]);
+        run($(link),audio);
     });
   }
   
@@ -121,8 +132,8 @@ function play_torrent_file(url, title, type) {
           player.src = link.attr('href');
           par = link.parent();
           par.addClass('active-file').siblings().removeClass('active-file');
-          audio[0].load();
-          audio[0].play();
+          player.load();
+          player.play();
           $('.nowplaying').remove();
           $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
           $('.nowplaying').css({opacity:1,left:"1em"})

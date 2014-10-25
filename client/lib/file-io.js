@@ -397,7 +397,7 @@ function play_file(id, title, type,file) {
   var tracks;
   var current;
 
-  $('<li id="'+title+'"><a href=' + url + '>' + title + '</a></li>').appendTo('#playlist');
+  $('<a href=' + url + '><li class="playlist-entry" id="'+title+'">' + title + '</li></a>').appendTo('#playlist');
 
   initPlaylist();
   function initPlaylist(){
@@ -468,7 +468,7 @@ function create_or_clear_container(id, username) {
 	
 	if (!filecontainer) {
 		/* if filecontainer doesn't exist, create it */
-		var fs = '<div id="' + id + '"></div>';
+		var fs = '<div id="' + id + '"></li>';
 		filelist.innerHTML = filelist.innerHTML + fs;
 	} else {
 		/* if filecontainer does exist, clear it */
@@ -521,6 +521,7 @@ function create_pre_file_link(meta, id, username) {
   //create a place to store this if it does not already
 	create_or_clear_container(id, username);
 	var filecontainer = document.getElementById(id);
+  filecontainer.classList.add('file-container')
 	
 	//create the link
 	var span = document.createElement('span');
@@ -600,7 +601,7 @@ function create_file_link (meta, id, username, fileEntry) {
 	filecontainer.innerHTML = filecontainer.innerHTML+ " ";
 
 	// add play button
-	if (filetype === "audio/mp3"){
+	if (filetype === "audio/mp3" || filetype === "audio/wav" ){
 	  var name = meta.name;
 	  var name = name.substr(0, name.lastIndexOf('.'));
 
