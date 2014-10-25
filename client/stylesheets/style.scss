@@ -82,10 +82,11 @@ audio {
       width: 100%;
       margin-bottom: 2em;
       padding: .5em .5em .6em .5em;
-      border: none;
-      background-color: $grey-shade;
+      border: 1px solid #eee;
+      background-color: #0F0F11;
       color: white;
       box-sizing: border-box;
+      border-radius: 7px;
     }
 
     button {
@@ -330,11 +331,17 @@ audio {
   box-shadow: 0 0 5px 1px #FF0000;
 }
 .mouse{
-  position: absolute;
+  position: fixed;
   width: 10px;
   height: 10px;
-  color:red;
+  border-radius:100%;
+  background-color:rgba(255,0,0,0.6);
 }
+
+video{
+  width:100px;
+}
+
 #desktop{
   position: absolute;
   top:3em;
