@@ -164,7 +164,6 @@ $('document').ready(function(){
           
         },300);
         // left side is dragged from snap
-        //if (element.offsetLeft === 0) { 
           if (horizontalGrid[0]==jElement){
             horizontalGrid[0] = null
             if ( ls != null){
@@ -184,9 +183,7 @@ $('document').ready(function(){
               horizontalGrid[0].css( fullHeight ).css( placeTop );
             }
           }
-        //}
         // right side is dragged from snap
-        //if (element.offsetLeft === Math.round(get_viewpoint()[0]/2) ) { 
           if (horizontalGrid[1]==jElement){
             horizontalGrid[1] = null
             if ( rs != null){
@@ -195,9 +192,11 @@ $('document').ready(function(){
               rs = null;
             } else {
               if ( ls != null && horizontalGrid[0] != null ){
-                attack_grid(ls,'rs');
+                nextAttack = ls;
+                ls = null;
+                attack_grid(nextAttack,'rs');
                 horizontalGrid[0].css( fullHeight ).css( placeTop);
-                ls = null
+                
               }
             }
           } else if(rs == jElement){
@@ -205,8 +204,11 @@ $('document').ready(function(){
             if ( horizontalGrid[1] != null){
               horizontalGrid[1].css( fullHeight ).css(placeTop);
             } 
-          }  
-        //}
+          }  else if(bs == jElement){
+            bs = null;
+            horizontalGrid[0].css(fullHeight).css(placeLeft).css(placeTop);
+            horizontalGrid[1].css(fullHeight).css(placeRight).css(placeTop);
+          }
         //if (element.offsetTop === 0 ) { ts = false }
         //if (element.offsetTop + element.offsetHeight == get_viewpoint()[1] && element.clientWidth+10 === get_viewpoint()[0]) { bs = false }
 
@@ -225,7 +227,7 @@ $('document').ready(function(){
       'easing':function(){
         var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
-        if (dropRegion.length > 0){
+        if (dropRegion.length == 1){
           jElement.css({"z-index":1})
           jElement.removeClass('dragging_box')
   /*        if(dropRegion === "rs"){
@@ -254,25 +256,49 @@ function attack_grid(jElement,side){
   var placeRight = { 'left': width/2 }
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
+  var fullWidth = { 'width': width }
+//needs heavy refactoring!!! very naive and wet * 3
 switch (side)
     {
+    // user has thrown a window to right
       case "rs":
+      //if only 1 window is snapped right do this
         if ( horizontalGrid[1] != null && rs == null && bs == null){
-          horizontalGrid[1].addClass('.split_top_right');
           horizontalGrid[1].css( splitHieght ).css( placeBottom ).css( placeRight );
           rs = jElement;
-          rs.addClass('.split_bottom_right')
           rs.css( splitHieght ).css( placeTop ).css( placeRight );
           break;
-        } else if ( horizontalGrid[1] != null && rs != null ){
-          console.log("next ATTACK!")
+        } 
+      // if 2 windows are snapped right do this
+        else if ( horizontalGrid[1] != null && rs != null && bs == null ){
           jElement.css( splitHieght ).css( placeTop ).css( placeRight );
           rs.css( splitHieght ).css( placeBottom ).css( placeRight );
           nextAttack = horizontalGrid[1];
           horizontalGrid[1] = jElement;
           attack_grid(nextAttack,"ls");
           break;
-        } else {
+        } 
+        // if 1 window is snapped to bottom and 1 window is snapped to right or left
+        else if( (horizontalGrid[1] || horizontalGrid[0]) && rs == null && ls == null && bs){
+          // theres a window on the right so it should split hieght go left and bottom should split width and move left
+          if( horzontalGrid[1]){ 
+            horizontalGrid[1].css(splitHieght).css(placeTop).css(placeLeft); horizontalGrid[0] = horizontalGrid[1]; 
+            bs.css( splitWidth).css( placeBottom ).css(placeLeft);
+            ls = bs;
+            bs = null;
+          }
+          // theres a window on left so it should split hieght bottom should split width and move left
+          else if( horizontalGrid[0]){ 
+            horizontalGrid[0].css(splitHieght).css(placeTop).css(placeLeft);
+            bs.css( splitWidth).css( placeBottom ).css(placeLeft);
+            ls = bs;
+            bs = null;
+          }
+          jElement.css( splitWidth ).css( placeTop ).css( fullHeight ).css( placeRight );
+          horizontalGrid[1] = jElement;
+          break;
+        }
+        else{
           horizontalGrid[1] = jElement;
           horizontalGrid[1].css( placeRight ).css( placeTop ).css( fullHeight );
           break;
@@ -319,6 +345,29 @@ switch (side)
           horizontalGrid[0].css( placeLeft ).css( placeTop ).css( fullHeight );
           break;
         }
+      // user has thrown window to the bottom  
+      case "bs":{
+        // if there is a window on the bottom already and a window on the left or right
+        if(bs != null && (horizontalGrid[0] || horizontalGrid[1]) && ls==null && rs==null){
+          console.log('what?');
+          // if there is a window on the left or a window on the right they should split height 
+          if(horizontalGrid[0] &&  horizontalGrid[1] == null){
+            horizontalGrid[0].css( splitHieght ).css( placeTop ).css( placeLeft );            
+          } else if (horizontalGrid[1]){
+            horizontalGrid[1].css( splitHieght ).css( placeTop ).css( placeLeft);
+          }
+          bs.css(splitHieght).css(placeRight).css(placeTop).css(splitWidth);
+          bs = jElement;
+          bs.css(splitHieght).css(fullWidth).css(placeBottom).css(placeLeft);
+          break;
+        } else {
+          horizontalGrid[0].css(splitHieght).css(placeLeft).css(placeTop);
+          horizontalGrid[1].css(splitHieght).css(placeRight).css(placeTop);
+          jElement.css(placeBottom).css(placeLeft).css(fullWidth);
+          debugger;
+          bs=jElement;
+        }
+      }
     }
 }
 var rtime = new Date(23, 4, 1985, 12,00,00);
