@@ -31,7 +31,8 @@ function doNothing(e){
   e.preventDefault();
 }
 
-
+var bigFile = false;
+console.log("1"+bigFile)
 // Decide whether to send to webRTCio or not
 function fileRouter(e){
   var files = e.dataTransfer.files;
@@ -44,14 +45,21 @@ function fileRouter(e){
   if ( fileCount == 1 ) {
     var file = files[0]
     checkIfFile(file, function(){
-      if ( file.size > 104857600 ) {
-        // DO SOMETHING! -- send to file-io.js
-        process_inbound_files(file)
+      if ( file.size > 104857600 ) {  
+        if ( !bigFile ) {     
+          process_inbound_files(file)
+          bigFile = true;
+          console.log("2"+bigFile)
+        } else {
+          errorMessage("---------------")
+          alert("!");
+          console.log("3"+bigFile)
+        }
       } else {
         // do nothing, handled by dragDrop below
       }      
     }, function(){
-      // ERROR: Files only!!
+      errorMessage("Cannot identify file type.")
     });
 
   // Handle multiple files
@@ -60,16 +68,20 @@ function fileRouter(e){
   }
 }
 
+var globalChat = $('#global_chat');
+
+var errorMessage = function(msg){
+  var error_message = $('<div style="color:red;"><em></em></div>').addClass('messages').text(msg).addClass('messages');
+  globalChat.append(error_message);
+  
+}
+
 dragDrop('body', function(files){
   // does nothing if file is too big
   // see //FUCK in webtorrent.js
   // add error readout for user!
   // logAppend('Creating .torrent file...<br>')
   client.seed(files, function(torrent){
-
-      
-
-
     var newTorrentDiv = $('<div class="file-entry" id="'+torrent.infoHash+'">').appendTo('#filelist');
     var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
     newTorrentFile.attr('href','javascript:void(0);');
@@ -79,9 +91,6 @@ dragDrop('body', function(files){
     newTorrentFile.on('click', function(e){
       download(e.target.id.split('-torrent')[0]);
     });
-
-
-
 
     eachActiveConnection(function(c, $c) {
       if (c.label === 'torrentz') {

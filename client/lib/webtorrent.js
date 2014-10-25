@@ -8231,7 +8231,7 @@ function onDrop(elem, cb, e) {
     }
     if ( totalSize > 104857600 ) {
       // ERROR!
-      console.log("Too Big!")
+      errorMessage('No multiple uploads over 150MB')
     } else {
       cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
     }
