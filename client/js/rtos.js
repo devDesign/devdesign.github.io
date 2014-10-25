@@ -251,8 +251,9 @@ $(document).ready(function() {
 
     // Send mouse position of moving mouse to user
     } else if (c.label === 'mouse') {
+
       $('<div id="' + c.peer + 'mouse" class="mouse">').appendTo('body');
-     // $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
+      $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
       c.on('data', function(data) {
         var id = '#' + c.peer + 'mouse';
         $(id).css({
