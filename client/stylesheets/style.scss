@@ -134,23 +134,26 @@ audio {
 
 #pid {
   color: white;
-  padding: auto;
 }
 
-#start-video-feed {
-  margin: 10px 10px 0px 10px;
-  color: black;
-  display: none;
+.glyph {
+  padding: 0.2em;
+  margin: 0.4em;
+  display: flex;
+}
 
-  button {
-    width: 100%;
-    height: 2.6em;
-    border-radius: 7px;
-    background-color: $orange-shade;
-    border-color: darken($orange-shade, 1%);
-    font-weight: bold;
-    color: #882418;
-  }
+.fa {
+  display: flex;
+  color: $orange-shade;
+  margin: auto;
+}
+
+#user-button:hover, #start-video-feed:hover {
+  color: darken(#e05a49, 1%);
+}
+
+#user-button, #start-video-feed {
+  display: none;
 }
 
 // Windows // 
@@ -287,7 +290,9 @@ audio {
   width: 10em;
   // height: 94%;
   top: 2.6em;
-  bottom: 1.3em;
+  // bottom: 1.3em;
+  display: none;
+  z-index:99999;
   @extend .border-module;
     .users {
       text-align: center;
@@ -301,7 +306,7 @@ audio {
       justify-content: flex-end;
     }
     .active {
-      padding: 0px 8px 1px 0px;
+      padding: 4px 8px 4px 1px;
     }
 }
 #users{
@@ -314,7 +319,7 @@ audio {
   top: 1.3em;
   height: 1.3em;
   z-index: 3;
-    @extend .border-module;
+  @extend .border-module;
 }
 .chat_text-input input[type="text"] {
   padding: 10px;
