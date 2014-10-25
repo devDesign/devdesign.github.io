@@ -91,6 +91,9 @@ dragDrop('body', function(files){
       download(e.target.id.split('-torrent')[0]);
     });
 
+    sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length})
+    console.log(sessionTorrents)
+
     eachActiveConnection(function(c, $c) {
       if (c.label === 'torrentz') {
         c.send([torrent.infoHash,torrent.name,torrent.files.length]);
