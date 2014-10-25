@@ -51,11 +51,11 @@ onTorrent = function(torrent) {
 
   torrent.swarm.on('download', function () {
     var progress = (100 * torrent.downloaded / torrent.parsedTorrent.length).toFixed(1)
-    progressSpan.html(progress+"% "+prettysize(torrent.swarm.downloadSpeed()));
+    progressSpan.html(progress+"% "+prettysize(torrent.swarm.downloadSpeed())+"/s");
   })
 
   torrent.swarm.on('upload', function () {
-    progressSpan.html(prettysize(client.uploadSpeed()))
+    progressSpan.html(prettysize(client.uploadSpeed())+"/s")
   })
 
 

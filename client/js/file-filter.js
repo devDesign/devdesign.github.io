@@ -73,7 +73,7 @@ dragDrop('body', function(files){
     var newTorrentDiv = $('<div class="file-entry" id="'+torrent.infoHash+'">').appendTo('#filelist');
     var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
     newTorrentFile.attr('href','javascript:void(0);');
-    $('<span class="progress-bar" id="'+torrent.infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+    $('<span class="progress-bar" id="'+torrent.infoHash+'-progress">').appendTo(newTorrentDiv)
     newTorrentFile.appendTo(newTorrentDiv)
     newTorrentDiv.appendTo('#filelist')
     newTorrentFile.on('click', function(e){
