@@ -454,7 +454,7 @@ function resizeend() {
           if(bs){
             horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
             horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
-            bs.css( fullWidth ).css( placeBottom).css( placeLeft );
+            bs.css( fullWidth ).css( placeBottom).css( placeLeft ).css(splitHieght);
           }
         }
     }               
