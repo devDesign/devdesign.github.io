@@ -547,7 +547,7 @@ $(document).ready(function() {
     var messageObject = { "peer": peer.id, "message": msg, "color": color }
     sessionMessages.push(messageObject);
 
-    $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span>' + msg + '</div>');
+    $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span><span>' + msg + '</span></div>');
     $('#global_chat').scrollTop($('#global_chat').prop("scrollHeight"));
     eachActiveConnection(function(c, $c) {
       if (c.label === 'chat') {

@@ -203,10 +203,11 @@ audio {
   bottom: 1.8em;
   z-index: -1;
   overflow-y: hidden;
-  top: 1.6em; }
+  top: 1.6em;
+  width: 100%; }
   #global_chat div {
-    width: 98%;
-    padding: 0px 0px 1px 8px; }
+    padding: 0px 0px 1px 8px;
+    word-wrap: break-word; }
   #global_chat div:first-child {
     padding: 5px 0px 1px 8px; }
   #global_chat .messages em {
