@@ -433,9 +433,9 @@ function play_file(id, title, type,file) {
           par.addClass('active-file').siblings().removeClass('active-file');
           audio[0].load();
           audio[0].play();
-          $('.nowplaying').remove();
- 					$('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
- 					$('.nowplaying').css({opacity:1,left:"1em"})
+      //     $('.nowplaying').remove();
+ 					// $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
+ 					// $('.nowplaying').css({opacity:1,left:"1em"})
   }
 }
 

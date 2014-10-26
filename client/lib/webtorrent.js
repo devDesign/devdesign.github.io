@@ -142,9 +142,9 @@ function play_torrent_file(url, title, type) {
           par.addClass('active-file').siblings().removeClass('active-file');
           player.load();
           player.play();
-          $('.nowplaying').remove();
-          $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
-          $('.nowplaying').css({opacity:1,left:"1em"})
+          // $('.nowplaying').remove();
+          // $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
+          // $('.nowplaying').css({opacity:1,left:"1em"})
   }
 }
 
