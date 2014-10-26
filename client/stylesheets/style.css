@@ -325,7 +325,9 @@ video {
 
 #playlist {
   position: absolute;
+  border-spacing: 0px;
   top: 0px;
+  width: 100%;
   margin: 0px;
   list-style: none;
   right: 0em;
@@ -337,15 +339,16 @@ video {
   #playlist a {
     color: #aaa;
     text-decoration: none; }
-  #playlist ul {
-    display: flex;
-    box-sizing: border-box;
+  #playlist table {
     margin: 0;
-    padding: 0; }
-  #playlist li {
+    padding: 0;
+    width: 100%; }
+  #playlist tr {
+    width: 100%; }
+  #playlist td {
     padding: 0.7em;
     box-shadow: -1px 1px 1px #111; }
-    #playlist li:hover {
+    #playlist td:hover {
       box-shadow: inset 0 0 3px #2D313D;
       color: #eee; }
 
@@ -370,9 +373,7 @@ video {
   position: absolute;
   bottom: 1.9em;
   color: red;
-  opacity: 0;
-  right: 6em;
-  transition: all 5s; }
+  margin: auto; }
 
 #pointcloud {
   position: fixed;

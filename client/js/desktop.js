@@ -4,9 +4,12 @@ var horizontalGrid = [null,null];
 
 $('document').ready(function(){
   $("#audio").bind('ended', function(){
-    setTimeout(function(){$('.nowplaying').remove()},200);
- 
-});
+   $('.nowplaying').remove()
+  });
+  $("#audio").bind('play', function(e){
+    $('.nowplaying').remove();
+    $('<div />',{class:'nowplaying',text:nowPlaying}).appendTo('#now_playing');
+  });
   // maximize
   $(".maximize").on("click",function(){
     var viewpoint = get_viewpoint();
