@@ -212,6 +212,15 @@ audio {
   box-sizing: border-box;
   @extend .border-module;
 }
+#file_list{
+  position: absolute;
+  left:0em;
+  right:0em;
+  top:1.3em;
+  bottom:1.3em;
+  overflow-y:auto;
+  overflow-x:none;
+}
 #cam_box{
   background-color: rgba(0,0,0,0.3);
   position: absolute;
@@ -224,7 +233,7 @@ audio {
   position: absolute;
   box-sizing: border-box;
   overflow-y: none;
-  overflow-x: hidden;
+  overflow-x: none;
   @extend .border-module;
 }
 #rs{
@@ -382,11 +391,13 @@ video{
 }
 #playlist_box{
   position: absolute;
-  width: 100%;
+  left:0em;
+  right:0em;
   top:1.6em;
   bottom:2em;
   overflow-y: auto;
-  
+  overflow-x:none;
+
   // top:1.3em;
   // bottom: 0px;
 }
@@ -395,7 +406,8 @@ video{
   top:0px;
   margin: 0px;
   list-style: none;
-  width:103%;
+  right:0em;
+  left:0em;
   border: 1px;
   border-width: 1px;
   padding: 0;
@@ -405,13 +417,14 @@ video{
     text-decoration: none;
   }
   ul{
+    display: flex;
+    box-sizing:border-box;
     margin: 0;
     padding: 0;
   }
   li{
     padding: 0.7em;
     box-shadow: -1px 1px 1px #111;
-    width:100%;
     &:hover{
       box-shadow: inset 0 0 3px $black;
       color:#eee;
