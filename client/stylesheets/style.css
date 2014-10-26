@@ -111,7 +111,7 @@ audio {
 .fa {
   display: flex;
   color: #F18160;
-  margin: auto; }
+  margin-top: 2px; }
 
 #user-button:hover, #start-video-feed:hover {
   color: #df5645; }
@@ -122,7 +122,7 @@ audio {
 .window_title {
   display: flex;
   box-sizing: border-box;
-  height: 1.3em;
+  height: 1.5em;
   width: 100%;
   background-color: #4B4F53; }
   .window_title span {
