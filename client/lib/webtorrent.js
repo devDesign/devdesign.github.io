@@ -80,12 +80,14 @@ onTorrent = function(torrent) {
           li.appendTo('#filelist');
           a = a[0]
         }
-         a.download = file.name
-         a.href = URL.createObjectURL(new Blob([ buf ]))
-         a.innerHTML = file.name
+        a.classList.add('downloaded');
+        a.download = file.name
+        a.href = URL.createObjectURL(new Blob([ buf ]))
+        a.innerHTML = file.name
  
-         play_torrent_file(a.href, file.name, file.type);
-
+        if (file.type == "audio/mp3" || file.type == "audio/wav" ){
+          play_torrent_file(a.href, file.name, file.type);
+        }
       }))
     // }
   })
