@@ -58,13 +58,13 @@ $(document).ready(function() {
     // FUCK
     peer.on('connection', connect);
 
-    peer.on('connection', function(c){
-      // if ( c.label === "loadRoom" ) {
-      //   setTimeout(function(){
-      //     c.send([sessionMessages,sessionTorrents]);
-      //   },2000)
-      // }
-    });
+    // peer.on('connection', function(c){
+    //   if ( c.label === "loadRoom" ) {
+    //     setTimeout(function(){
+    //       c.send([sessionMessages,sessionTorrents]);
+    //     },2000)
+    //   }
+    // });
 
     peer.on('call', function(call) {
 
@@ -147,16 +147,7 @@ $(document).ready(function() {
       // Open chat channel
       createChannel({label: 'chat'}, requestedPeer)
       // Pass room history (chat and torrents) to new user
-      // createChannel({label: 'loadRoom'}, requestedPeer);
-
-      var loadRoom = peer.connect(requestedPeer, {label: 'loadRoom'});
-      loadRoom.on('open', function() {
-        connect(loadRoom);
-      });
-      loadRoom.on('error', function(err) {       
-        console.log(options.label + ": " +err);
-      });
-
+      // createChannel({label:"loadRoom"}, requestedPeer);
       // Open torrent hash sending channel
       createChannel({label: 'torrentz'}, requestedPeer)      
       // Open video stream channel
@@ -196,57 +187,58 @@ $(document).ready(function() {
 
     var globalChat = $('#global_chat');
 
-    if(c.label === 'loadRoom') {
+    // if(c.label === 'loadRoom') {
 
-      c.on('data', function(data){
+    //   c.on('data', function(data){
 
-        if ( isRoomLoaded ){
-          c.close()
-        } else {
-          var messageList = data[0]
-          messageList.forEach(function(message,index){
-            globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
-          '</div>');
-            globalChat.scrollTop(globalChat.prop("scrollHeight"));
-          });
-          isRoomLoaded = true;
-        }
+    //     if ( isRoomLoaded ){
+    //       c.close()
+    //     } else {
+    //       var messageList = data[0]
+    //       messageList.forEach(function(message,index){
+    //         globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
+    //       '</div>');
+    //         globalChat.scrollTop(globalChat.prop("scrollHeight"));
+    //       });
+    //       isRoomLoaded = true;
+    //     }
 
-        var torrentList = data[1]
+    //     var torrentList = data[1]
 
-        torrentList.forEach(function(torrent,index){
-
-
-          var infoHash = torrent["infoHash"]
-          var fileName = torrent["name"]
-          var numberOfFiles = torrent["length"]
+    //     torrentList.forEach(function(torrent,index){
 
 
-          var newTorrentDiv = $('<div class="file-entry" id="'+infoHash+'">')
+    //       var infoHash = torrent["infoHash"]
+    //       var fileName = torrent["name"]
+    //       var numberOfFiles = torrent["length"]
+
+
+    //       var newTorrentDiv = $('<div class="file-entry" id="'+infoHash+'">')
         
-          if (numberOfFiles == 1){
-            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
-          } else {
-            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text("torrent ("+numberOfFiles+" files)");            
-          }
+    //       if (numberOfFiles == 1){
+    //         var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
+    //       } else {
+    //         var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text("torrent ("+numberOfFiles+" files)");            
+    //       }
 
-          newTorrentFile.attr('href','javascript:void(0);');
+    //       newTorrentFile.attr('href','javascript:void(0);');
           
-          $('<span class="progress-bar" id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
-          newTorrentFile.appendTo(newTorrentDiv)
+    //       $('<span class="progress-bar" id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+    //       newTorrentFile.appendTo(newTorrentDiv)
 
-          newTorrentDiv.appendTo('#filelist');
+    //       newTorrentDiv.appendTo('#filelist');
 
-          newTorrentFile.on('click', function(e){
-            download(e.target.id.split('-torrent')[0]);
-          });
+    //       newTorrentFile.on('click', function(e){
+    //         download(e.target.id.split('-torrent')[0]);
+    //       });
 
 
-        });
-      });
+    //     });
+    //   });
 
     // Handle a chat connection.
-    } else if (c.label === 'chat') {
+    // } else 
+    if (c.label === 'chat') {
       var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
       var header = $('<div></div>').html(c.peer).appendTo(chatbox);
       var messages = $('<div><em>'+c.peer+' connected.</em></div>').addClass('messages');
