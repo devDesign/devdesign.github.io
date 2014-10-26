@@ -86,11 +86,9 @@ onTorrent = function(torrent) {
         a.innerHTML = file.name
  
 
-        console.log("---------------------"+file)
-        
-        if (file.type === "audio/mp3" || file.type === "audio/wav" ){
+       // if (file.type === "audio/mp3" || file.type === "audio/wav" ){
           play_torrent_file(a.href, file.name, file.type);
-        }
+        // }
 
       }))
     // }
