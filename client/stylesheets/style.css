@@ -109,18 +109,18 @@ audio {
   padding: 0.2em;
   margin: 0.4em;
   display: flex;
-  z-index: 999999; }
+  z-index: 999999;
+  display: none; }
 
 .fa {
   display: flex;
   color: #E58C7D;
   margin-top: 2px; }
 
-#user-button:hover, #start-video-feed:hover {
+#user-button:hover,
+#start-video-feed:hover,
+#file-upload:hover {
   color: #df5645; }
-
-#user-button, #start-video-feed {
-  display: none; }
 
 .window_title {
   display: flex;

@@ -147,6 +147,7 @@ audio {
   margin: 0.4em;
   display: flex;
   z-index: 999999;
+  display: none;
 }
 
 .fa {
@@ -155,12 +156,13 @@ audio {
   margin-top: 2px;
 }
 
-#user-button:hover, #start-video-feed:hover {
-  color: darken(#e05a49, 1%);
-}
+#user-button, 
+#start-video-feed, 
+#file-upload {
 
-#user-button, #start-video-feed {
-  display: none;
+  &:hover {
+    color: darken(#e05a49, 1%);
+  }
 }
 
 // Windows // 
