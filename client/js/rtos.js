@@ -85,11 +85,8 @@ $(document).ready(function() {
       $('#username-text').hide();
       $('#peerSubmit').hide();
       $('#id').show();
-<<<<<<< HEAD
-=======
       $('#user-button').show();
       $('#start-video-feed').show();
->>>>>>> 79f35a620282956c62590d92c84c1f1cd5beefa0
       $('#pid').text(id);
       createVideoFeedButton();
       var data = {
@@ -540,13 +537,9 @@ $(document).ready(function() {
     e.preventDefault();
     var msg = $('#text').val();
     msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-<<<<<<< HEAD
     var messageObject = {};
     messageObject[peer.id] = msg;
-=======
-
     var messageObject = { "peer": peer.id, "message": msg, "color": color }
->>>>>>> 79f35a620282956c62590d92c84c1f1cd5beefa0
     sessionMessages.push(messageObject);
 
     $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span>' + msg + '</div>');
