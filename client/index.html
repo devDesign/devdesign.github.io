@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
 <html lang="en">
-
 <head>
   <title>RTOS - the future is real time</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Language" content="en-us">
- 
+
+  <link rel="stylesheet" href="./stylesheets/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="./stylesheets/style.css" />
 
-  <script type="text/javascript" src="lib/jquery-1.8.3.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/utils/jquery.gsap.min.js"></script>
+  <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="./lib/Tweenmax.min.js"></script>
+  <script type="text/javascript"src="./lib/jquery.gsap.min.js"></script>
 
   <script src="./lib/peer.js"></script>
   <script type="text/javascript" src="./js/rtos.js"></script>
@@ -26,32 +26,35 @@
 <!--   <script src='./js/pointcloud.js'></script>
  -->
 </head>
-
-<body>
-<!-- <div id="pointcloud"></div>
- -->  
-  <div id='nav'>
-    <div id="rtos">
-      <h2><a href="/">RTOS</a></h2>
-    </div>
-
-    <div id="start-video-feed">
-      <button>Start Video Feed</button>
-    </div>
-<!-- // camera button
-// not nickname
-
-    <div id='id'>
-      Nickname:
-      <span id="pid"></span>
-    </div> -->
-  </div>
-
-  <div id="login-box">
-    <div>
-      <div id="mesh-logo"> 
-        <img width="80px" height="80px" src="./images/mesh-logo.png"/>
+  <body>
+    <!-- <div id="pointcloud"></div>
+    -->
+    <div id="chat_user_list" class="chat_user_list">
+      <div class="self">
+        <img src="./images/person.png" height="20px" width="20px">
+        <span id="pid"></span>
       </div>
+    </div>
+
+    <div id='nav'>
+      <div id="rtos">
+        <h2><a href="/">RTOS</a></h2>
+      </div>
+
+      <!-- // not working right now -->
+      <div class="glyph">
+        <i class="fa fa-users" id="user-button"></i>
+      </div>
+      <div class="glyph">
+        <i class="fa fa-video-camera" id="start-video-feed"></i>
+      </div>
+    </div>
+
+    <div id="login-box">
+      <div>
+        <div id="mesh-logo">
+          <img width="80px" height="80px" src="./images/mesh-logo.png"/>
+        </div>
         <input type="text" id="username-text" placeholder="Nickname: "/>
         <input type="text" id="roomname-text" placeholder="Room:"/>
         <button id="peerSubmit">CONNECT</button>
@@ -82,15 +85,14 @@
       <div class="window_title"><span>media</span><span class="maximize" class="content">MAXIMIZE</span></div>
       <div class="content">
         <div id="music-player">
-            <audio id="audio" preload="auto" tabindex="0" controls="">
-              <source id="song" type="audio/mp3" src="">
-            </audio>
+          <audio id="audio" preload="auto" tabindex="0" controls="">
+            <source id="song" type="audio/mp3" src="">
+          </audio>
           <div id="playlist_box">
             <ul id="playlist">
             </ul>
           </div>
         </div>
-
       </div>
     </div>
     <div id="chat_box">
@@ -99,21 +101,9 @@
 
       <div class="content">
         <div id="wrap">
-          <div id="indicator"></div>  
-          <div id="global_chat">
-
-                
-              
+            <div id="global_chat">
             </div>
-            <div id='users' class='users'>
-                <span>users</span>
-              </div>
-            <div id="chat_user_list" class="chat_user_list">
-              <div class="self">
-                  <img src="./images/person.png" height="20px" width="20px"><span id="pid"></span>
-              </div>
-            </div>
-          <div class="clear"></div>
+            <div class="clear"></div>
         </div>
 
         <div id='send-div'>
@@ -122,23 +112,16 @@
           </form>
         </div>
       </div>
-
     </div>
-  </div>
-  <div class='window'>
-    
-  </div>
-
-  <!-- FROM WEBRTC COPY -->
-  <script type="text/javascript" src="lib/file-io.js"></script>
-  <script type="text/javascript" src="js/script.js"></script>
-
-  <!-- webtorrent -->
-  <script type="text/javascript" src="lib/webtorrent.js"></script>
-
-  <!-- file filtering -->
-  <script type="text/javascript" src="js/file-filter.js"></script>
-
-
-</body>
+    <div class='window'>
+      
+    </div>
+    <!-- FROM WEBRTC COPY -->
+    <script type="text/javascript" src="lib/file-io.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <!-- webtorrent -->
+    <script type="text/javascript" src="lib/webtorrent.js"></script>
+    <!-- file filtering -->
+    <script type="text/javascript" src="js/file-filter.js"></script>
+  </body>
 </html>

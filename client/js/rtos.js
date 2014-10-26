@@ -1,6 +1,6 @@
 var eachActiveConnection;
 // THANKS to github.com/peers 
-var sessionTorrents = [{hello: "sir"}];
+var sessionTorrents = [];
 
 $(document).ready(function() {
 
@@ -14,8 +14,7 @@ $(document).ready(function() {
   var peer;
   var connectedPeers = {};
 
-  var sessionMessages = [{brown: "rice"}];
-  var sessionTorrents = [{hello: "sir"}];
+  var sessionMessages = [];
 
   var isRoomLoaded = false;
   // get room from path!
@@ -86,6 +85,11 @@ $(document).ready(function() {
       $('#username-text').hide();
       $('#peerSubmit').hide();
       $('#id').show();
+<<<<<<< HEAD
+=======
+      $('#user-button').show();
+      $('#start-video-feed').show();
+>>>>>>> 79f35a620282956c62590d92c84c1f1cd5beefa0
       $('#pid').text(id);
       createVideoFeedButton();
       var data = {
@@ -197,24 +201,50 @@ $(document).ready(function() {
     if(c.label === 'loadRoom') {
 
       c.on('data', function(data){
-        // messageList = data[0]
-        // torrentList = data[1]
-        // FUCK
+
         if ( isRoomLoaded ){
           c.close()
         } else {
-          console.log(data);
+          var messageList = data[0]
+          messageList.forEach(function(message,index){
+            globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
+          '</div>');
+            globalChat.scrollTop(globalChat.prop("scrollHeight"));
+          });
           isRoomLoaded = true;
         }
-      
 
-        // messageList.forEach(function(message,index){
-        //   console.log(message);
-        // });
+        var torrentList = data[1]
 
-        // torrentList.forEach(function(torrent,index){
-        //   console.log(torrent);
-        // });
+        torrentList.forEach(function(torrent,index){
+
+
+          var infoHash = torrent["infoHash"]
+          var fileName = torrent["name"]
+          var numberOfFiles = torrent["length"]
+
+
+          var newTorrentDiv = $('<div class="file-entry" id="'+infoHash+'">')
+        
+          if (numberOfFiles == 1){
+            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
+          } else {
+            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text("torrent ("+numberOfFiles+" files)");            
+          }
+
+          newTorrentFile.attr('href','javascript:void(0);');
+          
+          $('<span class="progress-bar" id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+          newTorrentFile.appendTo(newTorrentDiv)
+
+          newTorrentDiv.appendTo('#filelist');
+
+          newTorrentFile.on('click', function(e){
+            download(e.target.id.split('-torrent')[0]);
+          });
+
+
+        });
       });
 
     // Handle a chat connection.
@@ -236,6 +266,7 @@ $(document).ready(function() {
           $(this).removeClass('active');
         }
       });
+
       $('.filler').hide();
       $('#chat_user_list').append(chatbox);
 
@@ -246,10 +277,10 @@ $(document).ready(function() {
           '</div>');
         globalChat.scrollTop(globalChat.prop("scrollHeight"));
 
-        var messageObject = {};
-        messageObject[peer.id] = data[0];
+
+
+        var messageObject = { "peer": c.peer, "message": data[0], "color": data[1] }
         sessionMessages.push(messageObject);
-        console.log(sessionMessages)
 
       });
 
@@ -271,12 +302,40 @@ $(document).ready(function() {
       c.on('data', function(data) {
         var infoHash = data[0]
         var fileName = data[1]
+<<<<<<< HEAD
         newTorrentFile = $('<a id="'+infoHash+'">').text(fileName);
         newTorrentFile.attr('href','javascript:void(0);');
         newTorrentFile.appendTo('#filelist')
         newTorrentFile.on('click', function(e){
           download(e.target.id);
         });
+=======
+        var numberOfFiles = data[2]
+
+
+          var newTorrentDiv = $('<div class="file-entry" id="'+infoHash+'">')
+        
+          if (numberOfFiles == 1){
+            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text(fileName);
+          } else {
+            var newTorrentFile = $('<a id="'+infoHash+'-torrent">').text("torrent ("+numberOfFiles+" files)");            
+          }
+
+          newTorrentFile.attr('href','javascript:void(0);');
+          
+          $('<span class="progress-bar" id="'+infoHash+'-progress">').text('0%').appendTo(newTorrentDiv)
+          newTorrentFile.appendTo(newTorrentDiv)
+
+          newTorrentDiv.appendTo('#filelist');
+
+          newTorrentFile.on('click', function(e){
+            download(e.target.id.split('-torrent')[0]);
+          });
+
+
+
+
+>>>>>>> 79f35a620282956c62590d92c84c1f1cd5beefa0
       });
 
     // Send mouse position of moving mouse to user
@@ -491,10 +550,14 @@ $(document).ready(function() {
     e.preventDefault();
     var msg = $('#text').val();
     msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+<<<<<<< HEAD
     var messageObject = {};
     messageObject[peer.id] = msg;
+=======
+
+    var messageObject = { "peer": peer.id, "message": msg, "color": color }
+>>>>>>> 79f35a620282956c62590d92c84c1f1cd5beefa0
     sessionMessages.push(messageObject);
-    console.log(sessionMessages)
 
     $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span>' + msg + '</div>');
     $('#global_chat').scrollTop($('#global_chat').prop("scrollHeight"));

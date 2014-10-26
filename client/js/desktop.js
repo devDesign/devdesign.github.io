@@ -37,17 +37,14 @@ $('document').ready(function(){
 
   }
 
-
   //ultimate hammer
   var inputfield = document.getElementsByTagName('*');
-
   [].slice.call(inputfield).forEach(function(element) {
-      var hammertime = new Hammer(element);
-      hammertime.on('tap', function(event) {
-          $(element).focus();
-      });
+    var hammertime = new Hammer(element);
+    hammertime.on('tap', function(event) {
+      $(element).focus();
+    });
   });
-
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
   var width = viewpoint[0];
@@ -62,67 +59,58 @@ $('document').ready(function(){
   var fullWidth = { 'width': width }
   var zIndex = 100;
   // event toggle userlist in chat
-  var users = document.getElementById('users')
-  var usertime = new Hammer(users);
-  var toggleUsers = true
-  usertime.on('tap', function(event) {
-    
-    toggleUserlist(document.getElementById('chat_user_list').offsetHeight);
+  // var users = document.getElementById('users')
+  // var usertime = new Hammer(users);
+  // var toggleUsers = true
+  // usertime.on('tap', function(event) {
+  //   toggleUserlist(document.getElementById('chat_user_list').offsetHeight);
+  // });
 
-  });
-  function toggleUserlist(boxheight){
-    var boxHieght = boxheight
-    if(toggleUsers) {
-      $(".chat_user_list").hide();
-      $('.peerUsername').hide();
-      toggleUsers = false;
-    } else {
-      $(".chat_user_list").show();
-      $('.peerUsername').show();
-      toggleUsers = true;
-    }
-  }
-  // media player
-/*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
-  //login
-  $('#username-text').on('keyup', function(){
+  // function toggleUserlist(boxheight) {
+  //     var boxHieght = boxheight
+  //     if (toggleUsers) {
+  //       $(".chat_user_list").hide();
+  //       $('.peerUsername').hide();
+  //       toggleUsers = false;
+  //     } else {
+  //       $(".chat_user_list").show();
+  //       $('.peerUsername').show();
+  //       toggleUsers = true;
+  //     }
+  //   }
+    // media player
+    /*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
+    //login
+  $('#username-text').on('keyup', function() {
     var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
     var dataLength = data.split('').length;
-
     if ((!data.match(isValid)) || (dataLength > 16)) {
       $('#username-text').css("box-shadow", "inset 0 0 5px red");
     } else {
       $('#username-text').css("box-shadow", "none");
     }
   })
-
-  $('#roomname-text').on('keyup', function(){
+  $('#roomname-text').on('keyup', function() {
     var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
-
-    if (data.match(isValid)){
+    if (data.match(isValid)) {
       $('#roomname-text').css("box-shadow", "none");
     } else {
       $('#roomname-text').css("box-shadow", "inset 0 0 5px red");
     }
   })
-
-  $('#peerSubmit').on('click', function(){
+  $('#peerSubmit').on('click', function() {
     var peerName = $('#username-text').val();
     var roomName = $('#roomname-text').val();
-
     var isValid = /^[a-zA-Z0-9]+$/
     var peerNameLength = peerName.split('').length;
-
     if ((!peerName.match(isValid)) || (!roomName.match(isValid)) || (peerNameLength > 16)) {
       return false;
     }
-
     if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
       return false;
     }
-
     chatBox.show();
     fileBox.show();
     mediaBox.show();
@@ -131,39 +119,40 @@ $('document').ready(function(){
   //select chat for hammertime tap events
   var chatBox = $('#chat_box');
   var chatElement = document.getElementById('chat_box');
-  chatBox.css( splitHieght ).css( fullHeight ).css( placeRight );
+  chatBox.css(splitHieght).css(fullHeight).css(placeRight);
   var chatWindow = new Hammer(chatElement);
-  set_drags(chatElement,chatBox);
-  attack_grid(chatBox,"rs")
+  set_drags(chatElement, chatBox);
+  attack_grid(chatBox, "rs")
   chatBox.hide();
   //select filebox for hammertime tap events
   var fileBox = $('#file_box');
   var fileElement = document.getElementById('file_box');
   var fileWindow = new Hammer(fileElement);
-  set_drags(fileElement,fileBox);
-  attack_grid(fileBox,"ls")
+  set_drags(fileElement, fileBox);
+  attack_grid(fileBox, "ls")
   fileBox.hide();
   //select cambox for hammertime tap events
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
-  set_drags(camElement,camBox);
+  set_drags(camElement, camBox);
   camBox.hide();
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');
   var mediaWindow = new Hammer(mediaElement);
-  set_drags(mediaElement,mediaBox);
-  attack_grid(mediaBox,"ls")
+  set_drags(mediaElement, mediaBox);
+  attack_grid(mediaBox, "ls")
   mediaBox.hide();
   //set content click handler to change z-index
-  $('.content').on('click',function(){
+  $('.content').on('click', function() {
     zIndex++;
-    $(this).parent().css({zIndex:zIndex});
+    $(this).parent().css({
+      zIndex: zIndex
+    });
   });
-  
   //drag the chat
-  function set_drags(element,jElement){
+  function set_drags(element, jElement) {
     jElement.pep({
       'constrainTo': '#desktop',
       'droppable': '.droppable',
@@ -175,15 +164,9 @@ $('document').ready(function(){
         $('.droppable').detach();
         zIndex++;
         console.log(element.id);
-        jElement.css( { zIndex: zIndex } );
-
-
-        
-        if( element.id == "chat_box" ){
-          
-          toggleUsers = !toggleUsers;
-          toggleUserlist({'height':get_viewpoint()[1]*2/3});
-        }
+        jElement.css({
+          zIndex: zIndex
+        });
       },
       'start':function(){
         var viewpoint = get_viewpoint();
@@ -201,12 +184,20 @@ $('document').ready(function(){
         maxWindow = null;
         jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
         jElement.addClass('dragging_box');
-        setTimeout(function(){
-          $('<div/>',{id:'rs',class:'droppable'}).prependTo('body');
-          $('<div/>',{id:'ls',class:'droppable'}).prependTo('body');
-          $('<div/>',{id:'bs',class:'droppable'}).prependTo('body');
-          
-        },300);
+        setTimeout(function() {
+          $('<div/>', {
+            id: 'rs',
+            class: 'droppable'
+          }).prependTo('body');
+          $('<div/>', {
+            id: 'ls',
+            class: 'droppable'
+          }).prependTo('body');
+          $('<div/>', {
+            id: 'bs',
+            class: 'droppable'
+          }).prependTo('body');
+        }, 300);
         // left side is dragged from snap
           if (horizontalGrid[0]==jElement){
             horizontalGrid[0] = null
@@ -258,7 +249,6 @@ $('document').ready(function(){
             horizontalGrid[0].css(fullHeight).css(placeLeft).css(placeTop);
             horizontalGrid[1].css(fullHeight).css(placeRight).css(placeTop);
           }
-
       },
       'rest':function(){
         if(timeout == false){
@@ -271,7 +261,7 @@ $('document').ready(function(){
        if (this.activeDropRegions.length >= 2){
        attack_grid(jElement,"bs")
       }}},
-      'easing':function(){
+      'easing': function() {
         var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
         if (dropRegion.length == 1){
@@ -281,7 +271,12 @@ $('document').ready(function(){
       }
     });
   }
+  $('#user-button').bind('click touchstart', function(e) {
+    e.preventDefault();
+    $('#chat_user_list').toggle();
+  });
 });
+
 function attack_grid(jElement,side){
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
@@ -474,4 +469,3 @@ function get_viewpoint(){
   var viewpointz = [vpw,vph];
   return viewpointz;
 }
-

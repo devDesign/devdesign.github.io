@@ -100,21 +100,24 @@ audio {
   color: #F18160; }
 
 #pid {
-  color: white;
-  padding: auto; }
+  color: white; }
 
-#start-video-feed {
-  margin: 10px 10px 0px 10px;
-  color: black;
+.glyph {
+  padding: 0.2em;
+  margin: 0.4em;
+  display: flex;
+  z-index: 999999; }
+
+.fa {
+  display: flex;
+  color: #F18160;
+  margin: auto; }
+
+#user-button:hover, #start-video-feed:hover {
+  color: #df5645; }
+
+#user-button, #start-video-feed {
   display: none; }
-  #start-video-feed button {
-    width: 100%;
-    height: 2.6em;
-    border-radius: 7px;
-    background-color: #F18160;
-    border-color: #f17d5b;
-    font-weight: bold;
-    color: #882418; }
 
 .window_title {
   display: flex;
@@ -226,10 +229,12 @@ audio {
   text-align: right;
   position: absolute;
   background-color: #333;
+  color: white;
   right: 0px;
   width: 10em;
   top: 2.6em;
-  bottom: 1.3em; }
+  display: none;
+  z-index: 99999; }
   #chat_user_list .users {
     text-align: center;
     padding-top: 0.4em;
@@ -240,7 +245,7 @@ audio {
     flex-direction: row;
     justify-content: flex-end; }
   #chat_user_list .active {
-    padding: 0px 8px 1px 0px; }
+    padding: 4px 8px 4px 1px; }
 
 #users {
   text-align: right;
@@ -357,26 +362,7 @@ video {
   top: 1.6em;
   bottom: 3em; }
 
-.demo {
-  background: #444;
-  width: 100%;
-  height: 500px;
-  border: 1px solid;
-  overflow: hidden;
-  padding: 0;
-  position: relative !important;
-  line-height: 1.5; }
-  .demo .pep {
-    cursor: pointer;
-    margin: 0;
-    padding: 10px; }
-  .demo .loading, .demo .pull {
-    text-align: center;
-    position: absolute;
-    top: -30px;
-    width: 100%;
-    /* @include transition(all 100ms); */ }
-    .demo .loading.shown, .demo .pull.shown {
-      top: 10px; }
+.downloaded {
+  color: #F18160 !important; }
 
 /*# sourceMappingURL=style.css.map */
