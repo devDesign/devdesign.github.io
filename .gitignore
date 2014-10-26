@@ -1,5 +1,5 @@
 *.DS_Store
 *.map
-client/.sass-cache
+client/stylesheets/.sass-cache
 *.log
 client/stylesheets/style.css
