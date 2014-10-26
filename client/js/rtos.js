@@ -536,6 +536,11 @@ $(document).ready(function() {
   $('#send').submit(function(e) {
     e.preventDefault();
     var msg = $('#text').val();
+
+    if (msg === ''){
+      return false;
+    }
+    
     msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var messageObject = {};
     messageObject[peer.id] = msg;

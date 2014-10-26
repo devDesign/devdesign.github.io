@@ -5,12 +5,15 @@
   font-family: "Aller";
   src: url("../fonts/Aller_Bd.ttf");
   font-weight: bold; }
+@font-face {
+  font-family: "FontAwesome";
+  src: url("../stylesheets/font-awesome/fonts/FontAwesome.otf"); }
 .border-module, #login-box, #chat_box, #file_box, #media_box, #chat_user_list, #users {
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
 
 html {
-  font-family: "Aller";
+  font-family: "Aller", "FontAwesome";
   overflow-y: hidden;
   overflow-x: hidden;
   height: 100%; }
@@ -21,16 +24,16 @@ input {
 body {
   padding: 0;
   margin: 0;
-  background-color: #26282C;
+  background-color: #2D313D;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
   body h2 {
-    color: #F18160;
+    color: #E58C7D;
     margin-left: 0.3em;
     margin-top: 10px; }
     body h2 a {
       text-decoration: none;
-      color: #F18160; }
+      color: #E58C7D; }
 
 audio {
   position: absolute;
@@ -42,7 +45,7 @@ audio {
   position: absolute;
   height: 33%;
   width: 100%;
-  background-color: #121317; }
+  background-color: #2D313D; }
 
 #login-box {
   position: absolute;
@@ -50,7 +53,7 @@ audio {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 2em; }
   #login-box input {
     display: flex;
@@ -67,8 +70,8 @@ audio {
     width: 100%;
     height: 3em;
     border-radius: 7px;
-    background-color: #F18160;
-    border-color: #f17d5b;
+    background-color: #E58C7D;
+    border-color: #e48879;
     font-weight: bold;
     color: #882418; }
   #login-box button:hover {
@@ -97,7 +100,7 @@ audio {
 #id {
   margin: 1em 10px 0px 10px;
   display: none;
-  color: #F18160; }
+  color: #E58C7D; }
 
 #pid {
   color: white; }
@@ -110,7 +113,7 @@ audio {
 
 .fa {
   display: flex;
-  color: #F18160;
+  color: #E58C7D;
   margin-top: 2px; }
 
 #user-button:hover, #start-video-feed:hover {
@@ -124,11 +127,15 @@ audio {
   box-sizing: border-box;
   height: 1.5em;
   width: 100%;
-  background-color: #4B4F53; }
+  background-color: #363A4A; }
   .window_title span {
     padding: 3px;
     margin-left: 5px;
-    color: #F18160; }
+    color: #E58C7D; }
+  .window_title .maximize {
+    position: absolute;
+    right: 0;
+    margin-right: 5px; }
 
 #chat_box {
   display: flex;
@@ -137,7 +144,7 @@ audio {
   flex: 1 50%;
   color: white;
   z-index: 99;
-  background-color: #26282C;
+  background-color: #424659;
   box-sizing: border-box;
   top: 0px;
   bottom: 0px; }
@@ -146,7 +153,7 @@ audio {
   flex: 1 50%;
   width: 50%;
   color: white;
-  background-color: #26282C;
+  background-color: #424659;
   position: absolute;
   box-sizing: border-box; }
 
@@ -158,7 +165,7 @@ audio {
 #media_box {
   width: 50%;
   color: white;
-  background-color: #26282C;
+  background-color: #424659;
   position: absolute;
   box-sizing: border-box;
   overflow-y: auto;
@@ -193,8 +200,6 @@ audio {
 
 #global_chat {
   position: absolute;
-  right: 10em;
-  left: 0;
   bottom: 1.8em;
   z-index: -1;
   overflow-y: hidden;
@@ -221,7 +226,7 @@ audio {
     box-sizing: border-box;
     font-size: 1.2em;
     color: white;
-    background-color: #121317;
+    background-color: #2D313D;
     width: 100%;
     padding: 1px 0px 1px 8px; }
 
@@ -241,7 +246,7 @@ audio {
   #chat_user_list .users {
     text-align: center;
     padding-top: 0.4em;
-    color: #F18160; }
+    color: #E58C7D; }
   #chat_user_list .self {
     padding: 0px 8px 1px 0px;
     display: flex;
@@ -323,7 +328,7 @@ video {
     box-shadow: -1px 1px 1px #111;
     width: 100%; }
     #playlist li:hover {
-      box-shadow: inset 0 0 3px #121317;
+      box-shadow: inset 0 0 3px #2D313D;
       color: #eee; }
 
 .file-entry {
@@ -333,7 +338,7 @@ video {
   box-shadow: -1px 1px 1px #111;
   width: auto; }
   .file-entry:hover {
-    box-shadow: inset 0 0 3px #121317;
+    box-shadow: inset 0 0 3px #2D313D;
     color: #eee; }
   .file-entry a {
     text-decoration: none;
@@ -370,6 +375,6 @@ video {
   bottom: 3em; }
 
 .downloaded {
-  color: #F18160 !important; }
+  color: #E58C7D !important; }
 
 /*# sourceMappingURL=style.css.map */
