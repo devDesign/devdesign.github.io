@@ -276,10 +276,12 @@ audio {
   height: 10px;
   border-radius: 100%;
   background-color: rgba(255, 0, 0, 0.6);
-  z-index: 99999; }
+  z-index: 99999;
+  pointer-events: none; }
 
 .mousecam {
-  border-radius: 10000px; }
+  border-radius: 10000px;
+  pointer-events: none; }
 
 video {
   width: 100px; }
