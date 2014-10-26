@@ -63,6 +63,8 @@ onTorrent = function(torrent) {
 
   torrent.files.forEach(function (file,index) {
     var extname = path.extname(file.name)
+
+ 
     // if (extname === '.mp4' || extname === '.webm') {
     //   var video = document.createElement('video')
     //   video.controls = true
@@ -82,8 +84,10 @@ onTorrent = function(torrent) {
         }
         a.classList.add('downloaded');
         a.download = file.name
-        a.href = URL.createObjectURL(new Blob([ buf ]))
+        realFile = new Blob([buf])
+        a.href = URL.createObjectURL(realFile)
         a.innerHTML = file.name
+ 
  
 
        // if (file.type === "audio/mp3" || file.type === "audio/wav" ){
