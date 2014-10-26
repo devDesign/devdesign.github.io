@@ -64,7 +64,6 @@ onTorrent = function(torrent) {
   torrent.files.forEach(function (file,index) {
     var extname = path.extname(file.name)
 
- 
     // if (extname === '.mp4' || extname === '.webm') {
     //   var video = document.createElement('video')
     //   video.controls = true
@@ -72,7 +71,7 @@ onTorrent = function(torrent) {
     //   file.createReadStream().pipe(video)
     // } else {
       file.createReadStream().pipe(concat(function (buf) {
-        console.log(index);
+
         if (index == 0) {
           var a = document.getElementById(torrent.infoHash+'-torrent') 
         } else {
@@ -88,64 +87,87 @@ onTorrent = function(torrent) {
         a.href = URL.createObjectURL(realFile)
         a.innerHTML = file.name
  
- 
+        console.log(extname)
+        if (extname == ".mp3"){
+          file.type = "audio/mp3"
+        } else if (extname == ".wav"){
+          file.type = "audio/wav"
+        }
 
-       // if (file.type === "audio/mp3" || file.type === "audio/wav" ){
-          play_torrent_file(a.href, file.name, file.type);
-        // }
+            if (file.type === "audio/mp3" || file.type === "audio/wav" ){
+              play_torrent_file(a.href, file.name, file.type, realFile);
+            }
+
 
       }))
     // }
   })
 }
 
-function play_torrent_file(url, title, type) {
+function play_torrent_file(url, title, type, blob) {
   
   var audio;
   var playlist;
   var tracks;
   var current;
 
-  $('<a href=' + url + '><li class="playlist-entry" id="'+title+'">' + title + '</li></a>').appendTo('#playlist');
+  reader = new FileReader();
 
-  initPlaylist();
-  function initPlaylist(){
-    current = 0;
-    audio = $('#audio')[0];
-    playlist = $('#playlist');
-    tracks = playlist.find('li a');
-    console.log(tracks);
-    len = tracks.length - 1;
-    audio.volume = .70;
-    audio.play();
-    playlist.find('a').click(function(e){
-        e.preventDefault();
-        link = $(this);
-        current = link.parent().index();
-        run(link, audio);
+  reader.onload = function(event) {
+    ID3.loadTags(url, function() {
+      var tags = ID3.getAllTags(url);
+      console.log(tags);
+
+      $('<a href=' + url + '><li class="playlist-entry" id="'+title+'">' + tags.title + '</li></a>').appendTo('#playlist');
+
+      initPlaylist();
+      function initPlaylist(){
+        current = 0;
+        audio = $('#audio')[0];
+        playlist = $('#playlist');
+        tracks = playlist.find('li a');
+        len = tracks.length - 1;
+        audio.volume = .70;
+        audio.play();
+        playlist.find('a').click(function(e){
+            e.preventDefault();
+            link = $(this);
+            current = link.parent().index();
+            run(link, audio);
+        });
+        audio.addEventListener('ended',function(e){
+            current++;
+            if(current == len){
+                current = 0;
+                link = playlist.find('a')[0];
+            }else{
+                link = playlist.find('a')[current];    
+            }
+            run($(link),audio);
+        });
+      }
+      
+      function run(link, player){
+              player.src = link.attr('href');
+              par = link.parent();
+              par.addClass('active-file').siblings().removeClass('active-file');
+              player.load();
+              player.play();
+              $('.nowplaying').remove();
+              $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
+              $('.nowplaying').css({opacity:1,left:"1em"})
+      }
+
+
+
+
+    }, {
+      tags: ["title","artist"],
+      dataReader: FileAPIReader(blob)
     });
-    audio.addEventListener('ended',function(e){
-        current++;
-        if(current == len){
-            current = 0;
-            link = playlist.find('a')[0];
-        }else{
-            link = playlist.find('a')[current];    
-        }
-        run($(link),audio);
-    });
-  }
-  
-  function run(link, player){
-          player.src = link.attr('href');
-          par = link.parent();
-          par.addClass('active-file').siblings().removeClass('active-file');
-          player.load();
-          player.play();
-          $('.nowplaying').remove();
-          $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
-          $('.nowplaying').css({opacity:1,left:"1em"})
-  }
+  };
+  reader.readAsArrayBuffer(blob);
+
 }
 
 var log = document.querySelector('.log')
