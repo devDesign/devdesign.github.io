@@ -228,13 +228,16 @@ audio {
 #chat_user_list {
   text-align: right;
   position: absolute;
-  background-color: #333;
+  background-color: #26282C;
   color: white;
-  right: 0px;
+  right: 29px;
   width: 10em;
   top: 2.6em;
   display: none;
-  z-index: 99999; }
+  z-index: 99999;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 7px; }
   #chat_user_list .users {
     text-align: center;
     padding-top: 0.4em;
@@ -272,7 +275,11 @@ audio {
   width: 10px;
   height: 10px;
   border-radius: 100%;
-  background-color: rgba(255, 0, 0, 0.6); }
+  background-color: rgba(255, 0, 0, 0.6);
+  z-index: 99999; }
+
+.mousecam {
+  border-radius: 10000px; }
 
 video {
   width: 100px; }
