@@ -1,10 +1,9 @@
-$black: #121317;
-$black-shade: #26282C;
-$grey-shade: #41454E;
-$orange-shade: #F18160;
+$black: #2D313D;
+$black-shade: #424659;
+$grey-shade: #363A4A;
+$orange-shade: #E58C7D;
 $blue-shade: #5699C2;
 
-// might kill this font. I don't think I like it.
 @font-face {
   font-family: "Aller";
   src: url('../fonts/Aller_Rg.ttf');
@@ -16,13 +15,18 @@ $blue-shade: #5699C2;
   font-weight: bold;
 }
 
+@font-face {
+  font-family: "FontAwesome";
+  src: url('../stylesheets/font-awesome/fonts/FontAwesome.otf');
+}
+
 .border-module {
   border: 1px solid rgba(0,0,0,0.1);
   box-shadow: 0 8px 16px rgba(0,0,0,0.25);
 }
 
 html {
-  font-family: "Aller";
+  font-family: "Aller", "FontAwesome";
   overflow-y: hidden;
   overflow-x: hidden;
   height: 100%;
@@ -37,7 +41,7 @@ input {
 body {
   padding: 0;
   margin: 0;
-  background-color: $black-shade;
+  background-color: $black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // background: url('images/stardust.png');
@@ -72,7 +76,7 @@ audio {
   left:50%;
   transform:translate(-50%,-50%);
   z-index: 99999;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0, 0.7);
   padding: 2em;
   @extend .border-module;
     input {
@@ -169,11 +173,17 @@ audio {
   // position: relative;
   height: 1.5em;
   width: 100%;
-  background-color: #4B4F53;
+  background-color: $grey-shade;
     span {
       padding: 3px;
       margin-left: 5px;
       color: $orange-shade;
+    }
+
+    .maximize {
+      position: absolute;
+      right: 0;
+      margin-right: 5px;
     }
 }
 
@@ -243,17 +253,15 @@ audio {
   transform: translate(-50%,0);
 }
 #global_chat{
-  // font-family: "Courier New", Courier, monospace;
   position: absolute;
-  right: 10em;
-  left: 0;
   bottom: 1.8em;
   z-index: -1;
   overflow-y: hidden;
   top: 1.6em;
+  width: 100%;
     div {
-      width: 98%;
       padding: 0px 0px 1px 8px;
+      word-wrap: break-word;
     }
 
     div:first-child {
