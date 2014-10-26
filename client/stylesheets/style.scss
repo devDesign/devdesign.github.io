@@ -223,7 +223,7 @@ audio {
   background-color: $black-shade;
   position: absolute;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: none;
   overflow-x: hidden;
   @extend .border-module;
 }
@@ -382,8 +382,10 @@ video{
 }
 #playlist_box{
   position: absolute;
-  background-color: #040404;
-  width: 95%;
+  width: 100%;
+  top:1.6em;
+  bottom:2em;
+  overflow-y: auto;
   // top:1.3em;
   // bottom: 0px;
 }
