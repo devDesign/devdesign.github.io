@@ -149,7 +149,7 @@ audio {
 .fa {
   display: flex;
   color: $orange-shade;
-  margin: auto;
+  margin-top: 2px;
 }
 
 #user-button:hover, #start-video-feed:hover {
@@ -168,7 +168,7 @@ audio {
   box-sizing: border-box;
   // padding: 1px;
   // position: relative;
-  height: 1.3em;
+  height: 1.5em;
   width: 100%;
   background-color: #4B4F53;
     span {
