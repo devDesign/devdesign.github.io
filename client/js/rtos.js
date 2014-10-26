@@ -56,13 +56,14 @@ $(document).ready(function() {
     // Listen for new connections
     // SEND ROOM TO NEW USER!!!!!!!!!!!!!!!!!
     // FUCK
+    peer.on('connection', connect);
+
     peer.on('connection', function(c){
-      connect(c);
-      if ( c.label === "loadRoom" ) {
-        setTimeout(function(){
-          c.send([sessionMessages,sessionTorrents]);
-        },1000)
-      }
+      // if ( c.label === "loadRoom" ) {
+      //   setTimeout(function(){
+      //     c.send([sessionMessages,sessionTorrents]);
+      //   },2000)
+      // }
     });
 
     peer.on('call', function(call) {
