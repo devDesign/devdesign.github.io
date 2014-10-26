@@ -8,11 +8,34 @@ $('document').ready(function(){
  
 });
   // maximize
-  $("#maximize").on("click",function(){
+  $(".maximize").on("click",function(){
+    var viewpoint = get_viewpoint();
+    var height = viewpoint[1];
+    var width = viewpoint[0];
+    var barHeight = document.getElementById('nav').offsetHeight;
+    var splitWidth = { 'width':width/2 }
+    var splitHieght = { 'height':(height-barHeight)/2 }
+    var placeTop = { 'top': 0 }
+    var placeBottom = { 'top': (height-barHeight)/2  }
+    var placeRight = { 'left': width/2 }
+    var placeLeft = { 'left': 0 }
+    var fullHeight = { 'height': height - barHeight }
+    var fullWidth = { 'width': width }
     thisWindow = $( this ).parent();
     thisWindow = thisWindow.parent();
-    console.log(thisWindow);
+    maxWindow = $(thisWindow);
+    $(thisWindow).css({"z-index":9999}).css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
   });
+
+  //clear all grid objects
+  function clearGrid(object){
+    verticalGrid = [null,null];
+    horizontalGrid = [null,null];
+    rs = null;
+    ls = null;
+    bs = null;
+
+  }
 
 
   //ultimate hammer
@@ -36,6 +59,7 @@ $('document').ready(function(){
   var placeRight = { 'left': width/2 }
   var placeLeft = { 'left': 0 }
   var fullHeight = { 'height': height - barHeight }
+  var fullWidth = { 'width': width }
   var zIndex = 100;
   // event toggle userlist in chat
   var users = document.getElementById('users')
@@ -162,6 +186,19 @@ $('document').ready(function(){
         }
       },
       'start':function(){
+        var viewpoint = get_viewpoint();
+        var height = viewpoint[1];
+        var width = viewpoint[0];
+        var barHeight = document.getElementById('nav').offsetHeight;
+        var splitWidth = { 'width':width/2 }
+        var splitHieght = { 'height':(height-barHeight)/2 }
+        var placeTop = { 'top': 0 }
+        var placeBottom = { 'top': (height-barHeight)/2  }
+        var placeRight = { 'left': width/2 }
+        var placeLeft = { 'left': 0 }
+        var fullHeight = { 'height': height - barHeight }
+        var fullWidth = { 'width': width }
+        maxWindow = null;
         jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
         jElement.addClass('dragging_box');
         setTimeout(function(){
@@ -183,7 +220,7 @@ $('document').ready(function(){
                 rs = null;
               } else if(bs){
                 bs.css(placeLeft).css(fullHeight).css(placeTop).css(splitWidth);
-                horizontalGrid[1].css(fullHeight).css(placeTop);
+                horizontalGrid[1].css(fullHeight).css(placeTop).css(placeRight);
                 horizontalGrid[0]= bs;
                 bs = null;
               }
@@ -347,7 +384,7 @@ switch (side)
           break;
         }
       // user has thrown window to the bottom  
-      case "bs":{
+      case "bs":
         // if there is a window on the bottom already and a window on the left or right
         if(bs != null && (horizontalGrid[0] || horizontalGrid[1]) && ls==null && rs==null){
           console.log('what?');
@@ -367,9 +404,10 @@ switch (side)
           jElement.css(splitHieght).css(placeBottom).css(placeLeft).css(fullWidth);
           bs=jElement;
         }
-      }
+      
     }
 }
+
 var rtime = new Date(23, 4, 1985, 12,00,00);
 var timeout = false;
 var delta = 300;
@@ -403,22 +441,26 @@ function resizeend() {
         zIndex = 100;
 
         $('.dragging_box').css(splitWidth);
-        if(horizontalGrid[0] && ls == null && bs == null){
-          horizontalGrid[0].css( fullHeight ).css( splitWidth).css( placeLeft ).css( placeTop );
-        } else if(horizontalGrid[0] && ls) { 
-          horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
-          ls.css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeBottom );
-        }
-        if(horizontalGrid[1] && rs == null && bs == null){
-          horizontalGrid[1].css( fullHeight ).css( splitWidth).css( placeRight ).css( placeTop );
-        } else if(horizontalGrid[1] && rs) { 
-          horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
-          rs.css( splitHieght ).css( splitWidth).css( placeRight ).css( placeBottom );
-        }
-        if(bs){
-          horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
-          horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
-          bs.css( fullWidth ).css( placeBottom).css( placeLeft );
+        if(maxWindow){
+          maxWindow.css(fullHeight).css(fullWidth).css(placeTop).css(placeLeft);
+        } else{ 
+          if(horizontalGrid[0] && ls == null && bs == null){
+            horizontalGrid[0].css( fullHeight ).css( splitWidth).css( placeLeft ).css( placeTop );
+          } else if(horizontalGrid[0] && ls) { 
+            horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
+            ls.css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeBottom );
+          }
+          if(horizontalGrid[1] && rs == null && bs == null){
+            horizontalGrid[1].css( fullHeight ).css( splitWidth).css( placeRight ).css( placeTop );
+          } else if(horizontalGrid[1] && rs) { 
+            horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
+            rs.css( splitHieght ).css( splitWidth).css( placeRight ).css( placeBottom );
+          }
+          if(bs){
+            horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
+            horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
+            bs.css( fullWidth ).css( placeBottom).css( placeLeft );
+          }
         }
     }               
 }

@@ -35,8 +35,7 @@ body {
 audio {
   position: absolute;
   bottom: 0px;
-  width: 100%;
-  z-index: 9999; }
+  width: 100%; }
 
 #visualizer {
   top: 1.3em;
@@ -180,7 +179,7 @@ audio {
 
 #bs {
   position: fixed;
-  width: 10px;
+  width: 1px;
   bottom: 0px;
   left: 50%;
   height: 1px;

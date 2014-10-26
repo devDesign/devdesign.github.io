@@ -1,5 +1,7 @@
 var eachActiveConnection;
 // THANKS to github.com/peers 
+var sessionTorrents = [{hello: "sir"}];
+
 $(document).ready(function() {
 
   function pastelColors(){
@@ -58,7 +60,6 @@ $(document).ready(function() {
     peer.on('connection', function(c){
       connect(c);
       if ( c.label === "loadRoom" ) {
-        console.log("fUUUUUUCCCCCCKKKKK here comes someone")
         setTimeout(function(){
           c.send([sessionMessages,sessionTorrents]);
         },1000)
@@ -240,11 +241,16 @@ $(document).ready(function() {
 
       // Append message to chat
       c.on('data', function(data) {
-        console.log(data);
      
         globalChat.append('<div><span class="peer" style="color:'+data[1]+'">' + c.peer + '</span>: ' + data[0] +
           '</div>');
         globalChat.scrollTop(globalChat.prop("scrollHeight"));
+
+        var messageObject = {};
+        messageObject[peer.id] = data[0];
+        sessionMessages.push(messageObject);
+        console.log(sessionMessages)
+
       });
 
       // Fade peer out on close
@@ -485,8 +491,11 @@ $(document).ready(function() {
     e.preventDefault();
     var msg = $('#text').val();
     msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    var messageObject = {};
+    messageObject[peer.id] = msg;
+    sessionMessages.push(messageObject);
+    console.log(sessionMessages)
 
-    console.log(msg);
     $('#global_chat').append('<div><span class="you" style="color:'+color+'">You: </span>' + msg + '</div>');
     $('#global_chat').scrollTop($('#global_chat').prop("scrollHeight"));
     eachActiveConnection(function(c, $c) {
