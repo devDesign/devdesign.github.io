@@ -161,7 +161,7 @@ audio {
   position: absolute;
   left: 0em;
   right: 0em;
-  top: 1.3em;
+  top: 1.6em;
   bottom: 1.3em;
   overflow-y: auto;
   overflow-x: none; }
@@ -211,7 +211,7 @@ audio {
   position: absolute;
   bottom: 1.8em;
   z-index: -1;
-  overflow-y: hidden;
+  overflow-y: auto;
   top: 1.6em;
   width: 100%; }
   #global_chat div {
