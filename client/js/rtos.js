@@ -302,14 +302,7 @@ $(document).ready(function() {
       c.on('data', function(data) {
         var infoHash = data[0]
         var fileName = data[1]
-<<<<<<< HEAD
-        newTorrentFile = $('<a id="'+infoHash+'">').text(fileName);
-        newTorrentFile.attr('href','javascript:void(0);');
-        newTorrentFile.appendTo('#filelist')
-        newTorrentFile.on('click', function(e){
-          download(e.target.id);
-        });
-=======
+
         var numberOfFiles = data[2]
 
 
@@ -333,9 +326,6 @@ $(document).ready(function() {
           });
 
 
-
-
->>>>>>> 79f35a620282956c62590d92c84c1f1cd5beefa0
       });
 
     // Send mouse position of moving mouse to user
