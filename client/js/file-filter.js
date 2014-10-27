@@ -100,6 +100,7 @@ dragDrop('body', function(files){
       }
     });
 
+    errorMessage('Torrent ready!')
     onTorrent(torrent)
   }); 
 })
