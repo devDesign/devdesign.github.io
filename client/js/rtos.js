@@ -281,6 +281,8 @@ $(document).ready(function() {
         if ($('.connection').length === 0) {
           $('.filler').show();
         }
+        var messages = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
+        globalChat.append(messages);
         delete connectedPeers[c.peer];
       });
 
@@ -590,6 +592,7 @@ $(document).ready(function() {
   $('#browsers').text(navigator.userAgent);
 
   window.onbeforeunload = function() {
+    peer.destroy();
     try {
       peer.destroy();
       console.log(peer)
@@ -598,15 +601,16 @@ $(document).ready(function() {
       console.log(err);
     }
     // KEEP FOR PRODUCTION
-     $.ajax({
-       type: 'delete',
-       url: '/rtos/rooms?userName=' + peer.id,
-       async: false
-     });
+     // $.ajax({
+     //   type: 'delete',
+     //   url: '/rtos/rooms?userName=' + peer.id,
+     //   async: false
+     // });
   }
 });
 
 window.onunload = window.onbeforeunload = function(e) {
+  peer.destroy();
   try {
     if (!!peer && !peer.destroyed) {
     peer.destroy();

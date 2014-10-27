@@ -157,10 +157,7 @@ function play_torrent_file(url, title, type, blob) {
               $('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
               $('.nowplaying').css({opacity:1,left:"1em"})
       }
-
-
-
-
+      
     }, {
       tags: ["title","artist"],
       dataReader: FileAPIReader(blob)

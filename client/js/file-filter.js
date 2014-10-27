@@ -32,7 +32,6 @@ function doNothing(e){
 }
 
 var bigFile = false;
-console.log("1"+bigFile)
 // Decide whether to send to webRTCio or not
 function fileRouter(e){
   var files = e.dataTransfer.files;
@@ -54,11 +53,8 @@ function fileRouter(e){
         if ( !bigFile ) {     
           process_inbound_files(file)
           bigFile = true;
-          console.log("2"+bigFile)
         } else {
-          errorMessage("---------------")
-          alert("!");
-          console.log("3"+bigFile)
+          errorMessage("One large file at a time, stop upload to add a new one")
         }
       } else {
         // do nothing, handled by dragDrop below
