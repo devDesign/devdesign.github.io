@@ -8193,6 +8193,8 @@ var parallel = require('run-parallel')
 
 function DragDropAsBuffer (elem, cb) {
   dragDrop(elem, function (files, pos) {
+
+
     var tasks = files.map(function (file) {
       return function (cb) {
         var reader = new FileReader()
@@ -8226,6 +8228,7 @@ function DragDrop (elem, cb) {
   elem.addEventListener('dragenter', killEvent, false)
   elem.addEventListener('dragover', makeOnDragOver(elem), false)
   elem.addEventListener('drop', onDrop.bind(undefined, elem, cb), false)
+  elem.addEventListener('change', onDrop.bind(undefined, elem, cb), false)
 }
 
 function killEvent (e) {
@@ -8254,22 +8257,26 @@ function makeOnDragOver (elem) {
 
 //FUCK
 
-onDrop = function(elem, cb, e, files) {
-  if(e == undefined){
-    // var totalSize = 0 
-    // for (var i = 0; i < files.length; i++) {
-    //   totalSize += files[i].size
-    // }
-    // if ( totalSize > 104857600 ) {
-    //   if ( files.length > 1 ) {
-    //     errorMessage('No multiple uploads over 150MB')
-    //   } else {
-    //     // Goes to webrtc.io
-    //   }
-    // } else {
-    //   cb(Array.prototype.slice.call(files))
-    // }
-    // return false
+onDrop = function(elem, cb, e) {
+  var invisibleInput = document.querySelector('#invisible-file-input');
+  if(e.target == invisibleInput){
+    console.log("from the drop");
+    files = invisibleInput.files
+    var totalSize = 0 
+    for (var i = 0; i < files.length; i++) {
+      totalSize += files[i].size
+    }
+    console.log(totalSize);
+    if ( totalSize > 104857600 ) {
+      if ( files.length > 1 ) {
+        errorMessage('No multiple uploads over 150MB')
+      } else {
+        // Goes to webrtc.io
+      }
+    } else {
+      cb(Array.prototype.slice.call(files), { x: e.clientX, y: e.clientY })
+    }
+    return false
   } else {
     e.stopPropagation()
     e.preventDefault()

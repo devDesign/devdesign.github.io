@@ -91,7 +91,7 @@ function upload_stop() {
 	this.meta = {};
 
   bigFile = false;
-  var filecontainer = document.getElementById(id);
+  var filecontainer = document.getElementById("0");
 	filecontainer.classList.remove('file-entry')
 
 	/* send a kill message */
@@ -581,10 +581,11 @@ function create_file_link (meta, id, username, fileEntry) {
 	//create a place to store this if it does not already
 	create_or_clear_container(id, username);
 	var filecontainer = document.getElementById(id);
+  filecontainer.classList.add('file-entry');
 	
 	//create the link
 	var span = document.createElement('span');
-	span.textContent = ': ';
+	span.textContent = '';
 	var a = document.createElement('a');
 	a.download = meta.name;
 	/* One difference with Chrome & FF :( */
@@ -596,7 +597,7 @@ function create_file_link (meta, id, username, fileEntry) {
 		/* fileEntry is actually not a FileEntry, but a blob in Chrome */
 		a.href = window.URL.createObjectURL(fileEntry);
 	}
-	a.textContent = 'save ' + meta.name;
+	a.textContent = meta.name;
 	a.dataset.downloadurl = [filetype, a.download, a.href].join(':');
 	a.draggable = true;
 
