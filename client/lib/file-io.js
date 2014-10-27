@@ -396,30 +396,31 @@ function play_file(id, title, type,file) {
   var url = $('#' + id).children('a').first().attr('href');
   var filez = file;
 
-  var audio;
+  var audio = document.getElementById('audio');
   var playlist;
   var tracks;
   var current;
+  var pButton = document.getElementById('pButton');
 
   $('<a href=' + url + '><li class="playlist-entry" id="'+ title +'">' + title + '</li></a>').appendTo('#playlist');
 
   initPlaylist();
   function initPlaylist(){
     current = 0;
-    audio = $('audio');
     playlist = $('#playlist');
     tracks = playlist.find('li a');
-    console.log(tracks);
     len = tracks.length - 1;
-    audio[0].volume = .70;
-    audio[0].play();
+    audio.volume = .70;
+    audio.play();
+    pButton.className = "";
+    pButton.className = "pause";
     playlist.find('a').click(function(e){
         e.preventDefault();
         link = $(this);
         current = link.parent().index();
-        run(link, audio[0]);
+        run(link, audio);
     });
-    audio[0].addEventListener('ended',function(e){
+    audio.addEventListener('ended',function(e){
         current++;
         if(current == len){
             current = 0;
@@ -427,19 +428,24 @@ function play_file(id, title, type,file) {
         }else{
             link = playlist.find('a')[current];    
         }
-        run($(link),audio[0]);
+        run($(link),audio);
     });
   }
   
   function run(link, player){
-          player.src = link.attr('href');
-          par = link.parent();
-          par.addClass('active-file').siblings().removeClass('active-file');
-          audio[0].load();
-          audio[0].play();
-          $('.nowplaying').remove();
- 					$('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
- 					$('.nowplaying').css({opacity:1,left:"1em"})
+	  if (pButton.className == "play"){
+	  	pButton.className = "";
+      pButton.className = "pause";
+	  };
+
+	  player.src = link.attr('href');
+	  par = link.parent();
+	  par.addClass('active-file').siblings().removeClass('active-file');
+	  audio.load();
+	  audio.play();
+	  $('.nowplaying').remove();
+		$('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
+		$('.nowplaying').css({opacity:1,left:"1em"})
   }
 }
 
@@ -453,7 +459,7 @@ function create_or_clear_container(id, username) {
 	if (this.downloading[id] == true) {
 		var span = document.getElementById(id + "-span");
 		if (!span) {
-			filecontainer.innerHTML = '<span id="'+id+'-span"></span>';
+			filecontainer.innerHTML = '<span id="'+ id +'-span"></span>';
 			/* add cancel button */
 			var a = document.createElement('a');
 			a.download = meta.name;

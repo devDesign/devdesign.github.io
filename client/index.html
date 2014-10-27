@@ -154,11 +154,13 @@
           <div id="now_playing"></div>
 
           <div id="audioplayer">
-            <button id="pButton" class="play"></button>
-            <div id="timeline">    
-              <div id="playhead"></div>
+            <div>
+              <button id="pButton" class="play"></button>
+              <div id="timeline">    
+                <div id="playhead"></div>
+              </div>
+              <input id="volume" min="0" max="1" step="0.01" type="range"/>
             </div>
-            <input id="volume" min="0" max="1" step="0.1" type="range" onchange="setVolume()" />
           </div>
         </div>
       </div>
@@ -184,7 +186,7 @@
     <div class='window'>
       
     </div>
-    
+
     <!-- FROM WEBRTC COPY -->
 
   <input type="file" id="invisible-file-input" multiple></div>
