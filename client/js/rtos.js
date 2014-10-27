@@ -62,7 +62,7 @@ $(document).ready(function() {
       if ( c.label === "loadRoom" ) {
         setTimeout(function(){
           c.send([sessionMessages,sessionTorrents]);
-        },2000)
+        },1000)
       }
     });
 
@@ -195,6 +195,7 @@ $(document).ready(function() {
         } else {
           var messageList = data[0]
           messageList.forEach(function(message,index){
+            sessionMessages.push(message);
             globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
           '</div>');
             globalChat.scrollTop(globalChat.prop("scrollHeight"));
