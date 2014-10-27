@@ -176,7 +176,6 @@ function store_in_fs(user_id, user_username, hash) {
 				
 				/* EOF condition */
 				if (recieved_meta[user_id].numOfChunksInFile <= (recievedChunksWritePointer[user_id])) {
-					console.log("creating file link!");
 						
 					/* stop accepting file info */
 					this.downloading[user_id] = false;
@@ -204,7 +203,6 @@ function process_inbound_files(file) {
 	this.meta.size = file.size;
 	this.meta.filetype = file.type;
 	this.meta.browser = $.browser.name; /* need browser name to set chunk size */
-	console.log(this.meta);
 	send_meta();
 	systemMessage("file ready to send");
 	/* user 0 is this user! */
@@ -245,7 +243,6 @@ function process_binary(id,message,hash) {
 	if (this.recieved_meta[id].numOfChunksInFile > this.recieved_meta[id].chunks_recieved) {
 		update_container_percentage(id, rtc.usernames[id], this.recieved_meta[id].chunks_recieved - 1, this.recieved_meta[id].numOfChunksInFile, this.recieved_meta[id].size);
 	} else {
-		console.log("done downloading file!");
 		/* stop accepting file info */
 		this.downloading[id] = false;
 		/* creating the download link is handled by write_to_file */
@@ -351,7 +348,7 @@ function download_file(id) {
         console.log("File system quota expanded by: " + (size_of_quota_granted / 1024*1024) + "MB");
       },
       function(err){
-        console.log(err);
+        errorMessage("Not enough space on HD to support FileSystemAPI")
       });
 	}
 
@@ -409,7 +406,6 @@ function play_file(id, title, type,file) {
     audio = $('audio');
     playlist = $('#playlist');
     tracks = playlist.find('li a');
-    console.log(tracks);
     len = tracks.length - 1;
     audio[0].volume = .70;
     audio[0].play();
@@ -500,7 +496,6 @@ function create_upload_stop_link(filename, id, username) {
 	create_or_clear_container(id, username);
 
   // How many files have 
-  console.log(filesDropped);
 
 	var filecontainer = document.getElementById(id);
 	 filecontainer.classList.add('file-entry')
@@ -629,8 +624,6 @@ function send_meta(id) {
 	if (jQuery.isEmptyObject(this.meta)) {
 		return;
 	}
-	console.log("sending meta data");
-	console.log(this.meta);
 	if (!id) {
 		dataChannelChat.broadcast(JSON.stringify({
 			"eventName": "data_msg",

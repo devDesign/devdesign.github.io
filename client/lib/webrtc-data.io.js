@@ -151,7 +151,6 @@ function sanitize(msg) {
       var pc = new PeerConnection(rtc.SERVER, rtc.dataChannelConfig);
       channel = pc.createDataChannel('supportCheck', {reliable: true}); 
       channel.close();
-	  console.log('data channel reliability set to true!');
       return reliable_true;
     } catch(e) {	
 		try {
@@ -159,7 +158,6 @@ function sanitize(msg) {
 		  var pc = new PeerConnection(rtc.SERVER, rtc.dataChannelConfig);
 		  channel = pc.createDataChannel('supportCheck', {reliable: false}); 
 		  channel.close();
-		  console.log('data channel reliability set to false!');
 		  return reliable_false;
 		} catch(e) {
 		  /* then fail :( */
@@ -234,8 +232,6 @@ function sanitize(msg) {
       };
 
       rtc.on('get_peers', function(data) {
-        console.log("get_peers");
-		    console.log(data);
         rtc.connections = data.connections;
         rtc.usernames = data.usernames;
         rtc._me = data.you;
@@ -259,7 +255,6 @@ function sanitize(msg) {
 
       rtc.on('new_peer_connected', function(data) {
         //add username
-        console.log(data.username+" has joined the room.");
         rtc.usernames[data.socketId] = sanitize(data.username);
         
         //add socket and create streams
@@ -268,7 +263,6 @@ function sanitize(msg) {
         // FUCK
         // THE CONNECTED GETS THIS
 
-        console.log("THE CONNECTED GETS SOCKETID OF CONNECTOR: "+data.socketId)
 
 
         var pc = rtc.createPeerConnection(data.socketId);
@@ -317,7 +311,6 @@ function sanitize(msg) {
   rtc.createPeerConnections = function() {
     for (var i = 0; i < rtc.connections.length; i++) {
       rtc.createPeerConnection(rtc.connections[i]);
-      console.log(rtc.connections[i]);
     }
   };
 
@@ -376,7 +369,6 @@ function sanitize(msg) {
     };
 	
 	pc.oniceconnectionstatechange = function(event) {
-		console.log("new ICE state:"+event.target.iceConnectionState);
 		if (event.target.iceConnectionState == 'connected') {
 			can_close = true; /* TODO! - make per channel */
 		}
@@ -385,7 +377,6 @@ function sanitize(msg) {
     //if (rtc.dataChannelSupport != rtc_unsupported) {
 	  /* this might need to be removed/handled differently if this is ever supported */
       pc.ondatachannel = function (evt) {
-        console.log('data channel connecting ' + id);
         rtc.addDataChannel(id, evt.channel); /* ? */
       //};
     }
@@ -470,12 +461,10 @@ function sanitize(msg) {
   rtc.createStream = function(opt, onSuccess, onFail) {
     var options;
     onSuccess = onSuccess || function(stream) {
-        console.log("STREAM ADDED");
         pc.onaddstream({stream: stream});
         pc.addStream(stream);
     };
     onFail = onFail || function() {
-      console.log("could not initialize video stream");
     };
 
     options = {
@@ -513,7 +502,6 @@ function sanitize(msg) {
       var stream = rtc.streams[i];
       for (var connection in rtc.peerConnections) {
         rtc.peerConnections[connection].addStream(stream);
-        console.log("GET DAT ADDSTREAM")
       }
     }
   };
@@ -555,10 +543,8 @@ function sanitize(msg) {
     }
 	
     try {
-      console.log('createDataChannel ' + id);
       channel = pc.createDataChannel(label, options);
     } catch (error) {
-      console.log('seems that DataChannel is NOT actually supported!');
       throw error;
     }
 
@@ -575,16 +561,13 @@ function sanitize(msg) {
 
     channel.onopen = function() {
 	  channel.binaryType = "arraybuffer";
-      console.log('data stream open ' + id);
-      console.log(channel);
 	  rtc.connection_ok_to_send[id] = true;
       rtc.fire('data stream open', id, rtc.usernames[id]);
     };
 
     channel.onclose = function(event) {
       delete rtc.dataChannels[id];
-      console.log('data stream close ' + id);
-      console.log(event);
+
       rtc.fire('data stream close', channel);
     };
 
@@ -596,7 +579,6 @@ function sanitize(msg) {
     };
 
     channel.onerror = function(err) {
-      console.log('data stream error ' + id + ': ' + err);
       rtc.fire('data stream error', channel, err);
     };
 
@@ -619,7 +601,6 @@ function sanitize(msg) {
 
     // FUCK
     // THE CONNECTOR GETS THIS
-    console.log("THE CONNECTER IS TOLD THAT THE CURRENT CONNECTION IS: >>>>>>"+connection)
 	}
   };
 

@@ -7,6 +7,8 @@ var sendMultiplesToWebTorrent;
 var download;
 var nowPlaying;
 
+
+
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var concat = require('concat-stream')
 dragDrop = require('drag-drop/buffer')
@@ -72,32 +74,60 @@ onTorrent = function(torrent) {
     // } else {
       file.createReadStream().pipe(concat(function (buf) {
 
+        // if (index == 0) {
+        //   var a = document.getElementById(torrent.infoHash+'-torrent') 
+        // } else {
+        //   var a = $('<a>')
+        //   var li = $('<div class="file-entry">')
+        //   a.appendTo(li)
+        //   li.appendTo('#filelist');
+        //   a = a[0]
+        // }
+        // a.classList.add('downloaded');
+        // a.download = file.name
+        // realFile = new Blob([buf])
+        // a.href = URL.createObjectURL(realFile)
+        // //a.innerHTML = file.name
 
-        if (index == 0) {
-          var a = document.getElementById(torrent.infoHash+'-torrent') 
-        } else {
-          var a = $('<a>')
-          var li = $('<div class="file-entry">')
-          a.appendTo(li)
-          li.appendTo('#filelist');
-          a = a[0]
-        }
-        a.classList.add('downloaded');
-        a.download = file.name
+        $('#file_list').show();
+        $('#download_list_box').hide();
+
         realFile = new Blob([buf])
-        a.href = URL.createObjectURL(realFile)
-        a.innerHTML = file.name
+        linkToFile = URL.createObjectURL(realFile)
  
-        console.log(extname)
+        console.log(index);
+
+        var newTorrentRow = $('<tr class="file-entry">fuck</tr>')
+        var streamCol = $('<td>')
+        var downloadCol = $('<td>')
+        var nameCol = $('<td>')
+        var sizeCol = $('<td>')
+        var typeCol = $('<td>')
+
         if (extname == ".mp3"){
           file.type = "audio/mp3"
         } else if (extname == ".wav"){
           file.type = "audio/wav"
         }
 
-            if (file.type === "audio/mp3" || file.type === "audio/wav" ){
-              play_torrent_file(a.href, file.name, file.type, realFile);
-            }
+        streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
+        downloadCol.html('<a download="'+file.name+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
+        nameCol.text(file.name).appendTo(newTorrentRow)
+        sizeCol.text((realFile.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
+        typeCol.text(file.type).appendTo(newTorrentRow)
+
+        // newTorrentRow.appendTo('#filelist')
+        newTorrentRow.appendTo('#filelist')
+
+
+    // var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
+    // newTorrentFile.attr('href','javascript:void(0);');
+    //$('<span class="progress-bar" id="'+torrent.infoHash+'-progress">').appendTo(newTorrentRow)
+    // newTorrentFile.appendTo(newTorrentRow)
+
+        if (file.type === "audio/mp3" || file.type === "audio/wav" ){
+          play_torrent_file(linkToFile, file.name, file.type, realFile);
+        }
 
 
       }))
@@ -121,7 +151,6 @@ function play_torrent_file(url, title, type, blob) {
   reader.onload = function(event) {
     ID3.loadTags(url, function() {
       var tags = ID3.getAllTags(url);
-      console.log(tags);
 
       //$('<tr id="'+title+'"><td class="artist">'+tags.artist+'</td><td class="playlist-entry><a href=' + url + '>' + tags.title + '</a></td></tr>').appendTo('#playlist');
       $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a class="track" href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td></tr>').appendTo('#playlist');
@@ -8228,7 +8257,7 @@ function DragDrop (elem, cb) {
   elem.addEventListener('dragenter', killEvent, false)
   elem.addEventListener('dragover', makeOnDragOver(elem), false)
   elem.addEventListener('drop', onDrop.bind(undefined, elem, cb), false)
-  elem.addEventListener('change', onDrop.bind(undefined, elem, cb), false)
+  invisibleInput.addEventListener('change', onDrop.bind(undefined, elem, cb), false)
 }
 
 function killEvent (e) {
@@ -8260,13 +8289,11 @@ function makeOnDragOver (elem) {
 onDrop = function(elem, cb, e) {
   var invisibleInput = document.querySelector('#invisible-file-input');
   if(e.target == invisibleInput){
-    console.log("from the drop");
     files = invisibleInput.files
     var totalSize = 0 
     for (var i = 0; i < files.length; i++) {
       totalSize += files[i].size
     }
-    console.log(totalSize);
     if ( totalSize > 104857600 ) {
       if ( files.length > 1 ) {
         errorMessage('No multiple uploads over 150MB')

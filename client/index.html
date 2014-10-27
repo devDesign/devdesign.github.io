@@ -77,8 +77,7 @@
           <span id="downloads">downloads</span>
         </div>
         <div id="download_list_box">
-          <div id="download_list">
-            <table>
+            <table id="download_list">
               <tr>
                 <td class="column_label">
                 filename
@@ -94,7 +93,6 @@
                 </td>
               </tr>
             </table>
-          </div>
         </div>
         <div id="file_list">
             <table id="filelist">
@@ -190,6 +188,8 @@
   <input type="file" id="invisible-file-input" multiple></div>
 
   <script>
+
+  var invisibleInput = document.querySelector('#invisible-file-input');
 
   $('#file-upload').on('click', function(e){
     $('#invisible-file-input').click();
