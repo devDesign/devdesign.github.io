@@ -46,7 +46,6 @@ download = function(infoHash) {
 
 onTorrent = function(torrent) {
   
-
   var progressSpan = $('#'+torrent.infoHash+'-progress');
 
   torrent.swarm.on('download', function () {
@@ -71,6 +70,7 @@ onTorrent = function(torrent) {
     //   file.createReadStream().pipe(video)
     // } else {
       file.createReadStream().pipe(concat(function (buf) {
+
 
         if (index == 0) {
           var a = document.getElementById(torrent.infoHash+'-torrent') 
@@ -8244,25 +8244,43 @@ function makeOnDragOver (elem) {
 }
 
 //FUCK
-function onDrop(elem, cb, e) {
-  e.stopPropagation()
-  e.preventDefault()
-  elem.classList.remove('drag')
-    var totalSize = 0 
-    var files = e.dataTransfer.files;
-    for (var i = 0; i < files.length; i++) {
-      totalSize += files[i].size
-    }
-    if ( totalSize > 104857600 ) {
-      if ( files.length > 1 ) {
-        errorMessage('No multiple uploads over 150MB')
-      } else {
-        // Goes to webrtc.io
+
+onDrop = function(elem, cb, e, files) {
+  if(e == undefined){
+    // var totalSize = 0 
+    // for (var i = 0; i < files.length; i++) {
+    //   totalSize += files[i].size
+    // }
+    // if ( totalSize > 104857600 ) {
+    //   if ( files.length > 1 ) {
+    //     errorMessage('No multiple uploads over 150MB')
+    //   } else {
+    //     // Goes to webrtc.io
+    //   }
+    // } else {
+    //   cb(Array.prototype.slice.call(files))
+    // }
+    // return false
+  } else {
+    e.stopPropagation()
+    e.preventDefault()
+    elem.classList.remove('drag')
+      var totalSize = 0 
+      var files = e.dataTransfer.files;
+      for (var i = 0; i < files.length; i++) {
+        totalSize += files[i].size
       }
-    } else {
-      cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
-    }
-  return false
+      if ( totalSize > 104857600 ) {
+        if ( files.length > 1 ) {
+          errorMessage('No multiple uploads over 150MB')
+        } else {
+          // Goes to webrtc.io
+        }
+      } else {
+        cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
+      }
+    return false
+  }
 }
 
 },{"lodash.throttle":46}],46:[function(require,module,exports){
