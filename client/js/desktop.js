@@ -121,6 +121,7 @@ $('document').ready(function(){
     mediaBox.show();
    /* camBox.show();*/
     $('#login-box').hide();
+    connectToPeer();
   });
 
   //there must be a way to listen to both input fields
@@ -141,6 +142,7 @@ $('document').ready(function(){
       mediaBox.show();
      /* camBox.show();*/
       $('#login-box').hide();
+      connectToPeer();
     }
   });
 
@@ -161,6 +163,7 @@ $('document').ready(function(){
       mediaBox.show();
      /* camBox.show();*/
       $('#login-box').hide();
+      connectToPeer();
     }
   });
   //select chat for hammertime tap events
