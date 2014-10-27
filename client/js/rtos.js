@@ -74,6 +74,10 @@ $(document).ready(function() {
         var v = document.querySelector("#v" + call.peer + "cam");
         v.src = window.URL.createObjectURL(remoteStream);
         v.play();
+        $('<span id="mute'+call.peer+'">&#xf028;</span>').prependTo('#'+call.peer);
+        $('#mute'+call.peer).on('click',function(){
+        $('#v' + call.peer + 'cam').prop('muted', true);  
+      })
       });
     });
     peer.on('error', function(err) {
@@ -248,13 +252,13 @@ $(document).ready(function() {
       globalChat.append(messages);
 
       // Select connection handler.
-      chatbox.on('click', function() {
+    /*  chatbox.on('click', function() {
         if ($(this).attr('class').indexOf('active') === -1) {
           $(this).addClass('active');
         } else {
           $(this).removeClass('active');
         }
-      });
+      });*/
 
       $('.filler').hide();
       $('#chat_user_list').append(chatbox);

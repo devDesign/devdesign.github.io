@@ -342,6 +342,10 @@ audio {
     justify-content: flex-end; }
   #chat_user_list .active {
     padding: 4px 8px 4px 1px; }
+  #chat_user_list .peerUsername {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end; }
 
 #users {
   text-align: right;
@@ -374,6 +378,7 @@ audio {
 
 .mousecam {
   border-radius: 10000px;
+  width: 100px;
   pointer-events: none; }
 
 /* video{
