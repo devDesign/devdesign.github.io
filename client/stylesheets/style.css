@@ -336,6 +336,8 @@ video {
   border-width: 1px;
   padding: 0;
   font-size: 0.9em; }
+  #playlist .artist {
+    width: 3em; }
   #playlist a {
     color: #aaa;
     text-decoration: none; }
@@ -345,12 +347,12 @@ video {
     width: 100%; }
   #playlist tr {
     width: 100%; }
-  #playlist td {
-    padding: 0.7em;
-    box-shadow: -1px 1px 1px #111; }
-    #playlist td:hover {
+    #playlist tr:hover {
       box-shadow: inset 0 0 3px #2D313D;
       color: #eee; }
+  #playlist td {
+    box-shadow: -1px 1px 1px #111 !important;
+    padding: 0.7em; }
 
 .file-entry {
   position: relative;

@@ -45,10 +45,9 @@ function fileRouter(e){
   if ( fileCount == 1 ) {
     var file = files[0]
 
-       id3(file, function(err, tags) {
-        console.log(tags);
-        });
-
+       // id3(file, function(err, tags) {
+       //  console.log(tags);
+       //  });
 
     checkIfFile(file, function(){
       if ( file.size > 104857600 ) {  

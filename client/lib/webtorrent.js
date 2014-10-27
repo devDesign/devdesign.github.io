@@ -65,7 +65,6 @@ onTorrent = function(torrent) {
   torrent.files.forEach(function (file,index) {
     var extname = path.extname(file.name)
 
- 
     // if (extname === '.mp4' || extname === '.webm') {
     //   var video = document.createElement('video')
     //   video.controls = true
@@ -73,7 +72,7 @@ onTorrent = function(torrent) {
     //   file.createReadStream().pipe(video)
     // } else {
       file.createReadStream().pipe(concat(function (buf) {
-        console.log(index);
+
         if (index == 0) {
           var a = document.getElementById(torrent.infoHash+'-torrent') 
         } else {
@@ -89,18 +88,24 @@ onTorrent = function(torrent) {
         a.href = URL.createObjectURL(realFile)
         a.innerHTML = file.name
  
- 
+        console.log(extname)
+        if (extname == ".mp3"){
+          file.type = "audio/mp3"
+        } else if (extname == ".wav"){
+          file.type = "audio/wav"
+        }
 
-       // if (file.type === "audio/mp3" || file.type === "audio/wav" ){
-          play_torrent_file(a.href, file.name, file.type);
-        // }
+            if (file.type === "audio/mp3" || file.type === "audio/wav" ){
+              play_torrent_file(a.href, file.name, file.type, realFile);
+            }
+
 
       }))
     // }
   })
 }
 
-function play_torrent_file(url, title, type) {
+function play_torrent_file(url, title, type, blob) {
   
   var audio;
   var playlist;
@@ -110,43 +115,64 @@ function play_torrent_file(url, title, type) {
 
 
 
-  $('<tr><td class="playlist-entry" id="'+title+'"><a href=' + url + '>' + title + '</a></td></tr>').appendTo('#playlist');
 
-  initPlaylist();
-  function initPlaylist(){
-    current = 0;
-    audio = $('#audio')[0];
-    playlist = $('#playlist');
-    tracks = playlist.find('li a');
-    console.log(tracks);
-    len = tracks.length - 1;
-    audio.volume = .70;
-    audio.play();
-    playlist.find('a').click(function(e){
-        e.preventDefault();
-        link = $(this);
-        current = link.parent().index();
-        run(link, audio);
+  reader = new FileReader();
+
+  reader.onload = function(event) {
+    ID3.loadTags(url, function() {
+      var tags = ID3.getAllTags(url);
+      console.log(tags);
+
+      //$('<tr id="'+title+'"><td class="artist">'+tags.artist+'</td><td class="playlist-entry><a href=' + url + '>' + tags.title + '</a></td></tr>').appendTo('#playlist');
+      $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a class="track" href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td></tr>').appendTo('#playlist');
+
+      initPlaylist(tags);
+      function initPlaylist(tag){
+        current = 0;
+        audio = $('#audio')[0];
+        playlist = $('#playlist');
+        tracks = playlist.find('tr');
+        len = tracks.length - 2;
+        audio.volume = .70;
+        audio.play();
+        playlist.find('a').click(function(e){
+            e.preventDefault();
+            link = $(this);
+            current = link.parent().parent().index();
+            run(link, audio);
+        });
+        audio.addEventListener('ended',function(e){
+            current++;
+            if(current == len){
+                current = 0;
+                link = playlist.find('a')[0];
+            }else{
+                var row = playlist.find('tr')[current]
+                link = $(row).find('td').find('a')[1];    
+            }
+            run($(link),audio);
+        });
+      }
+      
+      function run(link, player){
+              nowPlaying = link;
+              player.src = link.attr('href');
+              par = link.parent();
+              par.addClass('active-file').siblings().removeClass('active-file');
+              player.load();
+              player.play();
+      }
+
+
+
+
+    }, {
+      tags: ["title","artist","album","year"],
+      dataReader: FileAPIReader(blob)
     });
-    audio.addEventListener('ended',function(e){
-        current++;
-        if(current == len){
-            current = 0;
-            link = playlist.find('a')[0];
-        }else{
-            link = playlist.find('a')[current];    
-        }
-        run($(link),audio);
-    });
-  }
-  
-  function run(link, player){
-          player.src = link.attr('href');
-          par = link.parent();
-          par.addClass('active-file').siblings().removeClass('active-file');
-          player.load();
-          player.play();
-  }
+  };
+  reader.readAsArrayBuffer(blob);
+
 }
 
 var log = document.querySelector('.log')
