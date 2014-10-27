@@ -91,6 +91,8 @@ onTorrent = function(torrent) {
 
         $('#file_list').show();
         $('#download_list_box').hide();
+        $('#my_files').addClass('file_menu_active');
+        $('#downloads').removeClass('file_menu_active');
 
         realFile = new Blob([buf])
         linkToFile = URL.createObjectURL(realFile)
