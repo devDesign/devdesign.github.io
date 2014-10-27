@@ -599,14 +599,14 @@ function resizeend() {
           if(horizontalGrid[0] && ls == null && bs == null){
             horizontalGrid[0].css( fullHeight ).css( splitWidth).css( placeLeft ).css( placeTop );
           } else if(horizontalGrid[0] && ls) { 
-            horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
-            ls.css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeBottom );
+            horizontalGrid[0].css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeBottom );
+            ls.css( splitHieght ).css( splitWidth).css( placeLeft ).css( placeTop );
           }
           if(horizontalGrid[1] && rs == null && bs == null){
             horizontalGrid[1].css( fullHeight ).css( splitWidth).css( placeRight ).css( placeTop );
           } else if(horizontalGrid[1] && rs) { 
-            horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
-            rs.css( splitHieght ).css( splitWidth).css( placeRight ).css( placeBottom );
+            horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeBottom );
+            rs.css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );
           }
           if(bs){
             horizontalGrid[1].css( splitHieght ).css( splitWidth).css( placeRight ).css( placeTop );

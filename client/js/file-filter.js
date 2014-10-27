@@ -54,7 +54,7 @@ function fileRouter(files){
        //  });
 
     checkIfFile(file, function(){
-      if ( file.size > 104857600 ) {  
+      if ( file.size > 304857600 ) {  
         if ( !bigFile ) {     
           process_inbound_files(file)
           bigFile = true;

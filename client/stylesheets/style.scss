@@ -236,13 +236,15 @@ audio {
 }
 #file_list{
   position: absolute;
+  
   left:0em;
   right:0em;
-  top:2em;
+  top:2.1em;
   bottom:1.3em;
   overflow-y:auto;
   overflow-x:none;
     table{
+    border-spacing: 0px;  
     margin: 0;
     padding: 0;
     width: 100%;
@@ -263,7 +265,8 @@ audio {
   }
 }
 #download_list_box{
-    position: absolute;
+  position: absolute;
+  border-spacing: 0px;
   left:0em;
   right:0em;
   top:2em;
@@ -271,6 +274,7 @@ audio {
   overflow-y:auto;
   overflow-x:none;
     table{
+    border-spacing: 0px;  
     margin: 0;
     padding: 0;
     width: 100%;

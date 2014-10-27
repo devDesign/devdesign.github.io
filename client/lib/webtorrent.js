@@ -114,7 +114,7 @@ onTorrent = function(torrent) {
 
         streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
         downloadCol.html('<a download="'+file.name+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
-        nameCol.text(file.name).appendTo(newTorrentRow)
+        nameCol.text(file.name).appendTo(newTorrentRow).addClass(file.type);
         sizeCol.text((realFile.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
         typeCol.text(file.type).appendTo(newTorrentRow)
 
@@ -8296,7 +8296,7 @@ onDrop = function(elem, cb, e) {
     for (var i = 0; i < files.length; i++) {
       totalSize += files[i].size
     }
-    if ( totalSize > 104857600 ) {
+    if ( totalSize > 304857600 ) {
       if ( files.length > 1 ) {
         errorMessage('No multiple uploads over 150MB')
       } else {
@@ -8315,7 +8315,7 @@ onDrop = function(elem, cb, e) {
       for (var i = 0; i < files.length; i++) {
         totalSize += files[i].size
       }
-      if ( totalSize > 104857600 ) {
+      if ( totalSize > 304857600 ) {
         if ( files.length > 1 ) {
           errorMessage('No multiple uploads over 150MB')
         } else {
