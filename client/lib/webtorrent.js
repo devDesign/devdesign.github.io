@@ -61,8 +61,6 @@ onTorrent = function(torrent) {
   })
 
 
-
-
   torrent.files.forEach(function (file,index) {
     var extname = path.extname(file.name)
 
@@ -88,11 +86,10 @@ onTorrent = function(torrent) {
         // realFile = new Blob([buf])
         // a.href = URL.createObjectURL(realFile)
         // //a.innerHTML = file.name
-
         $('#file_list').show();
         $('#download_list_box').hide();
-        $('#my_files').addClass('file_menu_active');
-        $('#downloads').removeClass('file_menu_active');
+        $('#my_files').addClass('file_menu-active');
+        $('#downloads').removeClass('file_menu-active');
 
         realFile = new Blob([buf])
         linkToFile = URL.createObjectURL(realFile)
@@ -106,17 +103,24 @@ onTorrent = function(torrent) {
         var sizeCol = $('<td>')
         var typeCol = $('<td>')
 
+
+
         if (extname == ".mp3"){
           file.type = "audio/mp3"
         } else if (extname == ".wav"){
           file.type = "audio/wav"
         }
 
+
         streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
         downloadCol.html('<a download="'+file.name+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
         nameCol.text(file.name).appendTo(newTorrentRow).addClass(file.type);
         sizeCol.text((realFile.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
-        typeCol.text(file.type).appendTo(newTorrentRow)
+        if ( file.type ){
+          typeCol.text(file.type).appendTo(newTorrentRow)
+        } else {
+          typeCol.text(extname).appendTo(newTorrentRow)
+        }
 
         // newTorrentRow.appendTo('#filelist')
         newTorrentRow.appendTo('#filelist')
@@ -8096,7 +8100,7 @@ function enabled(name) {
  * @param {Mixed} val
  * @return {Mixed}
  * @api private
- */
+ */  
 
 function coerce(val) {
   if (val instanceof Error) return val.stack || val.message;
@@ -8304,6 +8308,7 @@ onDrop = function(elem, cb, e) {
         // Goes to webrtc.io
       }
     } else {
+      errorMessage("Upload torrent buffering... please wait")
       cb(Array.prototype.slice.call(files), { x: e.clientX, y: e.clientY })
     }
     return false
@@ -8323,6 +8328,7 @@ onDrop = function(elem, cb, e) {
           // Goes to webrtc.io
         }
       } else {
+        errorMessage("Upload torrent buffering... please wait")
         cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
       }
     return false

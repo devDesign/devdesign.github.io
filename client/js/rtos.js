@@ -2,6 +2,7 @@ var eachActiveConnection;
 // THANKS to github.com/peers 
 var sessionTorrents = [];
 var connectToPeer;
+var connectedPeers;
 
 $(document).ready(function() {
 
@@ -13,7 +14,7 @@ $(document).ready(function() {
   }
   var color = pastelColors();
   var peer;
-  var connectedPeers = {};
+  connectedPeers = {};
 
   var sessionMessages = [];
 
@@ -225,8 +226,8 @@ $(document).ready(function() {
         if ( torrentList.length > 0 ){          
           $('#download_list_box').show()
           $('#file_list').hide()
-          $('#my_files').removeClass('file_menu_active');
-          $('#downloads').addClass('file_menu_active');
+          $('#my_files').removeClass('file_menu-active');
+          $('#downloads').addClass('file_menu-active');
         }
 
         torrentList.forEach(function(torrent,index){
@@ -321,8 +322,8 @@ $(document).ready(function() {
 
         $('#download_list_box').show()
         $('#file_list').hide()
-        $('#my_files').removeClass('file_menu_active');
-        $('#downloads').addClass('file_menu_active');
+        $('#my_files').removeClass('file_menu-active');
+        $('#downloads').addClass('file_menu-active');
 
         var infoHash = data[0]
         var fileName = data[1]  
