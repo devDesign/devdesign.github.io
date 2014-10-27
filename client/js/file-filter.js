@@ -27,39 +27,6 @@ var invisibleInput = document.querySelector('#invisible-file-input');
 
   invisibleInput.addEventListener('change', function(e){
     fileRouter(this.files)
-    var file = this.files[0]
-
-    process_inbound_files(file)
-
-    // onDrop(undefined, function(files){
-    //   // METHODIZE
-    //   console.log(files)
-
-    //   // client.seed(files, function(torrent){
-    //   //   var newTorrentDiv = $('<div class="file-entry" id="'+torrent.infoHash+'">').appendTo('#filelist');
-    //   //   var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
-    //   //   newTorrentFile.attr('href','javascript:void(0);');
-    //   //   $('<span class="progress-bar" id="'+torrent.infoHash+'-progress">').appendTo(newTorrentDiv)
-    //   //   newTorrentFile.appendTo(newTorrentDiv)
-    //   //   newTorrentDiv.appendTo('#filelist')
-    //   //   newTorrentFile.on('click', function(e){
-    //   //     download(e.target.id.split('-torrent')[0]);
-    //   //   });
-
-    //   //   sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length})
-
-    //   //   eachActiveConnection(function(c, $c) {
-    //   //     if (c.label === 'torrentz') {
-    //   //       c.send([torrent.infoHash,torrent.name,torrent.files.length]);
-    //   //     }
-    //   //   });
-    //   //   onTorrent(torrent)
-    //   // });       
-
-    // }, undefined, files)
-
-
-
   });
 
 })();
@@ -119,6 +86,8 @@ dragDrop('body', function(files){
   // see //FUCK in webtorrent.js
   // add error readout for user!
   // logAppend('Creating .torrent file...<br>')
+  console.log(files);
+
   client.seed(files, function(torrent){
     var newTorrentDiv = $('<div class="file-entry" id="'+torrent.infoHash+'">').appendTo('#filelist');
     var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
