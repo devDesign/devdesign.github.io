@@ -148,6 +148,11 @@ audio {
     position: absolute;
     right: 0;
     margin-right: 5px; }
+  .window_title .close {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    margin-right: 5px; }
 
 #chat_box {
   display: flex;
@@ -168,6 +173,25 @@ audio {
   background-color: #424659;
   position: absolute;
   box-sizing: border-box; }
+  #file_box #file_menu {
+    background-color: #2D313D;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0em;
+    margin: 0;
+    padding: 0px;
+    font-size: 0.7em;
+    right: 0em; }
+    #file_box #file_menu #my_files {
+      padding-right: 2em;
+      padding-left: 2em; }
+      #file_box #file_menu #my_files:hover {
+        background-color: #363A4A; }
+    #file_box #file_menu #downloads {
+      padding-right: 2em;
+      padding-left: 2em; }
+      #file_box #file_menu #downloads:hover {
+        background-color: #363A4A; }
 
 #file_list {
   position: absolute;
@@ -177,11 +201,48 @@ audio {
   bottom: 1.3em;
   overflow-y: auto;
   overflow-x: none; }
+  #file_list table {
+    margin: 0;
+    padding: 0;
+    width: 100%; }
+  #file_list tr {
+    width: 100%; }
+    #file_list tr:hover {
+      box-shadow: inset 0 0 3px #2D313D;
+      color: #eee; }
+  #file_list td {
+    box-shadow: -1px 1px 1px #111 !important;
+    padding: 0.7em; }
+
+#download_list_box {
+  position: absolute;
+  left: 0em;
+  right: 0em;
+  top: 1.6em;
+  bottom: 1.3em;
+  overflow-y: auto;
+  overflow-x: none; }
+  #download_list_box table {
+    margin: 0;
+    padding: 0;
+    width: 100%; }
+  #download_list_box tr {
+    width: 100%; }
+    #download_list_box tr:hover {
+      box-shadow: inset 0 0 3px #2D313D;
+      color: #eee; }
+  #download_list_box td {
+    box-shadow: -1px 1px 1px #111 !important;
+    padding: 0.7em; }
 
 #cam_box {
+  position: absolute;
+  width: 640px;
+  height: 400px;
   background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  z-index: 99999; }
 
 #media_box {
   width: 50%;
@@ -310,8 +371,26 @@ audio {
   border-radius: 10000px;
   pointer-events: none; }
 
-video {
-  width: 100px; }
+/* video{
+  width:100px;
+} */
+#media_player-video {
+  position: absolute;
+  width: 100%;
+  margin: auto; }
+
+#togglevideo {
+  position: absolute;
+  z-index: 9999;
+  bottom: 5em; }
+
+#canvas {
+  position: absolute;
+  top: 1.6em;
+  bottom: 0em;
+  left: 0em;
+  right: 0em;
+  width: 100%; }
 
 #desktop {
   position: absolute;
@@ -411,5 +490,8 @@ video {
 
 .downloaded {
   color: #E58C7D !important; }
+
+.column_label {
+  font-size: 0.7em; }
 
 /*# sourceMappingURL=style.css.map */

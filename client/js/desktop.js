@@ -3,6 +3,7 @@ var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
 
 $('document').ready(function(){
+  //binding for now playing on mediaplayer
   $("#audio").bind('ended', function(){
    $('.nowplaying').remove()
   });
@@ -12,6 +13,18 @@ $('document').ready(function(){
       $('<div />',{class:'nowplaying',text:nowPlaying}).appendTo('#now_playing');
     }
   });
+
+  $('#file_list').hide();
+
+  $('#downloads').on('click',function(){
+    $('#file_list').hide();
+    $('#download_list_box').show();
+  });
+  $('#my_files').on('click',function(){
+    $('#download_list_box').hide();
+    $('#file_list').show();
+  });
+
   // maximize
   $(".maximize").on("click",function(){
     var viewpoint = get_viewpoint();
@@ -31,7 +44,11 @@ $('document').ready(function(){
     maxWindow = $(thisWindow);
     $(thisWindow).css({"z-index":9999}).css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
   });
-
+  $(".close").on("click",function(){
+    thisWindow = $( this ).parent();
+    thisWindow = thisWindow.parent();
+    $(thisWindow).remove();
+  });
   //clear all grid objects
   function clearGrid(object){
     verticalGrid = [null,null];
@@ -63,28 +80,7 @@ $('document').ready(function(){
   var fullHeight = { 'height': height - barHeight }
   var fullWidth = { 'width': width }
   var zIndex = 100;
-  // event toggle userlist in chat
-  // var users = document.getElementById('users')
-  // var usertime = new Hammer(users);
-  // var toggleUsers = true
-  // usertime.on('tap', function(event) {
-  //   toggleUserlist(document.getElementById('chat_user_list').offsetHeight);
-  // });
 
-  // function toggleUserlist(boxheight) {
-  //     var boxHieght = boxheight
-  //     if (toggleUsers) {
-  //       $(".chat_user_list").hide();
-  //       $('.peerUsername').hide();
-  //       toggleUsers = false;
-  //     } else {
-  //       $(".chat_user_list").show();
-  //       $('.peerUsername').show();
-  //       toggleUsers = true;
-  //     }
-  //   }
-    // media player
-    /*  $('#audio').mediaelementplayer({ audioWidth: splitWidth['width']-2});*/
     //login
   $('#username-text').on('keyup', function() {
     var isValid = /^[a-zA-Z0-9]+$/
@@ -119,6 +115,7 @@ $('document').ready(function(){
     chatBox.show();
     fileBox.show();
     mediaBox.show();
+   /* camBox.show();*/
     $('#login-box').hide();
   });
   //select chat for hammertime tap events
@@ -140,7 +137,9 @@ $('document').ready(function(){
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
-  set_drags(camElement, camBox);
+  camBox.pep({
+    constrainTo:'#desktop',
+  });
   camBox.hide();
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');

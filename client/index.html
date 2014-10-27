@@ -73,8 +73,50 @@
     <div id="file_box" class="files">
       <div class="window_title"><span>&#xf0f6;</span><span class="maximize content">&#xf096;</span></div>
       <div class="content">
+        <div id="file_menu">
+          <span id="my_files">myFiles</span>
+          <span id="downloads">downloads</span>
+        </div>
+        <div id="download_list_box">
+          <div id="download_list">
+            <table>
+              <tr>
+                <td class="column_label">
+                filename
+                </td>
+                <td class="column_label">
+                filesize
+                </td>
+                <td class="column_label">
+                sender
+                </td>
+                <td class="column_label">
+                status
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
         <div id="file_list">
-          <div id="filelist"></div>
+            <table id="filelist">
+              <tr>
+                <td class="column_label">
+                stream
+                </td>
+                <td class="column_label">
+                save
+                </td>
+                <td class="column_label">
+                filename
+                </td>
+                <td class="column_label">
+                filesize
+                </td>
+                <td class="column_label">
+                filetype
+                </td>
+              </tr>
+            </table>
           <!-- <input type="file" id="select_file"> -->
           <div id="messages"></div>
 
@@ -84,7 +126,12 @@
     </div>
 
     <div id="cam_box">
-      <div class="window_title"><span>cam</span></div>
+      <div class="window_title"><span>&#xf008;</span><span class="close content">&#xf00d;</span></div>
+      <div id="video_player">
+          <video id="media_player-video" controls="controls">
+            <source src="http://www.808.dk/pics/video/gizmo.mp4" type="video/mp4">
+          </video>
+        </div>
     </div>
 
     <div id="media_box">
@@ -97,7 +144,11 @@
         </div>
         <div id="playlist_box">
           <table id="playlist">
-          <tr><td>artist</td><td>title</td><td>album</td></tr>
+            <tr>
+              <td class="column_label">artist</td>
+              <td class="column_label">title</td>
+              <td class="column_label">album</td>
+            </tr>
           </table>
         </div>
         <div id="now_playing">
