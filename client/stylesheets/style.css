@@ -127,6 +127,7 @@ audio {
 .window_title {
   display: flex;
   box-sizing: border-box;
+  cursor: move;
   height: 1.5em;
   width: 100%;
   background-color: #363A4A; }
@@ -135,6 +136,7 @@ audio {
     margin-left: 5px;
     color: #E58C7D; }
   .window_title .maximize {
+    cursor: pointer;
     position: absolute;
     right: 0;
     margin-right: 5px; }

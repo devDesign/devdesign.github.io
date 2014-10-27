@@ -173,6 +173,7 @@ audio {
 .window_title{
   display: flex;
   box-sizing: border-box;
+  cursor: move;
   // padding: 1px;
   // position: relative;
   height: 1.5em;
@@ -185,6 +186,7 @@ audio {
     }
 
     .maximize {
+      cursor:pointer;
       position: absolute;
       right: 0;
       margin-right: 5px;
