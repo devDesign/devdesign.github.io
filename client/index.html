@@ -23,7 +23,6 @@
   <script src='./lib/id3.min.js'></script>
   <script src='./lib/id3v2.js'></script>
   <script src='./js/three.min.js'></script>
-  <script type="text/javascript" src="./lib/jDataView.js"></script>
 <!--   <script src='./js/pointcloud.js'></script>
  -->
 </head>
@@ -138,20 +137,29 @@
       <div class="window_title"><span>&#xf001;</span><span class="maximize content">&#xf096;</span></div>
       <div class="content">
         <div id="music-player">
-          <audio id="audio" preload="auto" tabindex="0" controls="">
+        <!-- comment -->
+          <audio id="audio" preload="auto" tabindex="0">
             <source id="song" type="audio/mp3" src="">
           </audio>
-        </div>
-        <div id="playlist_box">
-          <table id="playlist">
-            <tr>
-              <td class="column_label">artist</td>
-              <td class="column_label">title</td>
-              <td class="column_label">album</td>
-            </tr>
-          </table>
-        </div>
-        <div id="now_playing">
+
+          <div id="playlist_box">
+            <table id="playlist">
+              <tr>
+                <td class="column_label">artist</td>
+                <td class="column_label">title</td>
+                <td class="column_label">album</td>
+              </tr>
+            </table>
+          </div>
+          <div id="now_playing"></div>
+
+          <div id="audioplayer">
+            <button id="pButton" class="play"></button>
+            <div id="timeline">    
+              <div id="playhead"></div>
+            </div>
+            <input id="volume" min="0" max="1" step="0.1" type="range" onchange="setVolume()" />
+          </div>
         </div>
       </div>
     </div>
@@ -176,6 +184,7 @@
     <div class='window'>
       
     </div>
+    
     <!-- FROM WEBRTC COPY -->
 
   <input type="file" id="invisible-file-input" multiple></div>
