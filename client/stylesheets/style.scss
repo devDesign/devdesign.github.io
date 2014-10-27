@@ -59,6 +59,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#invisible-file-input{
+  position: fixed;
+  pointer-events: none;
+  width:0;
+  height:0;
+  bottom:-100;
+  right:-100;
+}
+
 audio {
   position: absolute;
   bottom:0px;
