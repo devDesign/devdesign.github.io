@@ -342,6 +342,8 @@ audio {
     display: flex;
     flex-direction: row;
     justify-content: flex-end; }
+  #chat_user_list .mute_button {
+    padding-right: 0.3em; }
 
 #users {
   text-align: right;

@@ -74,10 +74,23 @@ $(document).ready(function() {
         var v = document.querySelector("#v" + call.peer + "cam");
         v.src = window.URL.createObjectURL(remoteStream);
         v.play();
-        $('<span id="mute'+call.peer+'">&#xf028;</span>').prependTo('#'+call.peer);
+        if($('#mute'+call.peer) || $('#unmute'+call.peer)){
+          $('#mute'+call.peer).remove();
+          $('#unmute'+call.peer).remove();
+        }
+        $('<span class="mute_button" id="mute'+call.peer+'">&#xf028;</span>').prependTo('#'+call.peer);
+        $('<span class="mute_button" id="unmute'+call.peer+'">&#xf026;</span>').prependTo('#'+call.peer);
+        $('#unmute'+call.peer).hide();
         $('#mute'+call.peer).on('click',function(){
-        $('#v' + call.peer + 'cam').prop('muted', true);  
-      })
+          $(this).hide();
+          $('#unmute'+call.peer).show();
+          $('#v' + call.peer + 'cam').prop('muted', true);  
+        });
+        $('#unmute'+call.peer).on('click',function(){
+          $(this).hide();
+          $('#mute'+call.peer).show();
+          $('#v' + call.peer + 'cam').prop('muted', false);  
+        });
       });
     });
     peer.on('error', function(err) {

@@ -406,6 +406,9 @@ audio {
       flex-direction: row;
       justify-content: flex-end;
     }
+    .mute_button{
+      padding-right:0.3em; 
+    }
 }
 #users {
   text-align: right;
