@@ -17,10 +17,14 @@ $('document').ready(function(){
   $('#file_list').hide();
 
   $('#downloads').on('click',function(){
+    $('#my_files').removeClass('file_menu-active');
+    $(this).addClass('file_menu-active');
     $('#file_list').hide();
     $('#download_list_box').show();
   });
   $('#my_files').on('click',function(){
+    $('#downloads').removeClass('file_menu-active');
+    $(this).addClass('file_menu-active');
     $('#download_list_box').hide();
     $('#file_list').show();
   });
@@ -117,6 +121,47 @@ $('document').ready(function(){
     mediaBox.show();
    /* camBox.show();*/
     $('#login-box').hide();
+  });
+
+  //there must be a way to listen to both input fields
+    $('#username-text').on('keyup', function(e) {
+    if(e.keyCode === 13){
+      var peerName = $('#username-text').val();
+      var roomName = $('#roomname-text').val();
+      var isValid = /^[a-zA-Z0-9]+$/
+      var peerNameLength = peerName.split('').length;
+      if ((!peerName.match(isValid)) || (!roomName.match(isValid)) || (peerNameLength > 16)) {
+        return false;
+      }
+      if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
+        return false;
+      }
+      chatBox.show();
+      fileBox.show();
+      mediaBox.show();
+     /* camBox.show();*/
+      $('#login-box').hide();
+    }
+  });
+
+  $('#roomname-text').on('keyup', function(e) {
+    if(e.keyCode === 13){
+      var peerName = $('#username-text').val();
+      var roomName = $('#roomname-text').val();
+      var isValid = /^[a-zA-Z0-9]+$/
+      var peerNameLength = peerName.split('').length;
+      if ((!peerName.match(isValid)) || (!roomName.match(isValid)) || (peerNameLength > 16)) {
+        return false;
+      }
+      if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
+        return false;
+      }
+      chatBox.show();
+      fileBox.show();
+      mediaBox.show();
+     /* camBox.show();*/
+      $('#login-box').hide();
+    }
   });
   //select chat for hammertime tap events
   var chatBox = $('#chat_box');

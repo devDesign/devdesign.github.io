@@ -234,14 +234,15 @@ audio {
   @extend .border-module;
   #file_menu{
     background-color: $black;
-    cursor: pointer;
     position: absolute;
-    bottom: 0em;
-    margin: 0;
+    top:1.8em;
+    width: 100%;
+    margin:0;
     padding: 0px;
     font-size: 0.7em;
-    right:0em;
     #my_files {
+      cursor: pointer;
+      margin: 0;
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
@@ -249,12 +250,16 @@ audio {
       }
     }
     #downloads{
+      cursor: pointer;
+      margin: 0;
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
         background-color: $grey-shade;
       }
-
+    }
+    .file_menu-active{
+      background-color: $grey-shade;
     }
   }
 }
@@ -262,7 +267,7 @@ audio {
   position: absolute;
   left:0em;
   right:0em;
-  top:1.6em;
+  top:2em;
   bottom:1.3em;
   overflow-y:auto;
   overflow-x:none;
@@ -290,7 +295,7 @@ audio {
     position: absolute;
   left:0em;
   right:0em;
-  top:1.6em;
+  top:2em;
   bottom:1.3em;
   overflow-y:auto;
   overflow-x:none;

@@ -175,29 +175,34 @@ audio {
   box-sizing: border-box; }
   #file_box #file_menu {
     background-color: #2D313D;
-    cursor: pointer;
     position: absolute;
-    bottom: 0em;
+    top: 1.8em;
+    width: 100%;
     margin: 0;
     padding: 0px;
-    font-size: 0.7em;
-    right: 0em; }
+    font-size: 0.7em; }
     #file_box #file_menu #my_files {
+      cursor: pointer;
+      margin: 0;
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #my_files:hover {
         background-color: #363A4A; }
     #file_box #file_menu #downloads {
+      cursor: pointer;
+      margin: 0;
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #downloads:hover {
         background-color: #363A4A; }
+    #file_box #file_menu .file_menu-active {
+      background-color: #363A4A; }
 
 #file_list {
   position: absolute;
   left: 0em;
   right: 0em;
-  top: 1.6em;
+  top: 2em;
   bottom: 1.3em;
   overflow-y: auto;
   overflow-x: none; }
@@ -218,7 +223,7 @@ audio {
   position: absolute;
   left: 0em;
   right: 0em;
-  top: 1.6em;
+  top: 2em;
   bottom: 1.3em;
   overflow-y: auto;
   overflow-x: none; }
