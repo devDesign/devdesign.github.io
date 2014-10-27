@@ -62,7 +62,7 @@ $(document).ready(function() {
       if ( c.label === "loadRoom" ) {
         setTimeout(function(){
           c.send([sessionMessages,sessionTorrents]);
-        },2000)
+        },1000)
       }
     });
 
@@ -195,6 +195,7 @@ $(document).ready(function() {
         } else {
           var messageList = data[0]
           messageList.forEach(function(message,index){
+            sessionMessages.push(message);
             globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
           '</div>');
             globalChat.scrollTop(globalChat.prop("scrollHeight"));
@@ -281,6 +282,8 @@ $(document).ready(function() {
         if ($('.connection').length === 0) {
           $('.filler').show();
         }
+        var messages = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
+        globalChat.append(messages);
         delete connectedPeers[c.peer];
       });
 
@@ -590,6 +593,7 @@ $(document).ready(function() {
   $('#browsers').text(navigator.userAgent);
 
   window.onbeforeunload = function() {
+    peer.destroy();
     try {
       peer.destroy();
       console.log(peer)
@@ -598,15 +602,16 @@ $(document).ready(function() {
       console.log(err);
     }
     // KEEP FOR PRODUCTION
-     $.ajax({
-       type: 'delete',
-       url: '/rtos/rooms?userName=' + peer.id,
-       async: false
-     });
+     // $.ajax({
+     //   type: 'delete',
+     //   url: '/rtos/rooms?userName=' + peer.id,
+     //   async: false
+     // });
   }
 });
 
 window.onunload = window.onbeforeunload = function(e) {
+  peer.destroy();
   try {
     if (!!peer && !peer.destroyed) {
     peer.destroy();

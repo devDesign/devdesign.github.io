@@ -162,10 +162,7 @@ function play_torrent_file(url, title, type, blob) {
               player.load();
               player.play();
       }
-
-
-
-
+      
     }, {
       tags: ["title","artist","album","year"],
       dataReader: FileAPIReader(blob)

@@ -89,7 +89,11 @@ function upload_stop() {
 	/* remove data */
 	this.chunks = {};
 	this.meta = {};
-	
+
+  bigFile = false;
+  var filecontainer = document.getElementById(id);
+	filecontainer.classList.remove('file-entry')
+
 	/* send a kill message */
 	dataChannelChat.broadcast(JSON.stringify({
 		"eventName": "kill_msg",
@@ -101,8 +105,8 @@ function upload_stop() {
 	/* also clear the container */
 	create_or_clear_container(0,username);
 	
-	/* firefox and chrome specific I think, but clear the file input */
-	document.getElementById('select_file').value='';
+	//  firefox and chrome specific I think, but clear the file input 
+	// document.getElementById('select_file').value='';
 }
 
 /* write a peice of a file to a file on the filesystem... allows for unlimited file size!
@@ -211,7 +215,7 @@ var filesDropped = 0
 /* Document bind's to accept files copied. Don't accept until we have a connection */
 function accept_inbound_files() {
 
-  console.log("ready for big")
+//
 
 }
 
@@ -473,6 +477,8 @@ function create_or_clear_container(id, username) {
 	} else {
 		/* if filecontainer does exist, clear it */
 		filecontainer.innerHTML = '';
+    filecontainer.classList.remove('file-entry')
+
 	}
 }
 
@@ -497,7 +503,8 @@ function create_upload_stop_link(filename, id, username) {
   console.log(filesDropped);
 
 	var filecontainer = document.getElementById(id);
-	
+	 filecontainer.classList.add('file-entry')
+
 	//create the link
 	var span = document.createElement('span');
 	span.textContent = filename + ' ';
@@ -522,6 +529,7 @@ function create_pre_file_link(meta, id, username) {
 	create_or_clear_container(id, username);
 	var filecontainer = document.getElementById(id);
   filecontainer.classList.add('file-container')
+  filecontainer.classList.add('file-entry')
 	
 	//create the link
 	var span = document.createElement('span');
