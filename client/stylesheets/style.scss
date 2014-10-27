@@ -229,6 +229,16 @@ audio {
         background-color: $grey-shade;
       }
     }
+    #bigfiles{
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em;
+      &:hover{
+        background-color: $grey-shade;
+      }
+    }
+
     .file_menu-active{
       background-color: $grey-shade;
     }

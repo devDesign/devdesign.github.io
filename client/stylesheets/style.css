@@ -194,6 +194,13 @@ audio {
       padding-left: 2em; }
       #file_box #file_menu #downloads:hover {
         background-color: #363A4A; }
+    #file_box #file_menu #bigfiles {
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em; }
+      #file_box #file_menu #bigfiles:hover {
+        background-color: #363A4A; }
     #file_box #file_menu .file_menu-active {
       background-color: #363A4A; }
 
