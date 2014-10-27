@@ -397,7 +397,7 @@ function play_file(id, title, type,file) {
   var tracks;
   var current;
 
-  $('<a href=' + url + '><li class="playlist-entry" id="'+title+'">' + title + '</li></a>').appendTo('#playlist');
+  $('<a href=' + url + '><li class="playlist-entry" id="'+ title +'">' + title + '</li></a>').appendTo('#playlist');
 
   initPlaylist();
   function initPlaylist(){

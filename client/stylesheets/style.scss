@@ -3,49 +3,39 @@ $black-shade: #424659;
 $grey-shade: #363A4A;
 $orange-shade: #E58C7D;
 $blue-shade: #5699C2;
-
 @font-face {
   font-family: "Aller";
   src: url('../fonts/Aller_Rg.ttf');
 }
-
 @font-face {
   font-family: "Aller";
   src: url('../fonts/Aller_Bd.ttf');
   font-weight: bold;
 }
-
 @font-face {
   font-family: "FontAwesome";
   src: url('../stylesheets/font-awesome/fonts/FontAwesome.otf');
 }
-
 .border-module {
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
 }
-
 html {
   font-family: "Aller", "FontAwesome";
   overflow-y: hidden;
   overflow-x: hidden;
   height: 100%;
-  // background: url('../images/stardust.png');
-  // background-size: cover;
 }
-
 input {
   outline: none;
 }
-
 body {
   padding: 0;
   margin: 0;
   background-color: $black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // background: url('images/stardust.png');
-  h2{
+  h2 {
     color: $orange-shade;
     margin-left: 0.3em;
     margin-top: 10px;
@@ -54,67 +44,60 @@ body {
       color: $orange-shade;
     }
   }
-
 }
-
 audio {
   position: absolute;
-  bottom:0px;
+  bottom: 0px;
   width: 100%;
 }
-
-#visualizer{
+#visualizer {
   top: 1.3em;
   position: absolute;
   height: 33%;
   width: 100%;
   background-color: $black;
 }
-#login-box{
+#login-box {
   position: absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 99999;
-  background-color: rgba(0,0,0, 0.7);
+  background-color: $grey-shade;
   padding: 2em;
+  border-radius: 7px;
   @extend .border-module;
-    input {
-      display: flex;
-      margin: auto auto;
-      width: 100%;
-      margin-bottom: 2em;
-      padding: .5em .5em .6em .5em;
-      border: 1px solid #eee;
-      background-color: #0F0F11;
-      color: white;
-      box-sizing: border-box;
-      border-radius: 7px;
-    }
-
-    button {
-      width: 100%;
-      height: 3em;
-      border-radius: 7px;
-      background-color: $orange-shade;
-      border-color: darken($orange-shade, 1%);
-      font-weight: bold;
-      color: #882418;
-    }
-
-    button:hover {
-      background-color: #e05a49;
-      border-color: darken(#e05a49, 1%);
-    }
+  input {
+    display: flex;
+    margin: auto auto;
+    width: 100%;
+    margin-bottom: 2em;
+    padding: .5em .5em .6em .5em;
+    border: 0px solid #eee;
+    background-color: $black-shade;
+    color: white;
+    box-sizing: border-box;
+    border-radius: 7px;
+  }
+  button {
+    width: 100%;
+    height: 3em;
+    border-radius: 7px;
+    background-color: $orange-shade;
+    border-color: darken($orange-shade, 1%);
+    font-weight: bold;
+    color: #424659;
+  }
+  button:hover {
+    background-color: #e05a49;
+    border-color: darken(#e05a49, 1%);
+  }
 }
-
 #mesh-logo {
   text-align: center;
   margin-bottom: 2em;
 }
-
-// Nav // 
-
+// Nav //
 #nav {
   position: relative;
   width: 100%;
@@ -123,7 +106,6 @@ audio {
   display: inline-flex;
   justify-content: flex-end;
 }
-
 #rtos {
   display: inline-flex;
   text-align: left;
@@ -131,17 +113,14 @@ audio {
   top: 0;
   left: 0;
 }
-
 #id {
   margin: 1em 10px 0px 10px;
   display: none;
   color: $orange-shade;
 }
-
 #pid {
   color: white;
 }
-
 .glyph {
   padding: 0.2em;
   margin: 0.4em;
@@ -149,26 +128,18 @@ audio {
   z-index: 999999;
   display: none;
 }
-
 .fa {
   display: flex;
   color: $orange-shade;
   margin-top: 2px;
 }
-
-#user-button, 
-#start-video-feed, 
-#file-upload {
-
+#user-button, #start-video-feed, #file-upload {
   &:hover {
     color: darken(#e05a49, 1%);
   }
 }
-
-// Windows // 
-
-
-.window_title{
+// Windows //
+.window_title {
   display: flex;
   box-sizing: border-box;
   // padding: 1px;
@@ -176,21 +147,18 @@ audio {
   height: 1.5em;
   width: 100%;
   background-color: $grey-shade;
-    span {
-      padding: 3px;
-      margin-left: 5px;
-      color: $orange-shade;
-    }
-
-    .maximize {
-      position: absolute;
-      right: 0;
-      margin-right: 5px;
-    }
+  span {
+    padding: 3px;
+    margin-left: 5px;
+    color: $orange-shade;
+  }
+  .maximize {
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+  }
 }
-
-
-#chat_box{
+#chat_box {
   display: flex;
   width: 50%;
   flex-direction: column;
@@ -199,11 +167,11 @@ audio {
   z-index: 99;
   background-color: $black-shade;
   box-sizing: border-box;
-  top:0px;
+  top: 0px;
   bottom: 0px;
   @extend .border-module;
 }
-#file_box{
+#file_box {
   flex: 1 50%;
   width: 50%;
   color: white;
@@ -212,12 +180,12 @@ audio {
   box-sizing: border-box;
   @extend .border-module;
 }
-#cam_box{
-  background-color: rgba(0,0,0,0.3);
+#cam_box {
+  background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
   box-sizing: border-box
 }
-#media_box{
+#media_box {
   width: 50%;
   color: white;
   background-color: $black-shade;
@@ -227,64 +195,60 @@ audio {
   overflow-x: hidden;
   @extend .border-module;
 }
-#rs{
-  position:fixed;
-  width:33%;
-  top:0px;
-  right:0px;
-  bottom:0px;
+#rs {
+  position: fixed;
+  width: 33%;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
   z-index: -1;
 }
-#ls{
-  position:fixed;
-  width:33%;
-  top:0px;
-  left:0px;
-  bottom:0px;
+#ls {
+  position: fixed;
+  width: 33%;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
   z-index: -1;
 }
-#bs{
+#bs {
   position: fixed;
   width: 1px;
-  bottom:0px;
-  left:50%;
+  bottom: 0px;
+  left: 50%;
   height: 1px;
   margin: auto;
   z-index: -1;
-  background-color:red;
-  transform: translate(-50%,0);
+  background-color: red;
+  transform: translate(-50%, 0);
 }
-#global_chat{
+#global_chat {
   position: absolute;
   bottom: 1.8em;
   z-index: -1;
-  overflow-y: hidden;
+  overflow-y: scroll;
   top: 1.6em;
   width: 100%;
-    div {
-      padding: 0px 0px 1px 8px;
-      word-wrap: break-word;
-    }
-
-    div:first-child {
-      padding: 5px 0px 1px 8px;
-    }
-
-    .messages em {
-      font-size: small;
-    }
+  div {
+    padding: 0px 0px 1px 8px;
+    word-wrap: break-word;
+  }
+  div:first-child {
+    padding: 5px 0px 1px 8px;
+  }
+  .messages em {
+    font-size: small;
+  }
 }
-
-.dragging_box{
+.dragging_box {
   z-index: 99999;
-  
 }
-#send{
+#send {
   width: 100%;
   position: absolute;
   bottom: 0px;
   box-sizing: border-box;
-  #text{
+  #text {
     border: 0;
     height: 1.5em;
     box-sizing: border-box;
@@ -292,12 +256,11 @@ audio {
     font-size: 1.2em;
     color: white;
     background-color: $black;
-    width:100%;
+    width: 100%;
     padding: 1px 0px 1px 8px;
   }
 }
-
-#chat_user_list{
+#chat_user_list {
   text-align: right;
   position: absolute;
   background-color: #26282C;
@@ -311,26 +274,26 @@ audio {
   padding: 10px;
   margin-top: 7px;
   @extend .border-module;
-    .users {
-      text-align: center;
-      padding-top: 0.4em;
-      color: $orange-shade;
-    }
-    .self {
-      padding: 0px 8px 1px 0px;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-    }
-    .active {
-      padding: 4px 8px 4px 1px;
-    }
+  .users {
+    text-align: center;
+    padding-top: 0.4em;
+    color: $orange-shade;
+  }
+  .self {
+    padding: 0px 8px 1px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .active {
+    padding: 4px 8px 4px 1px;
+  }
 }
-#users{
+#users {
   text-align: right;
   position: absolute;
-  background-color:#4B4F53;
-  right:0px;
+  background-color: #4B4F53;
+  right: 0px;
   width: 10em;
   // height: 94%;
   top: 1.3em;
@@ -343,33 +306,29 @@ audio {
   border: solid 1px #dcdcdc;
   transition: box-shadow 0.3s, border 0.3s;
 }
-.chat_text-input input[type="text"]:focus,
-.chat_text-input input[type="text"].focus {
+.chat_text-input input[type="text"]:focus, .chat_text-input input[type="text"].focus {
   border: solid 1px #707070;
   box-shadow: 0 0 5px 1px #FF0000;
 }
-.mouse{
+.mouse {
   position: fixed;
   width: 10px;
   height: 10px;
-  border-radius:100%;
-  background-color:rgba(255,0,0,0.6);
+  border-radius: 100%;
+  background-color: rgba(255, 0, 0, 0.6);
   z-index: 99999;
   pointer-events: none;
 }
-
-.mousecam{
-  border-radius:10000px;
+.mousecam {
+  border-radius: 10000px;
   pointer-events: none;
 }
-
-video{
-  width:100px;
+video {
+  width: 100px;
 }
-
-#desktop{
+#desktop {
   position: absolute;
-  top:3em;
+  top: 3em;
   bottom: 0px;
   left: 0px;
   right: 0px;
@@ -380,74 +339,69 @@ video{
 .split_left .split_right {
   flex: 1 50%;
 }
-#playlist_box{
+#playlist_box {
   position: absolute;
   background-color: #040404;
   width: 95%;
   // top:1.3em;
   // bottom: 0px;
 }
-#playlist{
+#playlist {
   position: absolute;
-  top:0px;
+  top: 0px;
   margin: 0px;
   list-style: none;
-  width:103%;
+  width: 103%;
   border: 1px;
   border-width: 1px;
   padding: 0;
   font-size: 0.9em;
-  a{
-    color:#aaa;
+  a {
+    color: #aaa;
     text-decoration: none;
   }
-  ul{
+  ul {
     margin: 0;
     padding: 0;
   }
-  li{
+  li {
     padding: 0.7em;
     box-shadow: -1px 1px 1px #111;
-    width:100%;
-    &:hover{
+    width: 100%;
+    &:hover {
       box-shadow: inset 0 0 3px $black;
-      color:#eee;
+      color: #eee;
     }
   }
 }
-
-.file-entry{
-    position:relative;
-    font-size: 0.9em;
-    padding: 0.7em;
-    box-shadow: -1px 1px 1px #111;
-    width:auto;
-    &:hover{
-      box-shadow: inset 0 0 3px $black;
-      color:#eee;
-    }
-    a{
-      text-decoration: none;
-      color:#aaa;
-    }
+.file-entry {
+  position: relative;
+  font-size: 0.9em;
+  padding: 0.7em;
+  box-shadow: -1px 1px 1px #111;
+  width: auto;
+  &:hover {
+    box-shadow: inset 0 0 3px $black;
+    color: #eee;
+  }
+  a {
+    text-decoration: none;
+    color: #aaa;
+  }
 }
-
-.progress-bar{
-  position:absolute;
-  right:0;
-}
-
-
-.nowplaying{
+.progress-bar {
   position: absolute;
-  bottom:1.9em;
-  color:red;
+  right: 0;
+}
+.nowplaying {
+  position: absolute;
+  bottom: 1.9em;
+  color: red;
   opacity: 0;
-  right:6em;
+  right: 6em;
   transition: all 5s;
 }
-
-#pointcloud{
+#pointcloud {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -455,19 +409,95 @@ video{
   right: 0;
   z-index: -3;
 }
-
-.files{
-  bottom:0;
-  top:1.3em;
-  right:0;
-
+.files {
+  bottom: 0;
+  top: 1.3em;
+  right: 0;
 }
-.hide_users{
+.hide_users {
   position: absolute;
-  top:1.6em;
-  bottom:3em;
+  top: 1.6em;
+  bottom: 3em;
 }
-  
-.downloaded{
+.downloaded {
   color: $orange-shade !important;
+}
+
+/// Audio Player Styling /// 
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 10%;
+  height: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+  float: left;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, .3);
+
+  &::-moz-range-track {
+    -moz-appearance: none;
+    width: 5%;
+    height: 20px;
+    margin-top: 10px;
+    float: left;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, .3);
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin-top: 1px;
+    background: #E58C7D;
+  }
+
+  &::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin-top: 1px;
+    background: #E58C7D;
+  }
+}
+
+#audioplayer {
+  height: 40px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+#pButton {
+  height: 40px;
+  width: 40px;
+  border: none;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  float: left;
+  outline: none;
+}
+
+.play {background: url('../images/play.png');}
+.pause {background: url('../images/pause.png');}
+
+#timeline {
+  width: 80%;
+  height: 20px;
+  margin-top: 10px;
+  float: left;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, .3);
+}
+
+#playhead {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-top: 1px;
+  background: #E58C7D;
 }
