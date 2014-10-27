@@ -3,6 +3,7 @@ var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
 
 $('document').ready(function(){
+
   //binding for now playing on mediaplayer
   $("#audio").bind('ended', function(){
    $('.nowplaying').remove()
@@ -32,6 +33,7 @@ $('document').ready(function(){
     $('#big_file_list').hide();
     $('#file_list').show();
   });
+
   $('#bigfiles').on('click',function(){
     $('#downloads').removeClass('file_menu-active');
     $('#my_files').removeClass('file_menu-active');
@@ -41,8 +43,13 @@ $('document').ready(function(){
     $('#file_list').hide();
   });
   // Audio Player /// 
+
   $('#pButton').on('click', function(){
     play();
+  });
+
+  $('#volume').on('change', function(){
+    setVolume();
   });
 
   var audio = document.getElementById('audio');
@@ -51,6 +58,7 @@ $('document').ready(function(){
   var playhead = document.getElementById('playhead');
   var timeline = document.getElementById('timeline');
   var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+  var volume = document.getElementById("volume");
 
   audio.addEventListener("timeupdate", timeUpdate, false);
 
@@ -60,8 +68,7 @@ $('document').ready(function(){
   }, false);
 
   function setVolume() {
-     var volume = document.getElementById("volume");
-     audio.volume = volume.value;
+    audio.volume = volume.value;
   }
 
   function movesoundhead(e) {
@@ -139,10 +146,6 @@ $('document').ready(function(){
   audio.addEventListener("canplaythrough", function () {
     duration = audio.duration;  
   }, false);
-
-  $("#audio").bind('ended', function(){
-    setTimeout(function(){$('.nowplaying').remove()},200);
-  });
   /// Audio Player End //// 
 
   // maximize

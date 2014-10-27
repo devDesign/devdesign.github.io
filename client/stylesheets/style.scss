@@ -3,6 +3,7 @@ $black-shade: #424659;
 $grey-shade: #363A4A;
 $orange-shade: #E58C7D;
 $blue-shade: #5699C2;
+
 @font-face {
   font-family: "Aller";
   src: url('../fonts/Aller_Rg.ttf');
@@ -572,10 +573,10 @@ audio {
 .nowplaying {
   position: absolute;
   width: 100%;
-  bottom:1.9em;
+  bottom: 1.9em;
   text-align: center;
-  color:red;
-  margin:auto;
+  color: $orange-shade;
+  margin: auto;
 }
 #pointcloud {
   position: fixed;
@@ -603,7 +604,7 @@ audio {
 
 input[type="range"] {
   -webkit-appearance: none;
-  width: 10%;
+  width: 7.5em;
   height: 20px;
   margin-top: 10px;
   margin-left: 10px;
@@ -613,7 +614,7 @@ input[type="range"] {
 
   &::-moz-range-track {
     -moz-appearance: none;
-    width: 5%;
+    width: 7.5em;
     height: 20px;
     margin-top: 10px;
     float: left;
@@ -645,6 +646,11 @@ input[type="range"] {
   position: absolute;
   bottom: 0px;
   width: 100%;
+  text-align: center;
+}
+
+#audioplayer > div {
+  display: inline-flex;
 }
 
 #pButton {
@@ -662,7 +668,7 @@ input[type="range"] {
 .pause {background: url('../images/pause.png');}
 
 #timeline {
-  width: 80%;
+  width: 35em;
   height: 20px;
   margin-top: 10px;
   float: left;
@@ -675,7 +681,7 @@ input[type="range"] {
   height: 18px;
   border-radius: 50%;
   margin-top: 1px;
-  background: #E58C7D;
+  background: $orange-shade;
 }
 
 .column_label{

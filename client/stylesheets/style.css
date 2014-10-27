@@ -484,7 +484,7 @@ audio {
   width: 100%;
   bottom: 1.9em;
   text-align: center;
-  color: red;
+  color: #E58C7D;
   margin: auto; }
 
 #pointcloud {
@@ -510,7 +510,7 @@ audio {
 
 input[type="range"] {
   -webkit-appearance: none;
-  width: 10%;
+  width: 7.5em;
   height: 20px;
   margin-top: 10px;
   margin-left: 10px;
@@ -519,7 +519,7 @@ input[type="range"] {
   background: rgba(0, 0, 0, 0.3); }
   input[type="range"]::-moz-range-track {
     -moz-appearance: none;
-    width: 5%;
+    width: 7.5em;
     height: 20px;
     margin-top: 10px;
     float: left;
@@ -544,7 +544,11 @@ input[type="range"] {
   height: 40px;
   position: absolute;
   bottom: 0px;
-  width: 100%; }
+  width: 100%;
+  text-align: center; }
+
+#audioplayer > div {
+  display: inline-flex; }
 
 #pButton {
   height: 40px;
@@ -563,7 +567,7 @@ input[type="range"] {
   background: url("../images/pause.png"); }
 
 #timeline {
-  width: 80%;
+  width: 35em;
   height: 20px;
   margin-top: 10px;
   float: left;
