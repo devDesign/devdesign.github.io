@@ -1,6 +1,7 @@
 *.DS_Store
 *.map
 *.log
+client/stylesheets/*.css
 **/.sass-cache/
 **/.sass-cache/*
 .sass-cache/*
