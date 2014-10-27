@@ -8,7 +8,9 @@ $('document').ready(function(){
   });
   $("#audio").bind('play', function(e){
     $('.nowplaying').remove();
-    $('<div />',{class:'nowplaying',text:nowPlaying}).appendTo('#now_playing');
+    if(nowPlaying){
+      $('<div />',{class:'nowplaying',text:nowPlaying}).appendTo('#now_playing');
+    }
   });
   // maximize
   $(".maximize").on("click",function(){

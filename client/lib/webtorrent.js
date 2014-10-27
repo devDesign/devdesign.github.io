@@ -155,7 +155,11 @@ function play_torrent_file(url, title, type, blob) {
       }
       
       function run(link, player){
-              nowPlaying = link;
+
+              var songArtist = $(link[0]).parent().parent().find('a')[0];
+              var songTitle = $(link[0]).parent().parent().find('a')[1];
+              var songAlbum = $(link[0]).parent().parent().find('a')[2];
+              nowPlaying = $(songArtist).text()+" - "+$(songTitle).text();
               player.src = link.attr('href');
               par = link.parent();
               par.addClass('active-file').siblings().removeClass('active-file');
