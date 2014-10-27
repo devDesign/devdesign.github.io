@@ -468,8 +468,6 @@ function resizeend() {
 function get_viewpoint(){
   var vpw = $(window).width();
   var vph = $(window).height();
-  console.log(vph);
-  console.log(vpw);
   var viewpointz = [vpw,vph];
   return viewpointz;
 }

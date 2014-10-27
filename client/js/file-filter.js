@@ -86,7 +86,6 @@ dragDrop('body', function(files){
   // see //FUCK in webtorrent.js
   // add error readout for user!
   // logAppend('Creating .torrent file...<br>')
-  console.log(files);
 
   client.seed(files, function(torrent){
     var newTorrentDiv = $('<div class="file-entry" id="'+torrent.infoHash+'">').appendTo('#filelist');

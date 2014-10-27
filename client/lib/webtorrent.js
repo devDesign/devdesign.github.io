@@ -7,6 +7,8 @@ var sendMultiplesToWebTorrent;
 var download;
 var nowPlaying;
 
+
+
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var concat = require('concat-stream')
 dragDrop = require('drag-drop/buffer')
@@ -88,7 +90,6 @@ onTorrent = function(torrent) {
         a.href = URL.createObjectURL(realFile)
         a.innerHTML = file.name
  
-        console.log(extname)
         if (extname == ".mp3"){
           file.type = "audio/mp3"
         } else if (extname == ".wav"){
@@ -121,7 +122,6 @@ function play_torrent_file(url, title, type, blob) {
   reader.onload = function(event) {
     ID3.loadTags(url, function() {
       var tags = ID3.getAllTags(url);
-      console.log(tags);
 
       //$('<tr id="'+title+'"><td class="artist">'+tags.artist+'</td><td class="playlist-entry><a href=' + url + '>' + tags.title + '</a></td></tr>').appendTo('#playlist');
       $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a class="track" href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td></tr>').appendTo('#playlist');
@@ -8228,7 +8228,7 @@ function DragDrop (elem, cb) {
   elem.addEventListener('dragenter', killEvent, false)
   elem.addEventListener('dragover', makeOnDragOver(elem), false)
   elem.addEventListener('drop', onDrop.bind(undefined, elem, cb), false)
-  elem.addEventListener('change', onDrop.bind(undefined, elem, cb), false)
+  invisibleInput.addEventListener('change', onDrop.bind(undefined, elem, cb), false)
 }
 
 function killEvent (e) {
@@ -8260,13 +8260,11 @@ function makeOnDragOver (elem) {
 onDrop = function(elem, cb, e) {
   var invisibleInput = document.querySelector('#invisible-file-input');
   if(e.target == invisibleInput){
-    console.log("from the drop");
     files = invisibleInput.files
     var totalSize = 0 
     for (var i = 0; i < files.length; i++) {
       totalSize += files[i].size
     }
-    console.log(totalSize);
     if ( totalSize > 104857600 ) {
       if ( files.length > 1 ) {
         errorMessage('No multiple uploads over 150MB')
