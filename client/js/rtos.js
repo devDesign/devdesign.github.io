@@ -2,6 +2,7 @@ var eachActiveConnection;
 // THANKS to github.com/peers 
 var sessionTorrents = [];
 var connectToPeer;
+var connectedPeers;
 
 $(document).ready(function() {
 
@@ -13,7 +14,7 @@ $(document).ready(function() {
   }
   var color = pastelColors();
   var peer;
-  var connectedPeers = {};
+  connectedPeers = {};
 
   var sessionMessages = [];
 
