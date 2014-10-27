@@ -34,7 +34,6 @@ var rtccopy_server = "ws:allthetime.io:8000";
 
 function process_room_state(data) {
 	if (data.browser != "") { /* will be blank if new room */
-		console.log("Don't worry, you'll be there soon!");
 	}
 }
 
@@ -47,7 +46,6 @@ function startDownloadServer(usernameFromPeerJS,roomNameFromPeerJS) {
 
 /* adds small text to chat */
 function systemMessage(msg) {
-  console.log(msg);
 }
 
 /* Use this to avoid xss
@@ -75,7 +73,6 @@ var dataChannelChat = {
 					channel.send(message);
 
 			} else {
-				console.log("unable to send message to " + connection);
 			}
 		}
 	},
@@ -87,7 +84,6 @@ var dataChannelChat = {
 				channel.send(message);
 
 		} else {
-			console.log("unable to send message to " + connection);
 		}
 	},
 	recv: function(channel, message) {
@@ -99,7 +95,6 @@ var dataChannelChat = {
 function init(roomNameFromPeerJS) {
 
   if(!PeerConnection) {
-		console.log('WA WA: no peers, :(');
 		return;
   }
   
@@ -154,7 +149,6 @@ function init(roomNameFromPeerJS) {
 function initChat() {
   var chat;
 
-  console.log('initializing data channel chat');
   chat = dataChannelChat;
   /* this function is called with every data packet recieved */
   rtc.on(chat.event, function(conn, data, id, username) {
