@@ -312,6 +312,13 @@ $('document').ready(function(){
   });
   vidBox = camBox;
   camBox.detach();
+  //set up picbox 
+  var picBox = $('#pic_box');
+  var picElement = document.getElementById('pic_box');
+  var picWindow = new Hammer(picElement);
+  picBox.pep();
+  imgBox = picBox;
+  picBox.detach();
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');

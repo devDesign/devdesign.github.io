@@ -102,6 +102,21 @@ onTorrent = function(torrent) {
         } else if (extname == ".mp4"){
           file.type = "video/mp4"
           var icon = "&#xf008;"
+        } else if (extname.toLowerCase() == ".png"){
+          file.type = "image/png"
+          var icon = "&#xf1c5;"
+        } else if (extname.toLowerCase() == ".jpg"){
+          file.type = "image/jpg"
+          var icon = "&#xf1c5;"
+        } else if (extname.toLowerCase() == ".gif"){
+          file.type = "image/gif"
+          var icon = "&#xf1c5;"
+        } else if (extname.toLowerCase() == ".tiff"){
+          file.type = "image/gif"
+          var icon = "&#xf1c5;"
+        } else if (extname.toLowerCase() == ".jpeg"){
+          file.type = "image/jpeg"
+          var icon = "&#xf1c5;"
         }
 
 
@@ -121,22 +136,45 @@ onTorrent = function(torrent) {
 
         // newTorrentRow.appendTo('#filelist')
         newTorrentRow.appendTo('#filelist')
-        if(file.type == "video/mp4")
-        $(".mp4").on('click',function(){
-          if($('#cam_box')[0]){
-            var vidSrc = $(this).parent().parent().find('a')[0]
-            var video = $('#media_player-video')[0];
-            console.log($(vidSrc).attr('href'));
-            video.src = $(vidSrc).attr('href');
-          } else {
-            vidBox.appendTo('body');
-            var vidSrc = $(this).parent().parent().find('a')[0]
-            var video = $('#media_player-video')[0];
-            console.log($(vidSrc).attr('href'));
-            video.src = $(vidSrc).attr('href');
 
-          }
-        })
+        //binding the video box
+        if(file.type == "video/mp4"){
+          $(".mp4").on('click',function(){
+            if($('#cam_box')[0]){
+              var vidSrc = $(this).parent().parent().find('a')[0]
+              var video = $('#media_player-video')[0];
+              console.log($(vidSrc).attr('href'));
+              video.src = $(vidSrc).attr('href');
+            } else {
+              vidBox.appendTo('body');
+              var vidSrc = $(this).parent().parent().find('a')[0]
+              var video = $('#media_player-video')[0];
+              console.log($(vidSrc).attr('href'));
+              video.src = $(vidSrc).attr('href');
+
+            }
+          })
+        }
+
+        if(file.type.split('/')[0] == "image"){
+          $(extname.toLowerCase()).on('click',function(){
+            if($('#pic_box')[0]){
+              $('#pic_box').css({top:"1em",left:'1em'})
+              var picSrc = $(this).parent().parent().find('a')[0]
+              var picture = $('#media_player-image')[0];
+              console.log($(picSrc).attr('href'));
+              picture.src = $(picSrc).attr('href');
+              picture.height = get_viewpoint()[0]/2;
+            } else {
+              imgBox.appendTo('body');
+              var picSrc = $(this).parent().parent().find('a')[0]
+              var picture = $('#media_player-image')[0];
+              console.log($(picSrc).attr('href'));
+              picture.src = $(picSrc).attr('href');
+
+            }
+          })
+        }
 
     // var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
     // newTorrentFile.attr('href','javascript:void(0);');

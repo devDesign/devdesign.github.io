@@ -356,6 +356,12 @@ audio {
 
   @extend .border-module;
 }
+#pic_box{
+  position: fixed;
+  z-index: 9999;
+  background-color: $grey-shade;
+  @extend .border-module;
+}
 
 #media_box {
   width: 50%;
@@ -622,6 +628,7 @@ audio {
   bottom: 1.9em;
   text-align: center;
   color: $orange-shade;
+  font-size: 0.8em;
   margin: auto;
   border-top: 1px solid $orange-shade;
 }
