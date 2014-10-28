@@ -106,7 +106,7 @@ function init(roomNameFromPeerJS) {
     rtc.connect(rtccopy_server, room, username);
 
 	  rtc.on('ready', function(my_socket, usernames) {
-		
+
 			var username_arr = [];//convert to array
 			for (var x in usernames) {
 				if (x != my_socket) {//no reason to print yourself
@@ -137,7 +137,7 @@ function init(roomNameFromPeerJS) {
 	  
 	  /* when another user disconnects */
 	  rtc.on('disconnect stream', function(disconnecting_socket, disconnecting_username) {
-			systemMessage(disconnecting_username + " has left the room");
+      console.log(disconnecting_socket + " disconnected");
 			remove_container(disconnecting_socket);
 	  });
 	  
@@ -180,7 +180,6 @@ function packet_inbound(id, message) {
 function boot_alert(text) {
 	$("#alerts").append('<div class="alert alert-danger alert-dismissable">'+text+'<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
 }
-
 
 /* HSV idea from http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/ */
 /* returns random hex color */
