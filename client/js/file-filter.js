@@ -41,7 +41,6 @@ var bigFile = false;
 // Decide whether to send to webRTCio or not
 function fileRouter(files){
   //var files = files
-
   var fileCount = files.length
   var totalSize = 0
 

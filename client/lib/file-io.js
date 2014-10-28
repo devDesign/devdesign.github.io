@@ -639,15 +639,41 @@ function create_file_link (meta, id, username, fileEntry) {
         var nameCol = $('<td>')
         var sizeCol = $('<td>')
         var typeCol = $('<td>')
+        var icon = "&#xf016;"
+        if(filetype=="video/mp4"){
+        	icon = "&#xf008;"
+        } 
 
         streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
         downloadCol.html('<a download="'+meta.name+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
-        nameCol.text(meta.name).appendTo(newTorrentRow).addClass(filetype.split('/')[1]);
+        nameCol.html('<div class="'+filetype.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+meta.name+"</div>").appendTo(newTorrentRow);
+/*        nameCol.html("<span class='file_list-icon'>"+icon+"</span>").text(meta.name).appendTo(newTorrentRow).addClass(filetype.split('/')[1]);*/
         sizeCol.text((meta.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
         typeCol.text(filetype).appendTo(newTorrentRow)
+
+       
+        	
+
+      	
     
         // newTorrentRow.appendTo('#filelist')
         newTorrentRow.appendTo('#filelist')
+        $(".mp4").on('click',function(){
+	    		console.log(filetype);
+	        if($('#cam_box')[0]){
+	          var vidSrc = $(this).parent().parent().find('a')[0]
+	          var video = $('#media_player-video')[0];
+	          console.log($(vidSrc).attr('href'));
+	          video.src = $(vidSrc).attr('href');
+	        } else {
+	          vidBox.appendTo('body');
+	          var vidSrc = $(this).parent().parent().find('a')[0]
+	          var video = $('#media_player-video')[0];
+	          console.log($(vidSrc).attr('href'));
+	          video.src = $(vidSrc).attr('href');
+
+	        }
+	      });
 
   
     // GET ID3, add to play_file if necessary (shouldn't be)
