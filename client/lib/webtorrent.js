@@ -107,7 +107,11 @@ onTorrent = function(torrent) {
 
         streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
         downloadCol.html('<a download="'+file.name+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
-        nameCol.html('<div class="'+file.type.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+file.name+"</div>").appendTo(newTorrentRow);
+        if ( file.type ){
+          nameCol.html('<div class="'+file.type.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+file.name+"</div>").appendTo(newTorrentRow);
+        } else {
+          nameCol.html('<div class="FILEfile"><span class="file_list-icon">'+icon+'</span>'+file.name+"</div>").appendTo(newTorrentRow);
+        }        
         sizeCol.text((realFile.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
         if ( file.type ){
           typeCol.text(file.type).appendTo(newTorrentRow)
