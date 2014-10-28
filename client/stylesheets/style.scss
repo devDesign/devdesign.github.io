@@ -646,11 +646,12 @@ input[type="range"] {
   position: absolute;
   bottom: 0px;
   width: 100%;
-  text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
 #audioplayer > div {
-  display: inline-flex;
+  display: flex;
 }
 
 #pButton {
