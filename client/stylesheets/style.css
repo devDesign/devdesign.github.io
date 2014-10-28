@@ -422,7 +422,8 @@ audio {
 #media_player-video {
   position: absolute;
   width: 100%;
-  margin: auto; }
+  margin: auto;
+  outline: none; }
 
 #togglevideo {
   position: absolute;
