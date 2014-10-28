@@ -129,6 +129,7 @@ onTorrent = function(torrent) {
 
         // newTorrentRow.appendTo('#filelist')
         newTorrentRow.appendTo('#filelist')
+        if(file.type == "video/mp4")
         $(".mp4").on('click',function(){
           if($('#cam_box')[0]){
             var vidSrc = $(this).parent().parent().find('a')[0]
