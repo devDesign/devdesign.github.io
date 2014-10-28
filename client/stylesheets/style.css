@@ -249,6 +249,29 @@ audio {
     box-shadow: -1px 1px 1px #111 !important;
     padding: 0.7em; }
 
+#big_files_box {
+  position: absolute;
+  border-spacing: 0px;
+  left: 0em;
+  right: 0em;
+  top: 2em;
+  bottom: 1.3em;
+  overflow-y: auto;
+  overflow-x: none; }
+  #big_files_box table {
+    border-spacing: 0px;
+    margin: 0;
+    padding: 0;
+    width: 100%; }
+  #big_files_box tr {
+    width: 100%; }
+    #big_files_box tr:hover {
+      box-shadow: inset 0 0 3px #2D313D;
+      color: #eee; }
+  #big_files_box td {
+    box-shadow: -1px 1px 1px #111 !important;
+    padding: 0.7em; }
+
 #cam_box {
   position: absolute;
   width: 640px;
@@ -584,5 +607,8 @@ input[type="range"] {
 
 .column_label {
   font-size: 0.7em; }
+
+.torrent-contents {
+  list-style: none; }
 
 /*# sourceMappingURL=style.css.map */

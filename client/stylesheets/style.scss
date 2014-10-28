@@ -307,6 +307,38 @@ audio {
 
 
 }
+
+#big_files_box{
+  position: absolute;
+  border-spacing: 0px;
+  left:0em;
+  right:0em;
+  top:2em;
+  bottom:1.3em;
+  overflow-y:auto;
+  overflow-x:none;
+    table{
+    border-spacing: 0px;  
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  tr{
+    width: 100%;
+
+     &:hover{
+    box-shadow: inset 0 0 3px $black;
+    color:#eee;
+    }
+  }
+  td{
+    box-shadow: -1px 1px 1px #111!important;
+    padding: 0.7em;
+   
+ 
+  }
+
+}
 #cam_box{
   position: absolute;
   width:640px;
@@ -687,4 +719,8 @@ input[type="range"] {
 
 .column_label{
   font-size: 0.7em;
+}
+
+.torrent-contents{
+  list-style: none;
 }

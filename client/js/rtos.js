@@ -226,6 +226,8 @@ $(document).ready(function() {
         if ( torrentList.length > 0 ){          
           $('#download_list_box').show()
           $('#file_list').hide()
+          $('#big_files_box').hide()
+          $('#bigfiles').removeClass('file_menu-active');
           $('#my_files').removeClass('file_menu-active');
           $('#downloads').addClass('file_menu-active');
         }
@@ -322,6 +324,8 @@ $(document).ready(function() {
 
         $('#download_list_box').show()
         $('#file_list').hide()
+        $('#big_files_box').hide()
+        $('#bigfiles').removeClass('file_menu-active');        
         $('#my_files').removeClass('file_menu-active');
         $('#downloads').addClass('file_menu-active');
 
@@ -329,7 +333,10 @@ $(document).ready(function() {
         var fileName = data[1]  
         var numberOfFiles = data[2]
         var torrentSize = data[3]
+        var fileList = data[4]
         var sender = c.peer
+
+
 
         var newTorrentRow = $('<tr class="file-entry" id="'+infoHash+'">')
 
@@ -341,7 +348,14 @@ $(document).ready(function() {
         if (numberOfFiles == 1){
           nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+fileName+'</a>').appendTo(newTorrentRow)
         } else {
-          nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>').appendTo(newTorrentRow)            
+          nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>')
+          var torrentContents = $('<ul class="torrent-contents">')
+          fileList.forEach(function(name){
+            var fileItem = $('<li>').text(name)
+            fileItem.appendTo(torrentContents);
+          })
+          torrentContents.appendTo(nameCol)
+          nameCol.appendTo(newTorrentRow);            
         }
 
         sizeCol.text((torrentSize/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)

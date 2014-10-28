@@ -61,35 +61,23 @@ onTorrent = function(torrent) {
   })
 
 
+  var numberOfFiles = torrent.files.length
+  var filesProcessed = 0
+
   torrent.files.forEach(function (file,index) {
     var extname = path.extname(file.name)
 
-    // if (extname === '.mp4' || extname === '.webm') {
-    //   var video = document.createElement('video')
-    //   video.controls = true
-    //   videos.appendChild(video)
-    //   file.createReadStream().pipe(video)
-    // } else {
       file.createReadStream().pipe(concat(function (buf) {
+        filesProcessed ++ 
 
-        // if (index == 0) {
-        //   var a = document.getElementById(torrent.infoHash+'-torrent') 
-        // } else {
-        //   var a = $('<a>')
-        //   var li = $('<div class="file-entry">')
-        //   a.appendTo(li)
-        //   li.appendTo('#filelist');
-        //   a = a[0]
-        // }
-        // a.classList.add('downloaded');
-        // a.download = file.name
-        // realFile = new Blob([buf])
-        // a.href = URL.createObjectURL(realFile)
-        // //a.innerHTML = file.name
-        $('#file_list').show();
-        $('#download_list_box').hide();
-        $('#my_files').addClass('file_menu-active');
-        $('#downloads').removeClass('file_menu-active');
+        if (filesProcessed == numberOfFiles){
+          $('#file_list').show();
+          $('#download_list_box').hide();
+          $('#big_files_box').hide()
+          $('#bigfiles').removeClass('file_menu-active');
+          $('#my_files').addClass('file_menu-active');
+          $('#downloads').removeClass('file_menu-active');
+        }
 
         realFile = new Blob([buf])
         linkToFile = URL.createObjectURL(realFile)
