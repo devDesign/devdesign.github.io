@@ -279,7 +279,6 @@ function process_data(data) {
 		}
 		*/
 		
-		console.log(this.recieved_meta[data.id]);
 	} else if (data.kill) {
 		/* if it is a kill msg, then the user on the other end has stopped uploading! */
 		
@@ -348,7 +347,7 @@ function download_file(id) {
         console.log("File system quota expanded by: " + (size_of_quota_granted / 1024*1024) + "MB");
       },
       function(err){
-        errorMessage("Not enough space on HD to support FileSystemAPI")
+        errorMessage("Not enough space on disk to support FileSystemAPI")
       });
 	}
 
@@ -357,7 +356,9 @@ function download_file(id) {
 		filesysteminuse = true;
 		downloading[id] = true; /* accept file info from user */
 		request_chunk(id, 0, 0);
-	});
+	}, function(){
+    errorMessage("Not enough space on disk to support FileSystemAPI");
+  });
 	
 	recieved_meta[id].chunks_recieved = 0;
 	recievedChunksWritePointer[id] = 0;
@@ -372,9 +373,15 @@ function delete_file(user_id) {
 	if (fs[user_id]) {
 		this.filesysteminuse = false;
 		fs[user_id].root.getFile(this.recieved_meta[user_id].name, {create: false}, function(fileEntry) {
-			//fileEntry.remove(function() {
-			//	console.log('File removed.');
-			//}, FSerrorHandler);
+
+      fileEntry.file(function(file){
+        if (file.size < this.recieved_meta[user_id].size){
+          fileEntry.remove(function() {
+            console.log('File removed.');
+          }, FSerrorHandler);
+        }
+      })
+
 		}, FSerrorHandler);
 	}
 }
@@ -749,6 +756,7 @@ function FSerrorHandler(e) {
   switch (e.code) {
     case FileError.QUOTA_EXCEEDED_ERR:
       msg = 'QUOTA_EXCEEDED_ERR';
+      errorMessage('Not enough space on disk to write to FileSystem');
       break;
     case FileError.NOT_FOUND_ERR:
       msg = 'NOT_FOUND_ERR';
