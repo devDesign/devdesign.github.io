@@ -193,7 +193,6 @@ $(document).ready(function() {
   // Handle open channel between users
   function connect(c) {
 
-
     var globalChat = $('#global_chat');
 
     if(c.label === 'loadRoom') {
@@ -224,38 +223,7 @@ $(document).ready(function() {
         }
 
         torrentList.forEach(function(torrent,index){
-
-
-          var infoHash = torrent["infoHash"]
-          var fileName = torrent["name"]
-          var numberOfFiles = torrent["length"]
-          var torrentSize = torrent["size"]
-          var sender = c.peer
-
-          var newTorrentRow = $('<tr class="file-entry" id="'+infoHash+'">')
-
-          var nameCol = $('<td>')
-          var sizeCol = $('<td>')
-          var senderCol = $('<td>')
-          var statusCol = $('<td id="'+infoHash+'-progress">')
-
-          if (numberOfFiles == 1){
-            nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+fileName+'</a>').appendTo(newTorrentRow)
-          } else {
-            nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>').appendTo(newTorrentRow)            
-          }
-
-          sizeCol.text((torrentSize/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
-          senderCol.text(sender).appendTo(newTorrentRow)
-          statusCol.appendTo(newTorrentRow)
-
-          newTorrentRow.appendTo('#download_list');
-
-          $('#'+infoHash+'-torrent').on('click', function(e){
-            download(e.target.id.split('-torrent')[0]);
-          });
-
-
+          loadPushedTorrents(torrent["infoHash"],torrent["name"],torrent["length"],torrent["size"],torrent["fileList"],torrent["sender"])
         });
       });
 
@@ -265,19 +233,8 @@ $(document).ready(function() {
       var header = $('<div></div>').html(c.peer).appendTo(chatbox);
       var messages = $('<div><em>'+c.peer+' connected.</em></div>').addClass('messages');
 
-
-
       chatbox.append(header);
       globalChat.append(messages);
-
-      // Select connection handler.
-    /*  chatbox.on('click', function() {
-        if ($(this).attr('class').indexOf('active') === -1) {
-          $(this).addClass('active');
-        } else {
-          $(this).removeClass('active');
-        }
-      });*/
 
       $('.filler').hide();
       $('#chat_user_list').append(chatbox);
@@ -289,11 +246,8 @@ $(document).ready(function() {
           '</div>');
         globalChat.scrollTop(globalChat.prop("scrollHeight"));
 
-
-
         var messageObject = { "peer": c.peer, "message": data[0], "color": data[1] }
         sessionMessages.push(messageObject);
-
       });
 
       // Fade peer out on close and destroy users torrents
@@ -307,14 +261,14 @@ $(document).ready(function() {
         }
         var messages = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
         globalChat.append(messages);
-
+        // remove disconnecting users torrents
         $('.'+c.peer+'torrentz').remove();
 
-       $.ajax({
-         type: 'delete',
-         url: '/rtos/rooms?userName=' + c.peer,
-         async: false
-       });        
+        $.ajax({
+          type: 'delete',
+          url: '/rtos/rooms?userName=' + c.peer,
+          async: false
+        });        
 
         delete connectedPeers[c.peer];
       });
@@ -331,46 +285,7 @@ $(document).ready(function() {
         $('#my_files').removeClass('file_menu-active');
         $('#downloads').addClass('file_menu-active');
 
-        var infoHash = data[0]
-        var fileName = data[1]  
-        var numberOfFiles = data[2]
-        var torrentSize = data[3]
-        var fileList = data[4]
-        var sender = c.peer
-
-
-
-        var newTorrentRow = $('<tr class="file-entry '+c.peer+'torrentz" id="'+infoHash+'">')
-
-        var nameCol = $('<td>')
-        var sizeCol = $('<td>')
-        var senderCol = $('<td>')
-        var statusCol = $('<td id="'+infoHash+'-progress">')
-
-        if (numberOfFiles == 1){
-          nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+fileName+'</a>').appendTo(newTorrentRow)
-        } else {
-          nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>')
-          var torrentContents = $('<ul class="torrent-contents">')
-          fileList.forEach(function(name){
-            var fileItem = $('<li>').text(name)
-            fileItem.appendTo(torrentContents);
-          })
-          torrentContents.appendTo(nameCol)
-          nameCol.appendTo(newTorrentRow);            
-        }
-
-        sizeCol.text((torrentSize/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
-        senderCol.text(sender).appendTo(newTorrentRow)
-        statusCol.appendTo(newTorrentRow)
-
-        newTorrentRow.appendTo('#download_list');
-
-        $('#'+infoHash+'-torrent').on('click', function(e){
-          download(e.target.id.split('-torrent')[0]);
-        });
-
-
+        loadPushedTorrents(data[0],data[1],data[2],data[3],data[4],c.peer);
       });
 
     // Send mouse position of moving mouse to user
@@ -495,6 +410,38 @@ $(document).ready(function() {
       }
       checkedIds[peerId] = 1;
     });
+  }
+
+  function loadPushedTorrents(infoHash,fileName,numberOfFiles,torrentSize,fileList,sender){
+    var newTorrentRow = $('<tr class="file-entry '+sender+'torrentz" id="'+infoHash+'">')
+
+    var nameCol = $('<td>')
+    var sizeCol = $('<td>')
+    var senderCol = $('<td>')
+    var statusCol = $('<td id="'+infoHash+'-progress">')
+
+    if (numberOfFiles == 1){
+      nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+fileName+'</a>').appendTo(newTorrentRow)
+    } else {
+      nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>')
+      var torrentContents = $('<ul class="torrent-contents">')
+      fileList.forEach(function(name){
+        var fileItem = $('<li>').text(name)
+        fileItem.appendTo(torrentContents);
+      })
+      torrentContents.appendTo(nameCol)
+      nameCol.appendTo(newTorrentRow);            
+    }
+
+    sizeCol.text((torrentSize/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
+    senderCol.text(sender).appendTo(newTorrentRow)
+    statusCol.appendTo(newTorrentRow)
+
+    newTorrentRow.appendTo('#download_list');
+
+    $('#'+infoHash+'-torrent').on('click', function(e){
+      download(e.target.id.split('-torrent')[0]);
+    });  
   }
 
   // Show browser version

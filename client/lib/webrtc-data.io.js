@@ -254,17 +254,9 @@ function sanitize(msg) {
       });
 
       rtc.on('new_peer_connected', function(data) {
-        //add username
         rtc.usernames[data.socketId] = sanitize(data.username);
-        
-        //add socket and create streams
         rtc.connections.push(data.socketId);
-
-        // FUCK
         // THE CONNECTED GETS THIS
-
-
-
         var pc = rtc.createPeerConnection(data.socketId);
         for (var i = 0; i < rtc.streams.length; i++) {
          var stream = rtc.streams[i];
@@ -273,9 +265,10 @@ function sanitize(msg) {
       });
 
       rtc.on('remove_peer_connected', function(data) {
-	    rtc.connection_ok_to_send[data.socketId] = false;
+        console.log(data)
+	      rtc.connection_ok_to_send[data.socketId] = false;
         rtc.fire('disconnect stream', data.socketId, rtc.usernames[data.socketId]);
-		delete rtc.dataChannels[data.socketId];
+		    delete rtc.dataChannels[data.socketId];
         delete rtc.usernames[data.socketId];
         delete rtc.peerConnections[data.socketId];
       });
@@ -356,15 +349,13 @@ function sanitize(msg) {
       rtc.fire('peer connection opened');
     };
 
+    pc.onclose = function(){
+      console.log('Closed!')
+    }
+
 
     // FUCK ADD STREAM
     pc.onaddstream = function(event) {
-      // TODO: Finalize this API
-        var vid = document.createElement("video");
-        vid.id = event.stream.id
-        document.getElementById('filelist').appendChild(vid);
-        rtc.attachStream(event.stream, vid.id);
-        vid.play();
         rtc.fire('add remote stream', event.stream, id);
     };
 	
@@ -592,14 +583,8 @@ function sanitize(msg) {
 		return;
 	}
 
-  // FUCK 
-  // FOR EACH USER
-
 	for (var connection in rtc.peerConnections) {
 		rtc.createDataChannel(connection);
-    // rtc.createDataChannel(connection, "videoStream")
-
-    // FUCK
     // THE CONNECTOR GETS THIS
 	}
   };

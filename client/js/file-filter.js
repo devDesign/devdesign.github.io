@@ -94,7 +94,7 @@ dragDrop('body', function(files){
       fileList.push(file.name)
     });
 
-    sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length, "size": torrentSize})
+    sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length, "size": torrentSize, "fileList": fileList})
 
     eachActiveConnection(function(c, $c) {
       if (c.label === 'torrentz') {

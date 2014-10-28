@@ -18,34 +18,12 @@ var WebTorrent = require('webtorrent')
 
 client = new WebTorrent()
 
-
-// var hash = window.location.hash.replace('#', '')
-
-// Do this in file filter
-
-// dragDrop('body', function (files) {
-//   logAppend('Creating .torrent file...<br>')
-
-//   client.seed(files, onTorrent)
-// })
-
-
-// document.querySelector('form').addEventListener('submit', function (e) {
-//   e.preventDefault()
-//   download(document.querySelector('form input').value)
-// })
-
-// if (/^[a-f0-9]+$/i.test(hash)) {
-//   download(hash)
-// }
-
 download = function(infoHash) {
   client.add({
     infoHash: infoHash,
     announce: [ 'wss://tracker.webtorrent.io' ]
   }, onTorrent)
 }
-
 
 onTorrent = function(torrent) {
   
