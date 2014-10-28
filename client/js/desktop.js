@@ -427,14 +427,21 @@ $('document').ready(function(){
       },
       'rest':function(){
         if(timeout == false){
-        if(this.activeDropRegions[0][0].id){var dropRegion = this.activeDropRegions[0][0].id};
+   /*     if(this.activeDropRegions[0][0].id){var dropRegion = this.activeDropRegions[0][0].id};*/
         if (this.activeDropRegions.length== 1){
+          var dropRegion = this.activeDropRegions[0][0].id
           if( dropRegion === "rs" ){ attack_grid(jElement,"rs") }
           else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") }
           else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") }  
         }
        if (this.activeDropRegions.length >= 2){
-       attack_grid(jElement,"bs")
+        if (element.offsetLeft<100){
+          attack_grid(jElement,"lbs")
+        } else if (element.offsetLeft > get_viewpoint()[1]-100){
+          attack_grid(jElement,"rbs")
+        } else{
+        attack_grid(jElement,"bs");
+        }
       }}},
       'easing': function() {
         var dropRegion = this.activeDropRegions[0][0].id;
@@ -573,8 +580,20 @@ switch (side)
           horizontalGrid[1].css(splitHieght).css(placeRight).css(placeTop);
           jElement.css(splitHieght).css(placeBottom).css(placeLeft).css(fullWidth);
           bs=jElement;
+          break;
         }
-      
+      case "lbs":
+        horizontalGrid[0].css(splitHieght).css(placeTop).css(splitWidth).css(placeLeft);
+        ls = horizontalGrid[0];
+        horizontalGrid[0]=jElement;
+        horizontalGrid[0].css(splitHieght).css(splitWidth).css(placeLeft).css(placeBottom)
+        break;
+      case "rbs":
+        horizontalGrid[1].css(splitHieght).css(placeTop).css(splitWidth).css(placeRight);
+        rs = horizontalGrid[1];
+        horizontalGrid[1]=jElement;
+        horizontalGrid[1].css(splitHieght).css(splitWidth).css(placeRight).css(placeBottom)
+        break;
     }
 }
 
