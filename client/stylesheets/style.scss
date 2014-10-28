@@ -515,6 +515,7 @@ audio {
   position: absolute;
   width: 100%;
   margin: auto;
+  outline: none;
 }
 #togglevideo{
   position: absolute;
@@ -622,6 +623,7 @@ audio {
   text-align: center;
   color: $orange-shade;
   margin: auto;
+  border-top: 1px solid $orange-shade;
 }
 #pointcloud {
   position: fixed;

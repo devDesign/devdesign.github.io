@@ -422,7 +422,8 @@ audio {
 #media_player-video {
   position: absolute;
   width: 100%;
-  margin: auto; }
+  margin: auto;
+  outline: none; }
 
 #togglevideo {
   position: absolute;
@@ -513,7 +514,8 @@ audio {
   bottom: 1.9em;
   text-align: center;
   color: #E58C7D;
-  margin: auto; }
+  margin: auto;
+  border-top: 1px solid #E58C7D; }
 
 #pointcloud {
   position: fixed;

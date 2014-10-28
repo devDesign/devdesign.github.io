@@ -310,6 +310,12 @@ $(document).ready(function() {
 
         $('.'+c.peer+'torrentz').remove();
 
+       $.ajax({
+         type: 'delete',
+         url: '/rtos/rooms?userName=' + c.peer,
+         async: false
+       });        
+
         delete connectedPeers[c.peer];
       });
 
@@ -502,11 +508,11 @@ $(document).ready(function() {
       console.log(err);
     }
     // KEEP FOR PRODUCTION
-     $.ajax({
-       type: 'delete',
-       url: '/rtos/rooms?userName=' + peer.id,
-       async: false
-     });
+   $.ajax({
+     type: 'delete',
+     url: '/rtos/rooms?userName=' + peer.id,
+     async: false
+   });
   }
 });
 
