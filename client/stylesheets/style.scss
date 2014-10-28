@@ -165,7 +165,7 @@ audio {
   cursor: move;
   // padding: 1px;
   // position: relative;
-  height: 1.5em;
+  height: 1.8em;
   width: 100%;
   background-color: $grey-shade;
     span {
@@ -209,7 +209,7 @@ audio {
   box-sizing: border-box;
   @extend .border-module;
   #file_menu{
-    background-color: $black;
+    background-color: $grey-shade;
     position: absolute;
     top:1.8em;
     width: 100%;
@@ -222,7 +222,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
-        background-color: $grey-shade;
+        background-color: $black-shade;
       }
     }
     #downloads{
@@ -231,7 +231,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
-        background-color: $grey-shade;
+        background-color: $black-shade;
       }
     }
     #bigfiles{
@@ -240,12 +240,12 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
-        background-color: $grey-shade;
+        background-color: $black-shade;
       }
     }
 
     .file_menu-active{
-      background-color: $grey-shade;
+      background-color: $black;
     }
   }
 }
@@ -254,7 +254,7 @@ audio {
   
   left:0em;
   right:0em;
-  top:2.1em;
+  top:2.0em;
   bottom:1.3em;
   overflow-y:auto;
   overflow-x:none;
@@ -697,7 +697,11 @@ input[type="range"] {
 }
 
 .column_label{
+  background-color: $black;
   font-size: 0.7em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-align: center;
 }
 .file_list-icon{
   padding-right: 1em;

@@ -138,7 +138,7 @@ audio {
   display: flex;
   box-sizing: border-box;
   cursor: move;
-  height: 1.5em;
+  height: 1.8em;
   width: 100%;
   background-color: #363A4A; }
   .window_title span {
@@ -176,7 +176,7 @@ audio {
   position: absolute;
   box-sizing: border-box; }
   #file_box #file_menu {
-    background-color: #2D313D;
+    background-color: #363A4A;
     position: absolute;
     top: 1.8em;
     width: 100%;
@@ -189,29 +189,29 @@ audio {
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #my_files:hover {
-        background-color: #363A4A; }
+        background-color: #424659; }
     #file_box #file_menu #downloads {
       cursor: pointer;
       margin: 0;
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #downloads:hover {
-        background-color: #363A4A; }
+        background-color: #424659; }
     #file_box #file_menu #bigfiles {
       cursor: pointer;
       margin: 0;
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #bigfiles:hover {
-        background-color: #363A4A; }
+        background-color: #424659; }
     #file_box #file_menu .file_menu-active {
-      background-color: #363A4A; }
+      background-color: #2D313D; }
 
 #file_list {
   position: absolute;
   left: 0em;
   right: 0em;
-  top: 2.1em;
+  top: 2.0em;
   bottom: 1.3em;
   overflow-y: auto;
   overflow-x: none; }
@@ -588,7 +588,11 @@ input[type="range"] {
   background: #E58C7D; }
 
 .column_label {
-  font-size: 0.7em; }
+  background-color: #2D313D;
+  font-size: 0.7em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-align: center; }
 
 .file_list-icon {
   padding-right: 1em; }
