@@ -107,14 +107,19 @@ onTorrent = function(torrent) {
 
         if (extname == ".mp3"){
           file.type = "audio/mp3"
+          var icon = "&#xf001;"
         } else if (extname == ".wav"){
           file.type = "audio/wav"
+          var icon = "&#xf001;"
+        } else if (extname == ".mp4"){
+          file.type = "video/mp4"
+          var icon = "&#xf008;"
         }
 
 
         streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
         downloadCol.html('<a download="'+file.name+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
-        nameCol.text(file.name).appendTo(newTorrentRow).addClass(file.type);
+        nameCol.html('<div class="'+file.type.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+file.name+"</div>").appendTo(newTorrentRow);
         sizeCol.text((realFile.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
         if ( file.type ){
           typeCol.text(file.type).appendTo(newTorrentRow)
@@ -124,7 +129,21 @@ onTorrent = function(torrent) {
 
         // newTorrentRow.appendTo('#filelist')
         newTorrentRow.appendTo('#filelist')
+        $(".mp4").on('click',function(){
+          if($('#cam_box')[0]){
+            var vidSrc = $(this).parent().parent().find('a')[0]
+            var video = $('#media_player-video')[0];
+            console.log($(vidSrc).attr('href'));
+            video.src = $(vidSrc).attr('href');
+          } else {
+            vidBox.appendTo('body');
+            var vidSrc = $(this).parent().parent().find('a')[0]
+            var video = $('#media_player-video')[0];
+            console.log($(vidSrc).attr('href'));
+            video.src = $(vidSrc).attr('href');
 
+          }
+        })
 
     // var newTorrentFile = $('<a id="'+torrent.infoHash+'-torrent">').text(torrent.name);
     // newTorrentFile.attr('href','javascript:void(0);');

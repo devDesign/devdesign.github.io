@@ -1,7 +1,7 @@
 var rs,ls,ts,bs,maxWindow,nextAttack;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
-
+var vidBox;
 $('document').ready(function(){
 
   //binding for now playing on mediaplayer
@@ -14,6 +14,7 @@ $('document').ready(function(){
       $('<div />',{class:'nowplaying',text:nowPlaying}).appendTo('#now_playing');
     }
   });
+
 
   $('#file_list').hide();
 
@@ -170,7 +171,8 @@ $('document').ready(function(){
   $(".close").on("click",function(){
     thisWindow = $( this ).parent();
     thisWindow = thisWindow.parent();
-    $(thisWindow).remove();
+    vidBox = $(thisWindow);
+    $(thisWindow).detach();
   });
   //clear all grid objects
   function clearGrid(object){
@@ -238,7 +240,7 @@ $('document').ready(function(){
     chatBox.show();
     fileBox.show();
     mediaBox.show();
-   /* camBox.show();*/
+    camBox.show();
     $('#login-box').hide();
     connectToPeer();
   });
@@ -307,7 +309,8 @@ $('document').ready(function(){
   camBox.pep({
     constrainTo:'#desktop',
   });
-  camBox.hide();
+  vidBox = camBox;
+  camBox.detach();
   //select mediabox for hammertime tap events
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');

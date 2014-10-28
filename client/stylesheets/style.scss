@@ -310,8 +310,10 @@ audio {
 #cam_box{
   position: absolute;
   width:640px;
-  height: 400px;
-  background-color: rgba(0,0,0,0.3);
+  height: 320px;
+  z-index: 9999;
+
+  @extend .border-module;
 }
 #media_box {
   width: 50%;
@@ -687,4 +689,7 @@ input[type="range"] {
 
 .column_label{
   font-size: 0.7em;
+}
+.file_list-icon{
+  padding-right: 1em;
 }

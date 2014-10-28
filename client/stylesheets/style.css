@@ -8,7 +8,7 @@
 @font-face {
   font-family: "FontAwesome";
   src: url("../stylesheets/font-awesome/fonts/FontAwesome.otf"); }
-.border-module, #login-box, #chat_box, #file_box, #media_box, #chat_user_list, #users {
+.border-module, #login-box, #chat_box, #file_box, #cam_box, #media_box, #chat_user_list, #users {
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
 
@@ -252,8 +252,8 @@ audio {
 #cam_box {
   position: absolute;
   width: 640px;
-  height: 400px;
-  background-color: rgba(0, 0, 0, 0.3); }
+  height: 320px;
+  z-index: 9999; }
 
 #media_box {
   width: 50%;
@@ -584,5 +584,8 @@ input[type="range"] {
 
 .column_label {
   font-size: 0.7em; }
+
+.file_list-icon {
+  padding-right: 1em; }
 
 /*# sourceMappingURL=style.css.map */
