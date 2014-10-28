@@ -296,7 +296,7 @@ $(document).ready(function() {
 
       });
 
-      // Fade peer out on close
+      // Fade peer out on close and destroy users torrents
       c.on('close', function() {
         $('#' + c.peer + 'mouse').fadeOut(1000, function() {
           $(this).remove();
@@ -307,6 +307,9 @@ $(document).ready(function() {
         }
         var messages = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
         globalChat.append(messages);
+
+        $('.'+c.peer+'torrentz').remove();
+
         delete connectedPeers[c.peer];
       });
 
@@ -331,7 +334,7 @@ $(document).ready(function() {
 
 
 
-        var newTorrentRow = $('<tr class="file-entry" id="'+infoHash+'">')
+        var newTorrentRow = $('<tr class="file-entry '+c.peer+'torrentz" id="'+infoHash+'">')
 
         var nameCol = $('<td>')
         var sizeCol = $('<td>')
