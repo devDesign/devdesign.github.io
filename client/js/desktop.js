@@ -16,13 +16,14 @@ $('document').ready(function(){
   });
 
   $('#file_list').hide();
+  $('#big_files_box').hide();
 
   $('#downloads').on('click',function(){
     $('#my_files').removeClass('file_menu-active');
     $('#bigfiles').removeClass('file_menu-active');
     $(this).addClass('file_menu-active');
     $('#file_list').hide();
-    $('#big_file_list').hide();
+    $('#big_files_box').hide();
     $('#download_list_box').show();
   });
   $('#my_files').on('click',function(){
@@ -30,7 +31,7 @@ $('document').ready(function(){
     $('#bigfiles').removeClass('file_menu-active');
     $(this).addClass('file_menu-active');
     $('#download_list_box').hide();
-    $('#big_file_list').hide();
+    $('#big_files_box').hide();
     $('#file_list').show();
   });
 
@@ -39,7 +40,7 @@ $('document').ready(function(){
     $('#my_files').removeClass('file_menu-active');
     $(this).addClass('file_menu-active');
     $('#download_list_box').hide();
-    $('#big_file_list').show();
+    $('#big_files_box').show();
     $('#file_list').hide();
   });
   // Audio Player /// 

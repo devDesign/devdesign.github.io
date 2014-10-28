@@ -448,7 +448,7 @@ function play_file(id, title, type,file) {
 
 /* creates an entry in our filelist for a user, if it doesn't exist already - TODO: move this to script.js? */
 function create_or_clear_container(id, username) {
-	var filelist = document.getElementById('filelist');
+	var filelist = document.getElementById('big_files_list');
 	var filecontainer = document.getElementById(id);
 	username = sanitize(username);
 	
