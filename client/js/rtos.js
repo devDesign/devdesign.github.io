@@ -140,7 +140,6 @@ $(document).ready(function() {
     });
   }
 
-
   function createChannel(options,requestedPeer){
     var channel = peer.connect(requestedPeer, options);
     channel.on('open', function() {
@@ -151,12 +150,6 @@ $(document).ready(function() {
     });
   }
 
-
-
-
-
-
-
   // Initialize a peer connection open necessary dataChannels and streams
   function connectToUser(requestedPeer) {
     if (!connectedPeers[requestedPeer]) {
@@ -166,12 +159,10 @@ $(document).ready(function() {
       createChannel({label: 'chat'}, requestedPeer)
       // Pass room history (chat and torrents) to new user
       createChannel({label:"loadRoom"}, requestedPeer);
-      // Open torrent hash sending channel
-      createChannel({label: 'torrentz'}, requestedPeer)      
+      // Open torrent info sending channel
+      createChannel({label: 'torrentz'}, requestedPeer)   
       // Open video stream channel
       createChannel({label: 'videoFeed', reliable: true }, requestedPeer)
-      // Open file drop channel
-      createChannel({label: 'initData', reliable: true } ,requestedPeer)
     }
     connectedPeers[requestedPeer] = 1;
   }
@@ -226,6 +217,8 @@ $(document).ready(function() {
         if ( torrentList.length > 0 ){          
           $('#download_list_box').show()
           $('#file_list').hide()
+          $('#big_files_box').hide()
+          $('#bigfiles').removeClass('file_menu-active');
           $('#my_files').removeClass('file_menu-active');
           $('#downloads').addClass('file_menu-active');
         }
@@ -312,6 +305,8 @@ $(document).ready(function() {
         if ($('.connection').length === 0) {
           $('.filler').show();
         }
+        var messages = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
+        globalChat.append(messages);
         delete connectedPeers[c.peer];
       });
 
@@ -322,6 +317,8 @@ $(document).ready(function() {
 
         $('#download_list_box').show()
         $('#file_list').hide()
+        $('#big_files_box').hide()
+        $('#bigfiles').removeClass('file_menu-active');        
         $('#my_files').removeClass('file_menu-active');
         $('#downloads').addClass('file_menu-active');
 
@@ -329,7 +326,10 @@ $(document).ready(function() {
         var fileName = data[1]  
         var numberOfFiles = data[2]
         var torrentSize = data[3]
+        var fileList = data[4]
         var sender = c.peer
+
+
 
         var newTorrentRow = $('<tr class="file-entry" id="'+infoHash+'">')
 
@@ -341,7 +341,14 @@ $(document).ready(function() {
         if (numberOfFiles == 1){
           nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+fileName+'</a>').appendTo(newTorrentRow)
         } else {
-          nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>').appendTo(newTorrentRow)            
+          nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>')
+          var torrentContents = $('<ul class="torrent-contents">')
+          fileList.forEach(function(name){
+            var fileItem = $('<li>').text(name)
+            fileItem.appendTo(torrentContents);
+          })
+          torrentContents.appendTo(nameCol)
+          nameCol.appendTo(newTorrentRow);            
         }
 
         sizeCol.text((torrentSize/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
@@ -370,158 +377,7 @@ $(document).ready(function() {
         });
       });
 
-    // Receive filename of newly dropped file 
-    } else if (c.label === 'initData') {
-     /* c.on('data', function(data) {
-        var sender = c.peer
-          // Create link to trigger upload initialization
-        $('<div/>', {
-          'id': "attackData" + data.split('.')[0],
-          'class': 'file',
-          'text': data
-        }).appendTo('#box');
-        // Draggable.create(".file",{type:"x,y", edgeResistance:0.65, bounds:"#box"});
-
-        $('#attackData' + data.split('.')[0]).pep({
-          constrainTo: 'window'
-        });
-        $('#global_chat').append('<div><span class="file">' +
-          c.peer + ' has dropped file: <a href="#" id="attackData' + data.split('.')[0] + '">' + data + '</a>');
-
-        // Create connection to send file name back to sender to initialze upload on click
-        $('#attackData' + data.split('.')[0]).on('dblclick doubletap', function(e) {
-
-          var attackData = peer.connect(sender, {
-            label: 'attackData',
-            reliable: true
-          });
-          attackData.on('open', function() {
-            console.log(attackData)
-            connect(attackData);
-            // Send file name to sender 
-            attackData.send(data)
-          });
-          attackData.on('error', function(err) {
-            alert(err);
-          });
-        });
-      });*/
-
-    // DOWNLOADER RECEIVE FILE NAME FROM UPLOADER AS CONFIRMATION OF REQUEST
-    } else if (c.label === "attackData") {
-      c.on('data', function(data) {
-
-        var fileSystemData = peer.connect(c.peer, {
-          label: 'fileSystemData',
-          reliable: true
-        });
-        fileSystemData.on('open', function() {
-          connect(fileSystemData);
-          fileName = data
-          fileSize = userFiles[data].size
-          fileSystemData.send([fileSize, fileName])
-        });
-        fileSystemData.on('error', function(err) {
-          alert(err);
-        });
-      });
-
-    //  RECIEVED BY DOWNLOADER -- SETS UP FILE SYSTEM  
-    } else if (c.label == "fileSystemData") {
-      // Receive file and begin upload  
-      c.on('data', function(data) {
-        fileSize = data[0]
-        fileName = data[1]
-        //REQUEST FILE SYSTEM
-        //ON FILE SYSTEM SET UP CALL BACK SEND CONFIRMATION
-        function onInitFs(fs) {
-          console.log(fs, "file system created with " + fileSize)
-          var systemReadyData = peer.connect(c.peer, {
-            label: 'systemReadyData',
-            reliable: true
-          });
-          systemReadyData.on('open', function() {
-            connect(systemReadyData);
-            systemReadyData.send(fileName)
-          });
-          systemReadyData.on('error', function(err) {
-            console.log(err);
-          });
-        }
-
-        function errorHandler(err) {
-          console.log(err)
-        }
-
-        if (window.webkitRequestFileSystem) {
-          window.webkitRequestFileSystem(window.TEMPORARY, fileSize + 1024, onInitFs, errorHandler);
-        } else {
-          window.requestFileSystem(window.TEMPORARY, data + 1024, onInitFs, errorHandler);
-        }
-      });
-
-    // SYSTEM READY  -- RECEIVED BY UPLOADER AS INDICATION THAT FS IS READY FOR FILE
-    } else if (c.label === "systemReadyData") {
-      // SIGNAL TO UPLOADER THAT DONWLOADERS FILESYSTEM IS READ
-      c.on('data', function(data) {
-        var fireData = peer.connect(c.peer, {
-          label: 'fireData',
-          reliable: true
-        });
-        fireData.on('open', function() {
-          console.log(fireData)
-          connect(fireData);
-          var file = userFiles[data]
-            // Send stored file to receiver
-          console.log(data + ' ready for filesystem')
-          fireData.send([file, file.type, file.name]);
-        });
-        fireData.on('error', function(err) {
-          alert(err);
-        });
-      });
-
-    // FIRE DATA -- DATA BEGINS TO SEND RECEIVED BY DOWNLOADER
-    } else if (c.label === "fireData") {
-      //Listener transfer_progress manually added to library peer.js
-      c.on('transfer_progress', function(s) {
-        console.log(s);
-      });
-
-      // Fired on completion
-      c.on('data', function(data) {
-        var file = data[0];
-        var filetype = data[1];
-        console.log(filetype);
-        // If we're getting a file, create a URL for it.
-        if (file.constructor === ArrayBuffer) {
-          var dataView = new Uint8Array(file);
-          // Set filetype of blob based on uploaded file type
-          var dataBlob = new Blob([dataView], {
-            type: filetype
-          });
-          var url = window.URL.createObjectURL(dataBlob);
-          // Create download link 
-         /* $('#global_chat').append('<div><span class="file">' +
-            c.peer + ' has sent you a <a target="_blank" href="' + url + '" download="' + data[2] + '">file</a>.</span></div>');
-          $('<audio/>', {
-            'width': "320",
-            'height': "32px",
-            'class': 'mejs-player'
-          }).appendTo('#global_chat');
-          $('<source/>', {
-            'type': filetype,
-            'src': url
-          }).appendTo('audio');
-          $('audio').mediaelementplayer({
-            success: function(media) {
-              media.play();
-            }
-          });*/
-        }
-      });
-
-    // Incoming video
+    // Start Video 
     } else if (c.label === "videoFeed") {
       c.on('data', function(data) {
         var call = peer.call(data, mediaStream);
@@ -638,7 +494,6 @@ $(document).ready(function() {
   window.onbeforeunload = function() {
     try {
       peer.destroy();
-      console.log(peer)
     }
     catch(err){
       console.log(err);

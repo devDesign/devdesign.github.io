@@ -367,13 +367,14 @@ function download_file(id) {
 }
 
 /* delete a file - should be called when cancel is requested or kill is called */
+//FUCK - delete_file
 function delete_file(user_id) {
 	if (fs[user_id]) {
 		this.filesysteminuse = false;
 		fs[user_id].root.getFile(this.recieved_meta[user_id].name, {create: false}, function(fileEntry) {
-			fileEntry.remove(function() {
-				console.log('File removed.');
-			}, FSerrorHandler);
+			//fileEntry.remove(function() {
+			//	console.log('File removed.');
+			//}, FSerrorHandler);
 		}, FSerrorHandler);
 	}
 }
@@ -502,6 +503,12 @@ function create_upload_stop_link(filename, id, username) {
 	//create a place to store this if it does not already
 	create_or_clear_container(id, username);
 
+  $('#file_list').hide();
+  $('#download_list_box').hide();
+  $('#big_files_box').show();
+  $('#bigfiles').addClass('file_menu-active');
+  $('#my_files').removeClass('file_menu-active');
+  $('#downloads').removeClass('file_menu-active');
   // How many files have 
 
 	var filecontainer = document.getElementById(id);
@@ -527,6 +534,12 @@ function create_upload_stop_link(filename, id, username) {
 /* create a link that will let the user start the download */
 function create_pre_file_link(meta, id, username) {
 	
+  $('#file_list').hide();
+  $('#download_list_box').hide();
+  $('#big_files_box').show();
+  $('#bigfiles').addClass('file_menu-active');
+  $('#my_files').removeClass('file_menu-active');
+  $('#downloads').removeClass('file_menu-active');
   //create a place to store this if it does not already
 	create_or_clear_container(id, username);
 	var filecontainer = document.getElementById(id);
@@ -579,7 +592,6 @@ function getReadableFileSizeString(fileSizeInBytes) {
 function create_file_link (meta, id, username, fileEntry) {
 	var filetype = meta.filetype;
 
-
 	//create a place to store this if it does not already
 	create_or_clear_container(id, username);
 	var filecontainer = document.getElementById(id);
@@ -598,6 +610,7 @@ function create_file_link (meta, id, username, fileEntry) {
 	} else {
 		/* fileEntry is actually not a FileEntry, but a blob in Chrome */
 		a.href = window.URL.createObjectURL(fileEntry);
+    var filez = a.href;
 	}
 	a.textContent = meta.name;
 	a.dataset.downloadurl = [filetype, a.download, a.href].join(':');
@@ -611,19 +624,60 @@ function create_file_link (meta, id, username, fileEntry) {
 	/* make delete button */
 	filecontainer.innerHTML = filecontainer.innerHTML+ " ";
 
-	// add play button
-	if (filetype === "audio/mp3" || filetype === "audio/wav" ){
-	  var name = meta.name;
-	  var name = name.substr(0, name.lastIndexOf('.'));
+        $('#file_list').show();
+        $('#download_list_box').hide();
+        $('#big_files_box').hide()
+        $('#bigfiles').removeClass('file_menu-active');
+        $('#my_files').addClass('file_menu-active');
+        $('#downloads').removeClass('file_menu-active');
 
-	  play_file(id, name, filetype,filez);
-	}
+        linkToFile = a.href
+ 
+        var newTorrentRow = $('<tr class="file-entry">fuck</tr>')
+        var streamCol = $('<td>')
+        var downloadCol = $('<td>')
+        var nameCol = $('<td>')
+        var sizeCol = $('<td>')
+        var typeCol = $('<td>')
 
+        streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
+        downloadCol.html('<a download="'+meta.name+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
+        nameCol.text(meta.name).appendTo(newTorrentRow).addClass(filetype.split('/')[1]);
+        sizeCol.text((meta.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
+        typeCol.text(filetype).appendTo(newTorrentRow)
+    
+        // newTorrentRow.appendTo('#filelist')
+        newTorrentRow.appendTo('#filelist')
 
+  
+    // GET ID3, add to play_file if necessary (shouldn't be)
+
+        // fileEntry.file(function(file){
+
+        //   reader = new FileReader();
+        //   reader.onload = function(event) {
+
+        //     ID3.loadTags("a", function() {
+        //       var tags = ID3.getAllTags("a");
+
+        //       console.log(tags)
+                // if (filetype === "audio/mp3" || filetype === "audio/wav" ){
+                //   var name = meta.name;
+                //   var name = name.substr(0, name.lastIndexOf('.'));
+
+                //   play_file(id, name, filetype, filez);
+                // }
+        //       }, {
+        //       tags: ["title","artist","album","year"],
+        //       dataReader: FileAPIReader(file)
+        //     });
+
+        //   };
+        //   reader.readAsArrayBuffer(file);
+        // });
 
 	
 	//append to chat
-	systemMessage(username +"'s file " + meta.name + " is ready to save locally");
 }
 
 /* send out meta data, allow for id to be empty = broadcast */

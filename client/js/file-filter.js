@@ -49,10 +49,6 @@ function fileRouter(files){
   if ( fileCount == 1 ) {
     var file = files[0]
 
-       // id3(file, function(err, tags) {
-       //  console.log(tags);
-       //  });
-
     checkIfFile(file, function(){
       if ( file.size > 304857600 ) {  
         if ( !bigFile ) {     
@@ -60,6 +56,12 @@ function fileRouter(files){
           bigFile = true;
         } else {
           errorMessage("One large file at a time, stop upload to add a new one")
+          $('#file_list').hide();
+          $('#download_list_box').hide();
+          $('#big_files_box').show();
+          $('#bigfiles').addClass('file_menu-active');
+          $('#my_files').removeClass('file_menu-active');
+          $('#downloads').removeClass('file_menu-active');
         }
       } else {
         // do nothing, handled by dragDrop below
@@ -85,18 +87,19 @@ dragDrop('body', function(files){
   client.seed(files, function(torrent){
 
     // UPLOADING TORRENT
-
+    fileList = []
 
     var torrentSize = 0
     torrent.files.forEach(function(file,index){
       torrentSize += file.length
+      fileList.push(file.name)
     });
 
     sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length, "size": torrentSize})
 
     eachActiveConnection(function(c, $c) {
       if (c.label === 'torrentz') {
-        c.send([torrent.infoHash,torrent.name,torrent.files.length,torrentSize]);
+        c.send([torrent.infoHash,torrent.name,torrent.files.length,torrentSize,fileList]);
       }
     });
 
