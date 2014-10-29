@@ -627,12 +627,12 @@ audio {
 .nowplaying {
   position: absolute;
   width: 100%;
-  bottom: 1.9em;
+  bottom: 2.4em;
   text-align: center;
   color: $orange-shade;
   font-size: 0.8em;
   margin: auto;
-  border-top: 1px solid $orange-shade;
+  border-top: 1px solid #111;
 }
 #pointcloud {
   position: fixed;
