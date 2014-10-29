@@ -395,64 +395,65 @@ function cancel_file(id) {
 	create_pre_file_link(this.recieved_meta[id], id, rtc.usernames[id]);
 }
 
+//// Slated for removal. Serves no purpose. Check audio-player.js for audio handling ////
 /* Play media */
-function play_file(id, title, type,file) {
+// function play_file(id, title, type,file) {
 
-  var url = $('#' + id).children('a').first().attr('href');
-  var filez = file;
+//   var url = $('#' + id).children('a').first().attr('href');
+//   var filez = file;
 
-  var audio = document.getElementById('audio');
-  var playlist;
-  var tracks;
-  var current;
-  var pButton = document.getElementById('pButton');
+//   var audio = document.getElementById('audio');
+//   var playlist;
+//   var tracks;
+//   var current;
+//   var pButton = document.getElementById('pButton');
 
-  $('<a href=' + url + '><li class="playlist-entry" id="'+ title +'">' + title + '</li></a>').appendTo('#playlist');
+//   $('<a href=' + url + '><li class="playlist-entry" id="'+ title +'">' + title + '</li></a>').appendTo('#playlist');
 
-  initPlaylist();
-  function initPlaylist(){
-    current = 0;
-    playlist = $('#playlist');
-    tracks = playlist.find('li a');
-    len = tracks.length - 1;
-    audio.volume = .70;
-    audio.play();
-    pButton.className = "";
-    pButton.className = "pause";
-    playlist.find('a').click(function(e){
-        e.preventDefault();
-        link = $(this);
-        current = link.parent().index();
-        run(link, audio);
-    });
-    audio.addEventListener('ended',function(e){
-        current++;
-        if(current == len){
-            current = 0;
-            link = playlist.find('a')[0];
-        }else{
-            link = playlist.find('a')[current];    
-        }
-        run($(link),audio);
-    });
-  }
+//   initPlaylist();
+//   function initPlaylist(){
+//     current = 0;
+//     playlist = $('#playlist');
+//     tracks = playlist.find('li a');
+//     len = tracks.length - 1;
+//     audio.volume = .70;
+//     audio.play();
+//     pButton.className = "";
+//     pButton.className = "pause";
+//     playlist.find('a').click(function(e){
+//         e.preventDefault();
+//         link = $(this);
+//         current = link.parent().index();
+//         run(link, audio);
+//     });
+//     audio.addEventListener('ended',function(e){
+//         current++;
+//         if(current == len){
+//             current = 0;
+//             link = playlist.find('a')[0];
+//         }else{
+//             link = playlist.find('a')[current];    
+//         }
+//         run($(link),audio);
+//     });
+//   }
   
-  function run(link, player){
-	  if (pButton.className == "play"){
-	  	pButton.className = "";
-      pButton.className = "pause";
-	  };
+//   function run(link, player){
+// 	  if (pButton.className == "play"){
+// 	  	pButton.className = "";
+//       pButton.className = "pause";
+// 	  };
 
-	  player.src = link.attr('href');
-	  par = link.parent();
-	  par.addClass('active-file').siblings().removeClass('active-file');
-	  audio.load();
-	  audio.play();
-	  $('.nowplaying').remove();
-		$('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
-		$('.nowplaying').css({opacity:1,left:"1em"})
-  }
-}
+// 	  player.src = link.attr('href');
+// 	  par = link.parent();
+// 	  par.addClass('active-file').siblings().removeClass('active-file');
+// 	  audio.load();
+// 	  audio.play();
+// 	  $('.nowplaying').remove();
+// 		$('<div/>',{text:"now playing: "+ title, class:"nowplaying"}).appendTo('#playlist_box');
+// 		$('.nowplaying').css({opacity:1,left:"1em"})
+//   }
+// }
 
 /* creates an entry in our filelist for a user, if it doesn't exist already - TODO: move this to script.js? */
 function create_or_clear_container(id, username) {
