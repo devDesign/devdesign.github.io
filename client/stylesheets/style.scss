@@ -287,7 +287,7 @@ audio {
   left:0em;
   right:0em;
   top:2em;
-  bottom:1.3em;
+  bottom:0em;
   overflow-y:auto;
   overflow-x:none;
 
@@ -419,7 +419,6 @@ audio {
   }
   .messages em {
     font-size: small;
-    color: red;
   }
 }
 .dragging_box {
@@ -561,9 +560,7 @@ audio {
   bottom:3.2em;
   overflow-y: auto;
   overflow-x:none;
-
-  // top:1.3em;
-  // bottom: 0px;
+  border-shadow: -1px 1px 1px #111;
 }
 #playlist {
   position: absolute;
@@ -633,7 +630,6 @@ audio {
   color: $orange-shade;
   font-size: 0.8em;
   margin: auto;
-  border-top: 1px solid #111;
 }
 #pointcloud {
   position: fixed;
