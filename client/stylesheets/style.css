@@ -131,9 +131,9 @@ audio {
   color: #E58C7D;
   margin-top: 2px; }
 
-#user-button, #start-video-feed, #file-upload, #stop-video-feed {
+#user-button, #start-video-feed, #file-upload, #stop-video-feed, #reconnect-to-peers {
   cursor: pointer; }
-  #user-button:hover, #start-video-feed:hover, #file-upload:hover, #stop-video-feed:hover {
+  #user-button:hover, #start-video-feed:hover, #file-upload:hover, #stop-video-feed:hover, #reconnect-to-peers:hover {
     color: #df5645; }
 
 .window_title {
