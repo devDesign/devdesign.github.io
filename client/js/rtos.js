@@ -60,7 +60,7 @@ var peerReconnecting = false;
     });
 
     initUser(roomName);
-
+    errorMessage('connected!')
     // Listen for new connections
     // SEND ROOM TO NEW USER!!!!!!!!!!!!!!!!!
     // FUCK
@@ -362,12 +362,15 @@ var peerReconnecting = false;
   });*/
 
   $('#reconnect-to-peers').on('click', function(){
-    peerReconnecting = true;
-    peer.destroy();
-    eachActiveConnection(function(c) {
-      c.close();
-    });
-    connectToPeer();
+    errorMessage("reconnecting... hold on!");
+    setTimeout(function(){
+      peerReconnecting = true;
+      peer.destroy();
+      eachActiveConnection(function(c) {
+        c.close();
+      });
+      connectToPeer();
+    },1000);
   });
 
   // Temporary storage of file links for uploader 
