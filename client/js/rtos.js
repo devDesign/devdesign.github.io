@@ -3,6 +3,7 @@ var eachActiveConnection;
 var sessionTorrents = [];
 var connectToPeer;
 var connectedPeers;
+var openStreams = [];
 
 $(document).ready(function() {
 
@@ -71,7 +72,11 @@ $(document).ready(function() {
     peer.on('call', function(call) {
 
       call.answer();
+      call.on('close',function(){
+        console.log("FUCK");
+      });
       call.on('stream', function(remoteStream) {
+        $('<video id="v' + call.peer + 'cam" class="mousecam">').appendTo('#' + call.peer + 'mouse');
         var v = document.querySelector("#v" + call.peer + "cam");
         v.src = window.URL.createObjectURL(remoteStream);
         v.play();
@@ -174,14 +179,30 @@ $(document).ready(function() {
       // Vendor specific madness
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
       window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-
       navigator.getUserMedia({
           video: true,
           audio: true
         }, function(stream) {
+          $('#start-video-feed').hide();
+          $('#stop-video-feed').show()
+            .on('click',function(){
+              $('#start-video-feed').show();
+              $('#stop-video-feed').hide();
+              stream.stop();
+              eachActiveConnection(function(c,$c){
+                if(c.label==='videoFeed'){
+                  c.send("close");
+                }
+              });
+              
+            });
+
           eachActiveConnection(function(c, $c) {
             if (c.label === 'videoFeed') {
-              var call = peer.call(c.peer, stream)
+              var call = peer.call(c.peer, stream);
+              openStreams.push(c.peer);
+              console.log("call:"+call);
+              console.log("c.peer:"+c.peer)
             }
           })
         }, function(err) {
@@ -292,7 +313,7 @@ $(document).ready(function() {
     } else if (c.label === 'mouse') {
 
       $('<div id="' + c.peer + 'mouse" class="mouse">').appendTo('body');
-      $('<video id="v' + c.peer + 'cam" class="mousecam">').appendTo('#' + c.peer + 'mouse');
+      
       c.on('data', function(data) {
         var id = '#' + c.peer + 'mouse';
         $(id).css({
@@ -304,8 +325,12 @@ $(document).ready(function() {
     // Start Video 
     } else if (c.label === "videoFeed") {
       c.on('data', function(data) {
-        var call = peer.call(data, mediaStream);
-        console.log("here comes some video");
+        if(data != "close"){
+          var call = peer.call(data, mediaStream);
+          console.log("here comes some video");
+        } else{
+          $('#v' + c.peer + 'cam').detach();
+        }  
       });
     }
 
@@ -316,13 +341,13 @@ $(document).ready(function() {
 
 
   // Event handlers that open and close connections
-
+/*
   // Close a connection.
   $('#close').click(function() {
     eachActiveConnection(function(c) {
       c.close();
     });
-  });
+  });*/
 
   // Temporary storage of file links for uploader 
   var userFiles = {};
