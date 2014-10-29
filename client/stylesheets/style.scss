@@ -257,13 +257,13 @@ audio {
   left:0em;
   right:0em;
   top:2.0em;
-  bottom:1.3em;
+  bottom:0em;
   overflow-y:auto;
   overflow-x:none;
     table{
     border-spacing: 0px;  
     margin: 0;
-    padding: 0;
+    padding: 0; 
     width: 100%;
   }
   tr{
@@ -560,7 +560,7 @@ audio {
   bottom:3.2em;
   overflow-y: auto;
   overflow-x:none;
-  border-shadow: -1px 1px 1px #111;
+  box-shadow: -1px 1px 1px #111;
 }
 #playlist {
   position: absolute;

@@ -214,7 +214,7 @@ audio {
   left: 0em;
   right: 0em;
   top: 2.0em;
-  bottom: 1.3em;
+  bottom: 0em;
   overflow-y: auto;
   overflow-x: none; }
   #file_list table {
@@ -466,7 +466,7 @@ audio {
   bottom: 3.2em;
   overflow-y: auto;
   overflow-x: none;
-  border-shadow: -1px 1px 1px #111; }
+  box-shadow: -1px 1px 1px #111; }
 
 #playlist {
   position: absolute;

@@ -19,13 +19,20 @@ $('document').ready(function(){
     setVolume();
   });
 
+  $(window).on('resize', function(){
+    var timelineWidth = $('#timeline').width() - $('#playhead').width();
+  });
+
   var audio = document.getElementById('audio');
   var duration;
   var pButton = document.getElementById('pButton');
   var playhead = document.getElementById('playhead');
   var timeline = document.getElementById('timeline');
-  var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+  var timelineWidth = $('#timeline').width() - $('#playhead').width();
   var volume = document.getElementById('volume');
+  console.log($('#playhead').width());
+  // console.log(playhead.offsetWidth);
+
 
   audio.addEventListener('timeupdate', timeUpdate, false);
 
