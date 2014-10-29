@@ -347,7 +347,6 @@ $('document').ready(function(){
       initiate: function() {
         $('.droppable').detach();
         zIndex++;
-        console.log(element.id);
         jElement.css({
           zIndex: zIndex
         });
@@ -453,9 +452,9 @@ $('document').ready(function(){
         }
       }}},
       'easing': function() {
-        var dropRegion = this.activeDropRegions[0][0].id;
+        //var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
-        if (dropRegion.length == 1){
+        if (dropCount >= 1){
           jElement.css({"z-index":1})
           jElement.removeClass('dragging_box')
         }
@@ -623,7 +622,6 @@ function resizeend() {
         setTimeout(resizeend, delta);
     } else {
         timeout = false;
-        console.log("rezise!")
         viewpoint = get_viewpoint();
         height = viewpoint[1];
         width = viewpoint[0];
