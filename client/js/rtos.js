@@ -117,7 +117,11 @@ var peerReconnecting = false;
       $('#id').show();
       $('.glyph').show();
       $('#pid').text(id);
-      createVideoFeedButton();
+      if (peerReconnecting){
+        // do nothing
+      } else {
+        createVideoFeedButton();
+      }
       var data = {
         roomName: roomname,
         userName: id
@@ -367,8 +371,12 @@ var peerReconnecting = false;
       peerReconnecting = true;
       peer.destroy();
       eachActiveConnection(function(c) {
+        // delete peer.connections[c.peer]
+        // delete connectedPeers[c.peer];
         c.close();
       });
+      peer.connections = {}
+      connectedPeers = {}
       connectToPeer();
     },1000);
   });
