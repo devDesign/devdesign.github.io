@@ -131,8 +131,10 @@ audio {
   color: #E58C7D;
   margin-top: 2px; }
 
-#user-button:hover, #start-video-feed:hover, #file-upload:hover {
-  color: #df5645; }
+#user-button, #start-video-feed, #file-upload, #stop-video-feed {
+  cursor: pointer; }
+  #user-button:hover, #start-video-feed:hover, #file-upload:hover, #stop-video-feed:hover {
+    color: #df5645; }
 
 .window_title {
   display: flex;
@@ -630,5 +632,8 @@ input[type="range"] {
 
 .torrent-contents {
   list-style: none; }
+
+.png, .jpg, .jpeg, .gif, .mp4 {
+  cursor: pointer; }
 
 /*# sourceMappingURL=style.css.map */

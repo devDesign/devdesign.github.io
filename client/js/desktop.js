@@ -18,6 +18,7 @@ $('document').ready(function(){
 
   $('#file_list').hide();
   $('#big_files_box').hide();
+  $('#stop-video-feed').hide();
 
   $('#downloads').on('click',function(){
     $('#my_files').removeClass('file_menu-active');
@@ -288,6 +289,7 @@ $('document').ready(function(){
       connectToPeer();
     }
   });
+
   //select chat for hammertime tap events
   var chatBox = $('#chat_box');
   var chatElement = document.getElementById('chat_box');
