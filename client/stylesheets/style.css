@@ -339,7 +339,8 @@ audio {
   #global_chat div:first-child {
     padding: 5px 0px 1px 8px; }
   #global_chat .messages em {
-    font-size: small; }
+    font-size: small;
+    color: red; }
 
 .dragging_box {
   z-index: 99999; }

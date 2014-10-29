@@ -78,7 +78,7 @@ function fileRouter(files){
 var globalChat = $('#global_chat');
 
 var errorMessage = function(msg){
-  var error_message = $('<div style="color:red;"><em>'+msg+'</em></div>').addClass('messages')
+  var error_message = $('<div><em>'+msg+'</em></div>').addClass('messages')
   globalChat.append(error_message);
 }
 
