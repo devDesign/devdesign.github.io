@@ -8336,7 +8336,7 @@ onDrop = function(elem, cb, e) {
         // Goes to webrtc.io
       }
     } else {
-      errorMessage("Upload torrent buffering... please wait")
+      errorMessage("Creating torrent... please wait")
       cb(Array.prototype.slice.call(files), { x: e.clientX, y: e.clientY })
     }
     return false
@@ -8356,7 +8356,7 @@ onDrop = function(elem, cb, e) {
           // Goes to webrtc.io
         }
       } else {
-        errorMessage("Upload torrent buffering... please wait")
+        errorMessage("Creating torrent... please wait")
         cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
       }
     return false
