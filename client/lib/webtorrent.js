@@ -134,7 +134,13 @@ onTorrent = function(torrent) {
           })
         }
 
-        if(file.type.split('/')[0] == "image"){
+        if(file.type == undefined){
+          var fileType = "blank"
+        } else {
+          var fileType = file.type
+        }
+
+        if(fileType.split('/')[0] == "image"){
           $(extname.toLowerCase()).on('click',function(){
             if($('#pic_box')[0]){
               $('#pic_box').css({top:"1em",left:'1em'})
@@ -8331,7 +8337,7 @@ onDrop = function(elem, cb, e) {
     }
     if ( totalSize > 304857600 ) {
       if ( files.length > 1 ) {
-        errorMessage('No multiple uploads over 150MB')
+        errorMessage('No multiple uploads over 300MB')
       } else {
         // Goes to webrtc.io
       }
@@ -8351,13 +8357,15 @@ onDrop = function(elem, cb, e) {
       }
       if ( totalSize > 304857600 ) {
         if ( files.length > 1 ) {
-          errorMessage('No multiple uploads over 150MB')
+          errorMessage('No multiple uploads over 300MB')
         } else {
           // Goes to webrtc.io
         }
       } else {
-        errorMessage("Creating torrent... please wait")
-        cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
+        if (e.dataTransfer.files.length > 0){
+          errorMessage("Creating torrent... please wait")
+          cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
+        }
       }
     return false
   }
