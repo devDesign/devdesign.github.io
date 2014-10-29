@@ -131,7 +131,7 @@ audio {
   color: #E58C7D;
   margin-top: 2px; }
 
-#user-button:hover, #start-video-feed:hover, #file-upload:hover {
+#user-button:hover, #start-video-feed:hover, #file-upload:hover, #reconnect-to-peers:hover {
   color: #df5645; }
 
 .window_title {

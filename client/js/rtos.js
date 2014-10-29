@@ -25,6 +25,7 @@ $(document).ready(function() {
   var uriPath = window.location.hash.split('#')[1]
   $('#roomname-text').val(uriPath || "")
 
+var peerReconnecting = false;
   // Log In
   connectToPeer = function(e) {
     var peerName = $('#username-text').val();
@@ -45,7 +46,11 @@ $(document).ready(function() {
     window.location.hash = roomName;
 
     // Create WebRTC.io connection for HUGE files
-    startDownloadServer(peerName, roomName)
+    if (peerReconnecting) {
+      // Don't rehook to download server on peerJS restart
+    } else {
+      startDownloadServer(peerName, roomName)
+    }
     // Create PeerJS connection
     peer = new Peer(peerName, {
       host: 'allthetime.io',
@@ -197,36 +202,39 @@ $(document).ready(function() {
 
     if(c.label === 'loadRoom') {
 
-      c.on('data', function(data){
+      if ( peerReconnecting ){
+        // do nothing
+      } else {
+        c.on('data', function(data){
 
-        if ( isRoomLoaded ){
-          //
-        } else {
-          var messageList = data[0]
-          messageList.forEach(function(message,index){
-            globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
-          '</div>');
-            globalChat.scrollTop(globalChat.prop("scrollHeight"));
+          if ( isRoomLoaded ){
+            //
+          } else {
+            var messageList = data[0]
+            messageList.forEach(function(message,index){
+              globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
+            '</div>');
+              globalChat.scrollTop(globalChat.prop("scrollHeight"));
+            });
+            isRoomLoaded = true;
+          }
+
+          var torrentList = data[1]
+
+          if ( torrentList.length > 0 ){          
+            $('#download_list_box').show()
+            $('#file_list').hide()
+            $('#big_files_box').hide()
+            $('#bigfiles').removeClass('file_menu-active');
+            $('#my_files').removeClass('file_menu-active');
+            $('#downloads').addClass('file_menu-active');
+          }
+
+          torrentList.forEach(function(torrent,index){
+            loadPushedTorrents(torrent["infoHash"],torrent["name"],torrent["length"],torrent["size"],torrent["fileList"],c.peer)
           });
-          isRoomLoaded = true;
-        }
-
-        var torrentList = data[1]
-
-        if ( torrentList.length > 0 ){          
-          $('#download_list_box').show()
-          $('#file_list').hide()
-          $('#big_files_box').hide()
-          $('#bigfiles').removeClass('file_menu-active');
-          $('#my_files').removeClass('file_menu-active');
-          $('#downloads').addClass('file_menu-active');
-        }
-
-        torrentList.forEach(function(torrent,index){
-          loadPushedTorrents(torrent["infoHash"],torrent["name"],torrent["length"],torrent["size"],torrent["fileList"],torrent["sender"])
         });
-      });
-
+      }
     // Handle a chat connection.
     } else if (c.label === 'chat') {
       var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
@@ -262,14 +270,18 @@ $(document).ready(function() {
         var messages = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
         globalChat.append(messages);
         // remove disconnecting users torrents
-        $('.'+c.peer+'torrentz').remove();
+        if ( peerReconnecting ){
+          // do nothing
+        } else {
+          $('.'+c.peer+'torrentz').remove();
+        }
 
-        $.ajax({
-          type: 'delete',
-          url: '/rtos/rooms?userName=' + c.peer,
-          async: false
-        });        
-
+        // $.ajax({
+        //   type: 'delete',
+        //   url: 'http://allthetime.io/rtos/rooms?userName=' + c.peer,
+        //   async: false
+        // });        
+        delete peer.connections[c.peer]
         delete connectedPeers[c.peer];
       });
 
@@ -322,6 +334,15 @@ $(document).ready(function() {
     eachActiveConnection(function(c) {
       c.close();
     });
+  });
+
+  $('#reconnect-to-peers').on('click', function(){
+    peerReconnecting = true;
+    peer.destroy();
+    eachActiveConnection(function(c) {
+      c.close();
+    });
+    connectToPeer();
   });
 
   // Temporary storage of file links for uploader 
@@ -455,11 +476,11 @@ $(document).ready(function() {
       console.log(err);
     }
     // KEEP FOR PRODUCTION
-   $.ajax({
-     type: 'delete',
-     url: '/rtos/rooms?userName=' + peer.id,
-     async: false
-   });
+   // $.ajax({
+   //   type: 'delete',
+   //   url: 'http://allthetime.io/rtos/rooms?userName=' + peer.id,
+   //   async: false
+   // });
   }
 });
 

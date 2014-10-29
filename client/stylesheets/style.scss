@@ -153,7 +153,7 @@ audio {
   color: $orange-shade;
   margin-top: 2px;
 }
-#user-button, #start-video-feed, #file-upload {
+#user-button, #start-video-feed, #file-upload, #reconnect-to-peers {
   &:hover {
     color: darken(#e05a49, 1%);
   }
