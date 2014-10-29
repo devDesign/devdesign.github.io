@@ -241,7 +241,7 @@ function process_binary(id,message,hash) {
 	this.recieved_meta[id].chunks_recieved++;
 	
 	if (this.recieved_meta[id].numOfChunksInFile > this.recieved_meta[id].chunks_recieved) {
-		update_container_percentage(id, rtc.usernames[id], this.recieved_meta[id].chunks_recieved - 1, this.recieved_meta[id].numOfChunksInFile, this.recieved_meta[id].size);
+		update_container_percentage(this.recieved_meta[id].name, id, rtc.usernames[id], this.recieved_meta[id].chunks_recieved - 1, this.recieved_meta[id].numOfChunksInFile, this.recieved_meta[id].size);
 	} else {
 		/* stop accepting file info */
 		this.downloading[id] = false;
@@ -477,7 +477,7 @@ function create_or_clear_container(id, username) {
 			//append link!
 			filecontainer.appendChild(a);
 		} else {
-			span.innerHTML="";
+			span.innerHTML= meta.name;
 		}
 		return;
 	}
@@ -574,14 +574,14 @@ function create_pre_file_link(meta, id, username) {
 }
 
 /* update a file container with a DL % */
-function update_container_percentage(id, username, chunk_num, chunk_total, total_size) {
+function update_container_percentage(filename, id, username, chunk_num, chunk_total, total_size) {
 
 	create_or_clear_container(id, username);
 	var span = document.getElementById(id+'-span');
 
 	/* create file % based on chunk # downloaded */
 	var percentage = (chunk_num / chunk_total) * 100;
-	span.innerHTML = percentage.toFixed(1) + "% of " + getReadableFileSizeString(total_size) + ' ';
+	span.innerHTML = filename + " " + percentage.toFixed(1) + "% of " + getReadableFileSizeString(total_size) + ' ';
 	
 }
 
