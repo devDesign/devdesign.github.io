@@ -27,16 +27,16 @@ download = function(infoHash) {
 
 onTorrent = function(torrent) {
   // Let's say the first file is a webm (vp8) or mp4 (h264) video...
-  if(path.extname(torrent.files[0].name)===".mp4"){
-  var file = torrent.files[0]
+  if(path.extname(torrent.files[0].name)===".mp4" && torrent.swarm._peers.undefined != null){
+    var file = torrent.files[0]
 
-  // Create a video element
-  var video = vidBox.find('video')[0];
-  video.controls = true
-  document.body.appendChild(vidBox[0]);
+    // Create a video element
+    var video = vidBox.find('video')[0];
+    video.controls = true
+    document.body.appendChild(vidBox[0]);
 
-  // Stream the video into the video tag
-  file.createReadStream().pipe(video)
+    // Stream the video into the video tag
+    file.createReadStream().pipe(video)
   }
   var progressSpan = $('#'+torrent.infoHash+'-progress');
 
