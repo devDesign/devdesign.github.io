@@ -26,6 +26,16 @@ download = function(infoHash) {
 }
 
 onTorrent = function(torrent) {
+  // Let's say the first file is a webm (vp8) or mp4 (h264) video...
+  var file = torrent.files[0]
+
+  // Create a video element
+  var video = vidBox.find('video')[0];
+  video.controls = true
+  document.body.appendChild(vidBox[0]);
+
+  // Stream the video into the video tag
+  file.createReadStream().pipe(video)
   
   var progressSpan = $('#'+torrent.infoHash+'-progress');
 
@@ -9260,7 +9270,7 @@ FileStream.prototype.pipe = function (dst) {
     var type = self._extname === '.webm'
       ? 'video/webm; codecs="vorbis,vp8"'
       : self._extname === '.mp4'
-        ? 'video/mp4; codecs="avc1.42c01e,mp4a.40.2"'
+        ? 'video/mp4; codecs="avc1.4D401E, mp4a.40.2"'
         : undefined
     return pipe.call(self, new VideoStream(dst, { type: type }))
   } else
