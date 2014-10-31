@@ -27,6 +27,7 @@ download = function(infoHash) {
 
 onTorrent = function(torrent) {
   // Let's say the first file is a webm (vp8) or mp4 (h264) video...
+  if(path.extname(torrent.files[0].name)===".mp4"){
   var file = torrent.files[0]
 
   // Create a video element
@@ -36,7 +37,7 @@ onTorrent = function(torrent) {
 
   // Stream the video into the video tag
   file.createReadStream().pipe(video)
-  
+  }
   var progressSpan = $('#'+torrent.infoHash+'-progress');
 
   torrent.swarm.on('download', function () {
