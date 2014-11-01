@@ -168,15 +168,15 @@ var peerReconnecting = false;
   function connectToUser(requestedPeer) {
     if (!connectedPeers[requestedPeer]) {
       // Open cursor following channel
-      createChannel({label: 'mouse'}, requestedPeer)
+      createChannel({label: 'mouse', reliable: false}, requestedPeer)
       // Open chat channel
       createChannel({label: 'chat'}, requestedPeer)
       // Pass room history (chat and torrents) to new user
-      createChannel({label:"loadRoom"}, requestedPeer);
+      createChannel({label:"loadRoom", reliable: true }, requestedPeer);
       // Open torrent info sending channel
       createChannel({label: 'torrentz'}, requestedPeer)   
       // Open video stream channel
-      createChannel({label: 'videoFeed', reliable: true }, requestedPeer)
+      createChannel({label: 'videoFeed', reliable: false }, requestedPeer)
     }
     connectedPeers[requestedPeer] = 1;
   }
@@ -321,7 +321,7 @@ var peerReconnecting = false;
         $('#bigfiles').removeClass('file_menu-active');        
         $('#my_files').removeClass('file_menu-active');
         $('#downloads').addClass('file_menu-active');
-
+        sessionTorrents.push({"infoHash": data[0] , "name": data[1], "length": data[2], "size": data[3], "fileList": data[4]});
         loadPushedTorrents(data[0],data[1],data[2],data[3],data[4],c.peer);
       });
 
