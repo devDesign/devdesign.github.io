@@ -146,7 +146,7 @@ $('document').ready(function(){
   }
 
   //ultimate hammer focus on tap
-  var inputfield = document.getElementsByTagName('*');
+  var inputfield = document.getElementsByTagName('input');
   [].slice.call(inputfield).forEach(function(element) {
     var hammertime = new Hammer(element);
     hammertime.on('tap', function(event) {
@@ -156,6 +156,23 @@ $('document').ready(function(){
     });
   });
 
+  //hammertime events
+  function hammertimeBox(hammertime,target){
+    hammertime.on("doubletap",function(){
+    $('.maximize').hide();
+    $('.minimize').show();
+    get_viewpoint();
+    target.css({"z-index":9999}).css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+  })
+  hammertime.on("press",function(){
+    $('.minimize').hide();
+    $('.maximize').show();
+    get_viewpoint();
+    retreatGrid(target);
+    attack_grid(target,"bs");
+  })
+  }
+
   // chatBox WINDOW
   var chatBox = $('#chat_box');
   var chatElement = document.getElementById('chat_box');
@@ -164,6 +181,7 @@ $('document').ready(function(){
   setDrags(chatElement, chatBox);
   attack_grid(chatBox, "rs")
   chatBox.hide();
+  hammertimeBox(chatWindow,chatBox);
   // fileBox WINDOW
   var fileBox = $('#file_box');
   var fileElement = document.getElementById('file_box');
@@ -171,6 +189,7 @@ $('document').ready(function(){
   setDrags(fileElement, fileBox);
   attack_grid(fileBox, "ls")
   fileBox.hide();
+  hammertimeBox(fileWindow,fileBox);
   // camBox WINDOW
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
@@ -180,6 +199,7 @@ $('document').ready(function(){
   });
   vidBox = camBox;
   camBox.detach();
+  hammertimeBox(camWindow,camBox);
   // picBox WINDOW
   var picBox = $('#pic_box');
   var picElement = document.getElementById('pic_box');
@@ -187,6 +207,7 @@ $('document').ready(function(){
   picBox.pep();
   imgBox = picBox;
   picBox.detach();
+  hammertimeBox(picWindow,picBox);
   // mediaBox WINDOW
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');
@@ -194,6 +215,7 @@ $('document').ready(function(){
   setDrags(mediaElement, mediaBox);
   attack_grid(mediaBox, "ls")
   mediaBox.hide();
+  hammertimeBox(mediaWindow,mediaBox);
   //set content click handler to change z-index
   $('.content').on('click', function() {
     zIndex++;
@@ -208,9 +230,9 @@ $('document').ready(function(){
       'constrainTo': '#desktop',
       'droppable': '.droppable',
       'useCSSTranslation': false,
-      'cssEaseDuration': 400,
+      'cssEaseDuration': 300,
       'elementsWithInteraction': '.content',
-      'velocityMultiplier': 0.8,
+      'velocityMultiplier': 2.0,
       initiate: function() {
         $('.droppable').detach();
         zIndex++;
@@ -225,7 +247,7 @@ $('document').ready(function(){
         maxWindow = null;
         $('.minimize').hide();
         $('.maximize').show();
-        jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
+        jElement.css({'height':get_viewpoint()[1]*1/4}).css( {width: get_viewpoint()[0]/2} );
         jElement.addClass('dragging_box');
       },
       'rest':function(){  
@@ -238,7 +260,7 @@ $('document').ready(function(){
        if (this.activeDropRegions.length >= 2){
         if (element.offsetLeft<100){
           attack_grid(jElement,"lbs")
-        } else if (element.offsetLeft > get_viewpoint()[1]-100){
+        } else if (element.offsetLeft > get_viewpoint()[1]/2){
           attack_grid(jElement,"rbs")
         } else{
         attack_grid(jElement,"bs");

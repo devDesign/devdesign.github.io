@@ -65,7 +65,7 @@
     revert:                         false,
     revertAfter:                    'stop',
     revertIf:                       function(){ return true; },
-    ignoreRightClick:               true
+    ignoreRightClick:               false
   };
 
   //  ---------------------------------

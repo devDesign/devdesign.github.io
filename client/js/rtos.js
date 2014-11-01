@@ -298,7 +298,7 @@ var peerReconnecting = false;
         if ( peerReconnecting ){
           // do nothing
         } else {
-          $('.'+c.peer+'torrentz').remove();
+         /* $('.'+c.peer+'torrentz').remove();*/
         }
 
         // $.ajax({

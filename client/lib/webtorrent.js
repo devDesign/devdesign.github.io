@@ -42,7 +42,10 @@ onTorrent = function(torrent) {
 
   torrent.swarm.on('download', function () {
     var progress = (100 * torrent.downloaded / torrent.parsedTorrent.length).toFixed(1)
-    progressSpan.html(progress+"% "+prettysize(torrent.swarm.downloadSpeed())+"/s");
+    progressSpan.html("progress: "+progress+"% <br>download: "+prettysize(torrent.swarm.downloadSpeed())+"/s"+"<br />upload: "+prettysize(client.uploadSpeed())+"/s <br />connected peers: "+torrent.swarm.numPeers);
+  })
+  torrent.swarm.on('complete',function(){
+    progressSpan.html(" download complete ");
   })
 
   torrent.swarm.on('upload', function () {
@@ -60,12 +63,12 @@ onTorrent = function(torrent) {
         filesProcessed ++ 
 
         if (filesProcessed == numberOfFiles){
-          $('#file_list').show();
+         /* $('#file_list').show();
           $('#download_list_box').hide();
           $('#big_files_box').hide()
           $('#bigfiles').removeClass('file_menu-active');
           $('#my_files').addClass('file_menu-active');
-          $('#downloads').removeClass('file_menu-active');
+          $('#downloads').removeClass('file_menu-active');*/
         }
 
         realFile = new Blob([buf])
@@ -81,7 +84,7 @@ onTorrent = function(torrent) {
         var typeCol = $('<td>')
 
 
-
+        var icon = "&#xf15b;"
         if (extname == ".mp3"){
           file.type = "audio/mp3"
           var icon = "&#xf001;"
@@ -146,7 +149,7 @@ onTorrent = function(torrent) {
         }
 
         if(file.type == undefined){
-          var fileType = "blank"
+          var fileType = ""
         } else {
           var fileType = file.type
         }
