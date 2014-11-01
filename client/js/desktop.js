@@ -52,6 +52,8 @@ $('document').ready(function(){
     camBox.show();
     $('#login-box').hide();
     connectToPeer();
+    get_viewpoint();
+    refreshGrid();
   });
   $('.login-input').on('keyup', function(e) {
     if(e.keyCode === 13){
@@ -71,6 +73,8 @@ $('document').ready(function(){
      /* camBox.show();*/
       $('#login-box').hide();
       connectToPeer();
+      get_viewpoint();
+      refreshGrid();
     }
   });
 
@@ -147,6 +151,8 @@ $('document').ready(function(){
     var hammertime = new Hammer(element);
     hammertime.on('tap', function(event) {
       $(element).focus();
+      get_viewpoint();
+      refreshGrid();
     });
   });
 
@@ -217,6 +223,8 @@ $('document').ready(function(){
         delayDropzones();
         retreatGrid(jElement);
         maxWindow = null;
+        $('.minimize').hide();
+        $('.maximize').show();
         jElement.css({'height':get_viewpoint()[1]*2/3}).css( {width: get_viewpoint()[0]/2} );
         jElement.addClass('dragging_box');
       },
