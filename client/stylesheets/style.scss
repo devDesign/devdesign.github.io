@@ -182,6 +182,13 @@ audio {
       right: 0;
       margin-right: 5px;
     }
+    .minimize {
+      display: none;
+      cursor:pointer;
+      position: absolute;
+      right: 0;
+      margin-right: 5px;
+    }
     .close {
       cursor:pointer;
       position: absolute;
