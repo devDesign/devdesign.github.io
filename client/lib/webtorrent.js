@@ -50,14 +50,15 @@ onTorrent = function(torrent) {
 
   torrent.swarm.on('download', function () {
     var progress = (100 * torrent.downloaded / torrent.parsedTorrent.length).toFixed(1)
-    progressSpan.html("progress: "+progress+"% <br>download: "+prettysize(torrent.swarm.downloadSpeed())+"/s"+"<br />upload: "+prettysize(client.uploadSpeed())+"/s <br />connected peers: "+torrent.swarm.numPeers);
-  })
-  torrent.swarm.on('complete',function(){
-    progressSpan.html(" download complete ");
+    if(progress<99.9){
+      progressSpan.html("downloading..<br />progress: "+progress+"% <br>download: "+prettysize(torrent.swarm.downloadSpeed())+"/s"+"<br />upload: "+prettysize(client.uploadSpeed())+"/s <br />connected peers: "+torrent.swarm.numPeers);
+    } else{
+      progressSpan.html("download complete..<br />seeding..<br />awaiting peers..<br />")
+    }
   })
 
   torrent.swarm.on('upload', function () {
-    progressSpan.html(prettysize(client.uploadSpeed())+"/s")
+    progressSpan.html("seeding..<br />total: "+ prettysize(torrent.swarm.uploaded)+"<br /> upload: "+prettysize(client.uploadSpeed())+"/s")
   })
 
 
