@@ -27,6 +27,14 @@ download = function(infoHash) {
 
 onTorrent = function(torrent) {
   // Let's say the first file is a webm (vp8) or mp4 (h264) video...
+    fileList = []
+
+    var torrentSize = 0
+    torrent.files.forEach(function(file,index){
+      torrentSize += file.length
+      fileList.push(file.name)
+    });
+  sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length, "size": torrentSize, "fileList": fileList});
   if(path.extname(torrent.files[0].name)===".mp4" && torrent.swarm._peers.undefined != null){
     var file = torrent.files[0]
 
@@ -63,6 +71,7 @@ onTorrent = function(torrent) {
         filesProcessed ++ 
 
         if (filesProcessed == numberOfFiles){
+          
          /* $('#file_list').show();
           $('#download_list_box').hide();
           $('#big_files_box').hide()

@@ -4,6 +4,7 @@ var sessionTorrents = [];
 var connectToPeer;
 var connectedPeers;
 var openStreams = [];
+var torrentValidation = [];
 
 $(document).ready(function() {
 
@@ -255,8 +256,20 @@ var peerReconnecting = false;
             $('#downloads').addClass('file_menu-active');
           }
 
+
+
+
           torrentList.forEach(function(torrent,index){
-            loadPushedTorrents(torrent["infoHash"],torrent["name"],torrent["length"],torrent["size"],torrent["fileList"],c.peer)
+            var torrentValid = true
+            torrentValidation.forEach(function(validInfoHash,index){
+              if(validInfoHash==torrent["infoHash"]){
+                torrentValid = false;
+              }
+            })
+            if(torrentValid == true){
+              torrentValidation.push(torrent["infoHash"]);
+              loadPushedTorrents(torrent["infoHash"],torrent["name"],torrent["length"],torrent["size"],torrent["fileList"],c.peer)
+            }
           });
         });
       }
@@ -321,7 +334,6 @@ var peerReconnecting = false;
         $('#bigfiles').removeClass('file_menu-active');        
         $('#my_files').removeClass('file_menu-active');
         $('#downloads').addClass('file_menu-active');
-        sessionTorrents.push({"infoHash": data[0] , "name": data[1], "length": data[2], "size": data[3], "fileList": data[4]});
         loadPushedTorrents(data[0],data[1],data[2],data[3],data[4],c.peer);
       });
 
@@ -478,9 +490,9 @@ var peerReconnecting = false;
     var statusCol = $('<td id="'+infoHash+'-progress">')
 
     if (numberOfFiles == 1){
-      nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+fileName+'</a>').appendTo(newTorrentRow)
+      nameCol.html('<a href="javascript:void(0);" class="'+infoHash+'-torrent">'+fileName+'</a>').appendTo(newTorrentRow)
     } else {
-      nameCol.html('<a href="javascript:void(0);" id="'+infoHash+'-torrent">'+numberOfFiles+' files</a>')
+      nameCol.html('<a href="javascript:void(0);" class="'+infoHash+'-torrent">'+numberOfFiles+' files</a>')
       var torrentContents = $('<ul class="torrent-contents">')
       fileList.forEach(function(name){
         var fileItem = $('<li>').text(name)
@@ -496,8 +508,9 @@ var peerReconnecting = false;
 
     newTorrentRow.appendTo('#download_list');
 
-    $('#'+infoHash+'-torrent').on('click', function(e){
-      download(e.target.id.split('-torrent')[0]);
+    $('.'+infoHash+'-torrent').on('click', function(e){
+      console.log($(this));
+      download($(this)[0].className.split('-torrent')[0]);
     });  
   }
 
