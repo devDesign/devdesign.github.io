@@ -199,7 +199,6 @@ $('document').ready(function(){
   });
   vidBox = camBox;
   camBox.detach();
-  hammertimeBox(camWindow,camBox);
   // picBox WINDOW
   var picBox = $('#pic_box');
   var picElement = document.getElementById('pic_box');
@@ -207,7 +206,6 @@ $('document').ready(function(){
   picBox.pep();
   imgBox = picBox;
   picBox.detach();
-  hammertimeBox(picWindow,picBox);
   // mediaBox WINDOW
   var mediaBox = $('#media_box');
   var mediaElement = document.getElementById('media_box');
@@ -260,7 +258,7 @@ $('document').ready(function(){
        if (this.activeDropRegions.length >= 2){
         if (element.offsetLeft<100){
           attack_grid(jElement,"lbs")
-        } else if (element.offsetLeft > get_viewpoint()[1]/2){
+        } else if (element.offsetLeft > get_viewpoint()[1]/1.5){
           attack_grid(jElement,"rbs")
         } else{
         attack_grid(jElement,"bs");

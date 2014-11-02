@@ -5,6 +5,7 @@ var connectToPeer;
 var connectedPeers;
 var openStreams = [];
 var torrentValidation = [];
+var peer;
 
 $(document).ready(function() {
 
@@ -15,7 +16,7 @@ $(document).ready(function() {
     return '#' + r + g + b;
   }
   var color = pastelColors();
-  var peer;
+ 
   connectedPeers = {};
 
   var sessionMessages = [];
@@ -494,11 +495,20 @@ var peerReconnecting = false;
     } else {
       nameCol.html('<a href="javascript:void(0);" class="'+infoHash+'-torrent">'+numberOfFiles+' files</a>')
       var torrentContents = $('<ul class="torrent-contents">')
-      fileList.forEach(function(name){
-        var fileItem = $('<li>').text(name)
-        fileItem.appendTo(torrentContents);
-      })
+      var hiddenTorrentContents = $('<ul id="t'+infoHash+'-torrent-contents" class="torrent-contents">')
+      hiddenTorrentContents.hide();
+      fileList.forEach(function(name,index){
+          var fileItem = $('<li>').text(name)
+          fileItem.appendTo(hiddenTorrentContents);
+      });
+      if(fileList.length>1){
+          var morefiles = $('<li>').html("<a id='m"+infoHash+"moreFiles' class='more_files' href='javascript:void(0);'>-show files</a>")
+          morefiles.appendTo(torrentContents);
+          var hidefiles = $('<li>').html("<a id='h"+infoHash+"moreFiles' class='more_files' href='javascript:void(0);'>-hide</a>")
+          hidefiles.appendTo(hiddenTorrentContents);
+        }
       torrentContents.appendTo(nameCol)
+      hiddenTorrentContents.appendTo(nameCol)
       nameCol.appendTo(newTorrentRow);            
     }
 
@@ -507,6 +517,14 @@ var peerReconnecting = false;
     statusCol.appendTo(newTorrentRow)
 
     newTorrentRow.appendTo('#download_list');
+     $("#m"+infoHash+"moreFiles").on('click',function(){
+        $(this).hide();
+        hiddenTorrentContents.show().css({'margin-top':'-1em'});
+      });
+      $("#h"+infoHash+"moreFiles").on('click',function(){
+        $("#m"+infoHash+"moreFiles").show()
+        hiddenTorrentContents.hide();
+      });
 
     $('.'+infoHash+'-torrent').on('click', function(e){
       console.log($(this));

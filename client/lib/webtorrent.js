@@ -59,7 +59,6 @@ onTorrent = function(torrent) {
   })
 
   torrent.swarm.on('upload', function () {
-    if(torrentDownloading==false)
     progressSpan.html("seeding..<br />total: "+ prettysize(torrent.swarm.uploaded)+"<br /> upload: "+prettysize(client.uploadSpeed())+"/s <br />connected peers: "+torrent.swarm.numPeers)
   })
 
