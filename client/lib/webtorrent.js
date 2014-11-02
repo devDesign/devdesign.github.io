@@ -47,18 +47,20 @@ onTorrent = function(torrent) {
     file.createReadStream().pipe(video)
   }
   var progressSpan = $('#'+torrent.infoHash+'-progress');
-
+  var torrentDownloading = true;
   torrent.swarm.on('download', function () {
     var progress = (100 * torrent.downloaded / torrent.parsedTorrent.length).toFixed(1)
     if(progress<99.9){
       progressSpan.html("downloading..<br />progress: "+progress+"% <br>download: "+prettysize(torrent.swarm.downloadSpeed())+"/s"+"<br />upload: "+prettysize(client.uploadSpeed())+"/s <br />connected peers: "+torrent.swarm.numPeers);
     } else{
+      torrentDownloading= false;
       progressSpan.html("download complete..<br />seeding..<br />awaiting peers..<br />")
     }
   })
 
   torrent.swarm.on('upload', function () {
-    progressSpan.html("seeding..<br />total: "+ prettysize(torrent.swarm.uploaded)+"<br /> upload: "+prettysize(client.uploadSpeed())+"/s")
+    if(torrentDownloading==false)
+    progressSpan.html("seeding..<br />total: "+ prettysize(torrent.swarm.uploaded)+"<br /> upload: "+prettysize(client.uploadSpeed())+"/s <br />connected peers: "+torrent.swarm.numPeers)
   })
 
 
