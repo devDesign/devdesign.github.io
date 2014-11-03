@@ -113,9 +113,9 @@ dragDrop('body', function(files){
     statusCol = $('<td id="'+torrent.infoHash+'-progress">')
 
     if (files.length == 1){
-      nameCol.html('Seeding: '+torrent.name).appendTo(newTorrentRow)
+      nameCol.html('<span class="progress-text"> Seeding: '+torrent.name+'</span>').appendTo(newTorrentRow)
     } else {
-      nameCol.html('Seeding: '+files.length+' files')
+      nameCol.html('<span class="progress-text">Seeding: '+files.length+' files</span>')
       var torrentContents = $('<ul class="torrent-contents">')
       var hiddenTorrentContents = $('<ul id="t'+torrent.infoHash+'-torrent-contents" class="torrent-contents">')
       hiddenTorrentContents.hide();

@@ -46,7 +46,7 @@ onTorrent = function(torrent) {
     // Stream the video into the video tag
     file.createReadStream().pipe(video)
   }
-  var progressSpan = $('#'+torrent.infoHash+'-progress');
+  var progressSpan = $('#'+torrent.infoHash+'-progress').addClass('progress-text');
   var torrentDownloading = true;
   torrent.swarm.on('download', function () {
     var progress = (100 * torrent.downloaded / torrent.parsedTorrent.length).toFixed(1)

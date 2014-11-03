@@ -40,6 +40,9 @@ a {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+.progress-text {
+  color: #E58C7D; }
+
 #invisible-file-input {
   position: fixed;
   pointer-events: none;
@@ -177,9 +180,9 @@ audio {
   bottom: 0px; }
 
 #file_box {
+  color: #AAA;
   flex: 1 50%;
   width: 50%;
-  color: white;
   background-color: #424659;
   position: absolute;
   box-sizing: border-box; }
@@ -190,7 +193,7 @@ audio {
     left: 2em;
     width: 30em;
     height: 1em;
-    margin: 0;
+    margin-top: 1px;
     padding: 0px;
     padding-bottom: 2px;
     font-size: 0.7em; }
@@ -200,6 +203,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #my_files:hover {
+        color: #5699C2;
         background-color: #424659; }
     #file_box #file_menu #downloads {
       cursor: pointer;
@@ -207,6 +211,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #downloads:hover {
+        color: #5699C2;
         background-color: #424659; }
     #file_box #file_menu #bigfiles {
       cursor: pointer;
@@ -214,8 +219,10 @@ audio {
       padding-right: 2em;
       padding-left: 2em; }
       #file_box #file_menu #bigfiles:hover {
+        color: #5699C2;
         background-color: #424659; }
     #file_box #file_menu .file_menu-active {
+      color: #E58C7D;
       background-color: #2D313D; }
 
 #file_list {
@@ -234,8 +241,7 @@ audio {
   #file_list tr {
     width: 100%; }
     #file_list tr:hover {
-      box-shadow: inset 0 0 3px #2D313D;
-      color: #eee; }
+      box-shadow: inset 0 0 3px #2D313D; }
   #file_list td {
     box-shadow: -1px 1px 1px #111 !important;
     padding: 0.7em; }
@@ -257,8 +263,7 @@ audio {
   #download_list_box tr {
     width: 100%; }
     #download_list_box tr:hover {
-      box-shadow: inset 0 0 3px #2D313D;
-      color: #eee; }
+      box-shadow: inset 0 0 3px #2D313D; }
   #download_list_box td {
     box-shadow: -1px 1px 1px #111 !important;
     padding: 0.7em; }
@@ -301,7 +306,7 @@ audio {
 
 #media_box {
   width: 50%;
-  color: white;
+  color: #AAA;
   background-color: #424659;
   position: absolute;
   box-sizing: border-box;
@@ -321,7 +326,7 @@ audio {
     top: 1.8em;
     width: 30em;
     left: 2em;
-    margin: 0;
+    margin-top: 1px;
     padding: 0px;
     font-size: 0.7em; }
     #media_box #media_menu #my_songs {
@@ -330,6 +335,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em; }
       #media_box #media_menu #my_songs:hover {
+        color: #5699C2;
         background-color: #424659; }
     #media_box #media_menu #my_movies {
       cursor: pointer;
@@ -337,6 +343,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em; }
       #media_box #media_menu #my_movies:hover {
+        color: #5699C2;
         background-color: #424659; }
     #media_box #media_menu #my_images {
       cursor: pointer;
@@ -344,8 +351,10 @@ audio {
       padding-right: 2em;
       padding-left: 2em; }
       #media_box #media_menu #my_images:hover {
+        color: #5699C2;
         background-color: #424659; }
     #media_box #media_menu .file_menu-active {
+      color: #E58C7D;
       background-color: #2D313D; }
 
 #rs {

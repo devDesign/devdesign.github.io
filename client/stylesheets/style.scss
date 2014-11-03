@@ -3,6 +3,7 @@ $black-shade: #424659;
 $grey-shade: #363A4A;
 $orange-shade: #E58C7D;
 $blue-shade: #5699C2;
+$blue-shade2: #AAA;
 
 @font-face {
   font-family: "Aller";
@@ -54,6 +55,9 @@ a {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.progress-text{
+  color:$orange-shade;
+}
 #invisible-file-input{
   position: fixed;
   pointer-events: none;
@@ -210,9 +214,9 @@ audio {
   @extend .border-module;
 }
 #file_box {
+  color:$blue-shade2;
   flex: 1 50%;
   width: 50%;
-  color: white;
   background-color: $black-shade;
   position: absolute;
   box-sizing: border-box;
@@ -224,7 +228,7 @@ audio {
     left:2em;
     width: 30em;
     height: 1em;
-    margin:0;
+    margin-top:1px;
     padding: 0px;
     padding-bottom: 2px;
     font-size: 0.7em;
@@ -234,6 +238,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
+        color:$blue-shade;
         background-color: $black-shade;
       }
     }
@@ -243,6 +248,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
+        color:$blue-shade;
         background-color: $black-shade;
       }
     }
@@ -252,18 +258,19 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
+        color:$blue-shade;
         background-color: $black-shade;
       }
     }
 
     .file_menu-active{
+      color:$orange-shade;
       background-color: $black;
     }
   }
 }
 #file_list{
   position: absolute;
-  
   left:0em;
   right:0em;
   top:2.1em;
@@ -281,7 +288,6 @@ audio {
 
      &:hover{
     box-shadow: inset 0 0 3px $black;
-    color:#eee;
     }
   }
   td{
@@ -313,7 +319,6 @@ audio {
 
     &:hover{
       box-shadow: inset 0 0 3px $black;
-      color:#eee;
     }
   }
 
@@ -377,7 +382,7 @@ audio {
 
 #media_box {
   width: 50%;
-  color: white;
+  color: $blue-shade2;
   background-color: $black-shade;
   position: absolute;
   box-sizing: border-box;
@@ -399,7 +404,7 @@ audio {
     top:1.8em;
     width: 30em;
     left:2em;
-    margin:0;
+    margin-top:1px;
     padding: 0px;
     font-size: 0.7em;
     #my_songs {
@@ -408,6 +413,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
+        color:$blue-shade;
         background-color: $black-shade;
       }
     }
@@ -417,6 +423,7 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
+        color:$blue-shade;
         background-color: $black-shade;
       }
     }
@@ -426,11 +433,13 @@ audio {
       padding-right: 2em;
       padding-left: 2em;
       &:hover{
+        color:$blue-shade;
         background-color: $black-shade;
       }
     }
 
     .file_menu-active{
+      color:$orange-shade;
       background-color: $black;
     }
   }
