@@ -140,7 +140,7 @@ audio {
   display: flex;
   box-sizing: border-box;
   cursor: move;
-  height: 1.8em;
+  height: 2.1em;
   width: 100%;
   background-color: #363A4A; }
   .window_title span {
@@ -187,9 +187,12 @@ audio {
     background-color: #363A4A;
     position: absolute;
     top: 1.8em;
-    width: 100%;
+    left: 2em;
+    width: 30em;
+    height: 1em;
     margin: 0;
     padding: 0px;
+    padding-bottom: 2px;
     font-size: 0.7em; }
     #file_box #file_menu #my_files {
       cursor: pointer;
@@ -219,7 +222,7 @@ audio {
   position: absolute;
   left: 0em;
   right: 0em;
-  top: 2.0em;
+  top: 2.1em;
   bottom: 0em;
   overflow-y: auto;
   overflow-x: none; }
@@ -242,7 +245,7 @@ audio {
   border-spacing: 0px;
   left: 0em;
   right: 0em;
-  top: 2em;
+  top: 2.1em;
   bottom: 0em;
   overflow-y: auto;
   overflow-x: none; }
@@ -267,7 +270,7 @@ audio {
   border-spacing: 0px;
   left: 0em;
   right: 0em;
-  top: 2em;
+  top: 2.1em;
   bottom: 1.3em;
   overflow-y: auto;
   overflow-x: none; }
@@ -304,6 +307,46 @@ audio {
   box-sizing: border-box;
   overflow-y: none;
   overflow-x: none; }
+  #media_box #my_images_box {
+    position: absolute;
+    top: 2.1em;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    overflow-y: auto; }
+  #media_box #media_menu {
+    background-color: #363A4A;
+    position: absolute;
+    top: 1.8em;
+    width: 30em;
+    left: 2em;
+    margin: 0;
+    padding: 0px;
+    font-size: 0.7em; }
+    #media_box #media_menu #my_songs {
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em; }
+      #media_box #media_menu #my_songs:hover {
+        background-color: #424659; }
+    #media_box #media_menu #my_movies {
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em; }
+      #media_box #media_menu #my_movies:hover {
+        background-color: #424659; }
+    #media_box #media_menu #my_images {
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em; }
+      #media_box #media_menu #my_images:hover {
+        background-color: #424659; }
+    #media_box #media_menu .file_menu-active {
+      background-color: #2D313D; }
 
 #rs {
   position: fixed;
@@ -468,7 +511,7 @@ audio {
   position: absolute;
   left: 0em;
   right: 0em;
-  top: 1.6em;
+  top: 2.1em;
   bottom: 3.2em;
   overflow-y: auto;
   overflow-x: none;

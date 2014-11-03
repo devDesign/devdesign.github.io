@@ -166,19 +166,35 @@ onTorrent = function(torrent) {
         }
 
         if(fileType.split('/')[0] == "image"){
+          var newimage = $('<img class="thumb" />');
+          newimage[0].src = linkToFile;
+          newimage[0].width = 100;
+          newimage.appendTo('#my_images_list');
+          $('.thumb').on('click',function(){
+            if($('#pic_box')[0]){
+              $('#pic_box').css({top:"1em",left:'1em'})
+              var picture = $('#media_player-image')[0];
+              picture.src = $(this).attr('src');
+              picture.height = get_viewpoint()[0]/2;
+            } else {
+              imgBox.appendTo('body');
+              var picture = $('#media_player-image')[0];
+              picture.src = $(this).attr('src');
+            }
+          })
+
+
           $(extname.toLowerCase()).on('click',function(){
             if($('#pic_box')[0]){
               $('#pic_box').css({top:"1em",left:'1em'})
               var picSrc = $(this).parent().parent().find('a')[0]
               var picture = $('#media_player-image')[0];
-              console.log($(picSrc).attr('href'));
               picture.src = $(picSrc).attr('href');
               picture.height = get_viewpoint()[0]/2;
             } else {
               imgBox.appendTo('body');
               var picSrc = $(this).parent().parent().find('a')[0]
               var picture = $('#media_player-image')[0];
-              console.log($(picSrc).attr('href'));
               picture.src = $(picSrc).attr('href');
 
             }

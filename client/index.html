@@ -15,13 +15,14 @@
   <script src="./lib/peer.js"></script>
   <script src="./js/desktop.js"></script>
   <script type="text/javascript" src="./js/rtos.js"></script>
-  <script src="lib/idb.filesystem.min.js"></script>
-  <script src="lib/webrtc-data.io.js"></script>
+  <script src="./lib/idb.filesystem.min.js"></script>
+  <script src="./lib/webrtc-data.io.js"></script>
   <script src='./lib/pep.js'></script>
   <script src='./lib/hammer.min.js'></script>
   <script src='./lib/id3.min.js'></script>
   <script src='./lib/id3v2.js'></script>
   <script src='./js/three.min.js'></script>
+  <script src='./lib/freewall.js'></script>
 <!--   <script src='./js/pointcloud.js'></script>
  -->
 </head>
@@ -158,6 +159,21 @@
         <span class="minimize content">&#xf068;</span>
       </div>
       <div class="content">
+       <div id="media_menu">
+          <span id="my_songs">myMusic</span>
+          <span id="my_movies">myMovies</span>
+          <span id="my_images">myPictures</span>
+        </div>
+        <div id="my_movies_box">
+          <div id="my_movies_list">
+            
+          </div>
+        </div>
+        <div id="my_images_box">
+          <div id="my_images_list">
+            
+          </div>
+        </div>
         <div id="music-player">
         <!-- comment -->
           <audio id="audio" preload="auto" tabindex="0">

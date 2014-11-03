@@ -2,9 +2,10 @@ var rs,ls,ts,bs,maxWindow,nextAttack,backdoor;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
 var vidBox;
+var wall;
 var height,width,barHeight,splitWidth,splitHeight,placeTop,placeBottom,placeRight,placeLeft,fullHeight,fullWidth;
 $('document').ready(function(){
-
+  wallfree();
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
   var width = viewpoint[0];
@@ -105,6 +106,32 @@ $('document').ready(function(){
     $('#file_list').hide();
   });
 
+    // media player tabs
+  $('#my_songs').on('click',function(){
+    $('#my_images').removeClass('file_menu-active');
+    $('#my_movies').removeClass('file_menu-active');
+    $(this).addClass('file_menu-active');
+    $('#my_images_box').hide();
+    $('#my_movies_box').hide();
+    $('#music-player').show();
+  });
+  $('#my_images').on('click',function(){
+    $('#my_songs').removeClass('file_menu-active');
+    $('#my_movies').removeClass('file_menu-active');
+    $(this).addClass('file_menu-active');
+    $('#music-player').hide();
+    $('#my_movies_box').hide();
+    $('#my_images_box').show();
+  });
+  $('#my_movies').on('click',function(){
+    $('#my_images').removeClass('file_menu-active');
+    $('#my_songs').removeClass('file_menu-active');
+    $(this).addClass('file_menu-active');
+    $('#my_images_box').hide();
+    $('#music-player').hide();
+    $('#my_movies').show();
+  });
+
   // maximize window
   $(".maximize").on("click",function(){
     $('.maximize').hide();
@@ -113,6 +140,7 @@ $('document').ready(function(){
     thisWindow = $( this ).parent().parent();
     maxWindow = $(thisWindow);
     $(thisWindow).css({"z-index":9999}).css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    wall.fitWidth();
   });
   // minimize
   $(".minimize").on("click",function(){
@@ -163,6 +191,7 @@ $('document').ready(function(){
     $('.minimize').show();
     get_viewpoint();
     target.css({"z-index":9999}).css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    wall.fitWidth();
   })
   hammertime.on("press",function(){
     $('.minimize').hide();
@@ -432,7 +461,7 @@ switch (side)
               horizontalGrid[0] = jElement;
               verticalGrid[0].css( splitWidth ).css( placeRight )
               horizontalGrid[0].css( splitHeight ).css( placeTop).css( placeRight );
-              break; 
+                  break; 
             }
           }
         }
@@ -455,6 +484,10 @@ switch (side)
         }
       // user has thrown window to the bottom  
       case "bs":
+        if(jElement==$('#media_box')){
+          $('#my_images_list').css(fullWidth);
+          wall.fitWidth();
+        }
         // if there is a window on the bottom already and a window on the left or right
         if(bs != null && (horizontalGrid[0] || horizontalGrid[1]) && ls==null && rs==null){
           console.log('what?');
@@ -488,6 +521,7 @@ switch (side)
         horizontalGrid[1].css(splitHeight).css(splitWidth).css(placeRight).css(placeBottom)
         break;
     }
+  
 }
 
 // resize init date
@@ -536,7 +570,8 @@ function refreshGrid(){
   }
   if(maxWindow){
     maxWindow.css(fullHeight).css(fullWidth).css(placeTop).css(placeLeft);
-  } 
+  }
+  wall.fitWidth(); 
 }
 
 //find user viewpoint
@@ -557,3 +592,17 @@ function get_viewpoint(){
   var viewpointz = [vpw,vph];
   return viewpointz;
 }
+
+function wallfree(){
+  wall = new freewall("#my_images_list");
+  wall.reset({
+    selector: 'img',
+    animate: false,
+    delay: 10,
+    onResize: function() {
+      wall.fitWidth();
+    }
+  });
+  wall.fitWidth();
+}
+    

@@ -167,7 +167,7 @@ audio {
   cursor: move;
   // padding: 1px;
   // position: relative;
-  height: 1.8em;
+  height: 2.1em;
   width: 100%;
   background-color: $grey-shade;
     span {
@@ -221,9 +221,12 @@ audio {
     background-color: $grey-shade;
     position: absolute;
     top:1.8em;
-    width: 100%;
+    left:2em;
+    width: 30em;
+    height: 1em;
     margin:0;
     padding: 0px;
+    padding-bottom: 2px;
     font-size: 0.7em;
     #my_files {
       cursor: pointer;
@@ -263,7 +266,7 @@ audio {
   
   left:0em;
   right:0em;
-  top:2.0em;
+  top:2.1em;
   bottom:0em;
   overflow-y:auto;
   overflow-x:none;
@@ -293,7 +296,7 @@ audio {
   border-spacing: 0px;
   left:0em;
   right:0em;
-  top:2em;
+  top:2.1em;
   bottom:0em;
   overflow-y:auto;
   overflow-x:none;
@@ -330,7 +333,7 @@ audio {
   border-spacing: 0px;
   left:0em;
   right:0em;
-  top:2em;
+  top:2.1em;
   bottom:1.3em;
   overflow-y:auto;
   overflow-x:none;
@@ -381,6 +384,56 @@ audio {
   overflow-y: none;
   overflow-x: none;
   @extend .border-module;
+  #my_images_box{
+    position: absolute;
+    top:2.1em;
+    bottom: 0;
+    left: 0;
+    right:0;
+    display: none;
+    overflow-y: auto;
+  }
+  #media_menu{
+    background-color: $grey-shade;
+    position: absolute;
+    top:1.8em;
+    width: 30em;
+    left:2em;
+    margin:0;
+    padding: 0px;
+    font-size: 0.7em;
+    #my_songs {
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em;
+      &:hover{
+        background-color: $black-shade;
+      }
+    }
+    #my_movies{
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em;
+      &:hover{
+        background-color: $black-shade;
+      }
+    }
+    #my_images{
+      cursor: pointer;
+      margin: 0;
+      padding-right: 2em;
+      padding-left: 2em;
+      &:hover{
+        background-color: $black-shade;
+      }
+    }
+
+    .file_menu-active{
+      background-color: $black;
+    }
+  }
 }
 #rs {
   position: fixed;
@@ -563,7 +616,7 @@ audio {
   position: absolute;
   left:0em;
   right:0em;
-  top:1.6em;
+  top:2.1em;
   bottom:3.2em;
   overflow-y: auto;
   overflow-x:none;
