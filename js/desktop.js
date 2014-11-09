@@ -524,9 +524,9 @@ switch (side)
   
 }
 // focus resize
-document.addEventListener('blur',function(e){
+document.addEventListener('zoom',function(e){
   setTimeout(function(){
-    console.log('blur');
+    console.log('zoom');
     get_viewpoint();
   refreshGrid();  
   },200);    

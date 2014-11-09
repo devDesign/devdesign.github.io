@@ -82,7 +82,8 @@ audio {
     background-color: #424659;
     color: white;
     box-sizing: border-box;
-    border-radius: 7px; }
+    border-radius: 7px;
+    font-size: 1em; }
   #login-box button {
     width: 100%;
     height: 3em;
