@@ -154,7 +154,7 @@ $('document').ready(function(){
     attack_grid($(thisWindow),backdoor);
   });
   // close window
-  $(".close").on("click",function(){
+  $(".close").on("click touchstart",function(){
     thisWindow = $( this ).parent();
     thisWindow = thisWindow.parent();
     console.log(thisWindow);
@@ -225,6 +225,7 @@ $('document').ready(function(){
   var camWindow = new Hammer(camElement);
   camBox.pep({
     constrainTo:'#desktop',
+    'elementsWithInteraction': '.close'
   });
   vidBox = camBox;
   camBox.detach();
@@ -232,7 +233,7 @@ $('document').ready(function(){
   var picBox = $('#pic_box');
   var picElement = document.getElementById('pic_box');
   var picWindow = new Hammer(picElement);
-  picBox.pep();
+  picBox.pep({'elementsWithInteraction': '.close'});
   imgBox = picBox;
   picBox.detach();
   // mediaBox WINDOW
@@ -524,14 +525,21 @@ switch (side)
   
 }
 // focus resize
-document.addEventListener('zoom',function(e){
-  setTimeout(function(){
-    console.log('zoom');
-    get_viewpoint();
-  refreshGrid();  
-  },200);    
-}, true);
+$("input[type=text], textarea").on({ 'touchstart' : function() {
+    zoomDisable();
+}});
+$("input[type=text], textarea").on({ 'touchend' : function() {
+    setTimeout(zoomEnable, 500);
+}});
 
+function zoomDisable(){
+  $('head meta[name=viewport]').remove();
+  $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />');
+}
+function zoomEnable(){
+  $('head meta[name=viewport]').remove();
+  $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />');
+} 
 // resize init date
 var rtime = new Date(23, 4, 1985, 12,00,00);
 var timeout = false;
