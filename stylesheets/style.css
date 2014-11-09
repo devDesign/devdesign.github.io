@@ -747,4 +747,23 @@ input[type="range"] {
 .png, .jpg, .jpeg, .gif, .mp4 {
   cursor: pointer; }
 
+@media screen and (max-width: 600px) {
+  #file_menu {
+    display: none; }
+
+  #media_menu {
+    display: none; }
+
+  #chat_menu {
+    display: none; }
+
+  #file_menu_mobile {
+    display: inline; }
+
+  #media_menu_mobile {
+    display: inline; }
+
+  #chat_menu_mobile {
+    display: inline; } }
+
 /*# sourceMappingURL=style.css.map */
