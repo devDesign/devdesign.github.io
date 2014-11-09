@@ -1,3 +1,4 @@
+var sound;
 $('document').ready(function(){
 
   $('#audio').bind('ended', function() {
@@ -12,6 +13,10 @@ $('document').ready(function(){
   });
 
   $('#pButton').on('click', function(){
+    sound = new Howl({
+      urls: [audio.src],
+      format: 'mp3'
+    }).play();
     if (audio.paused) {
       audio.play();
       pButton.className = '';
