@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>RTOS</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Language" content="en-us">
+
+  <link rel="stylesheet" href="./stylesheets/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./stylesheets/style.css" />
+    <link rel="stylesheet" href="./stylesheets/audio_recorder.css" />
+
+  <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+
+  <script src="./js/audio-player.js"></script>
+  <script src="./lib/peer.js"></script>
+  <script src="./js/desktop.js"></script>
+  <script type="text/javascript" src="./js/rtos.js"></script>
+  <script src="./lib/idb.filesystem.min.js"></script>
+  <script src="./lib/webrtc-data.io.js"></script>
+  <script src='./lib/pep.js'></script>
+  <script src='./lib/hammer.min.js'></script>
+  <script src='./lib/id3.min.js'></script>
+  <script src='./lib/id3v2.js'></script>
+  <script src='./js/three.min.js'></script>
+  <script src='./lib/freewall.js'></script>
+  <script src='./js/howler.min.js'></script>
+  
+<!--   <script src='./js/pointcloud.js'></script>
+ -->
+</head>
+  <body>
+    <!-- <div id="pointcloud"></div>
+    -->
+    <div id="chat_user_list" class="chat_user_list">
+      <div class="self">
+        <img src="./images/person.png" height="20px" width="20px">
+        <span id="pid"></span>
+      </div>
+    </div>
+
+    <div id='nav'>
+      <div id="rtos">
+        <h2><a href="/client">RTOS</a></h2>
+      </div>
+
+      <div class="glyph">
+        <i class="fa fa-refresh" id="reconnect-to-peers"></i>
+      </div>
+      <div class="glyph">
+        <i class="fa fa-cloud-upload" id="file-upload"></i>
+      </div>
+      <div class="glyph">
+        <i class="fa fa-users" id="user-button"></i>
+      </div>
+      <div class="glyph">
+        <i class="fa fa-video-camera" id="start-video-feed"></i><i class="fa fa-times-circle" id="stop-video-feed"></i>
+      </div>
+
+    </div>
+
+    <div id="login-box">
+      <div>
+        <div id="mesh-logo">
+          <img width="80px" height="80px" src="./images/mesh-logo.png"/>
+        </div>
+        <input type="text" id="username-text" placeholder="Nickname: " class="login-input" />
+        <input type="text" id="roomname-text" placeholder="Room:" class="login-input"/>
+        <button id="peerSubmit">CONNECT</button>
+    </div>
+  </div>
+  
+  <div id='rs' class='droppable'></div>
+  <div id='ls' class='droppable'></div>
+  <div id='bs' class='droppable'></div>
+  <div id='lbs' class='droppable'></div>
+
+  <div id='desktop'>
+    <div id="file_box" class="files">
+      <div class="window_title">
+        <span>&#xf0f6;</span>
+        <span class="maximize content">&#xf096;</span>
+        <span class="minimize content">&#xf068;</span>
+      </div>
+      <div class="content">
+        <div id="file_menu">
+          <span id="my_files">myFiles</span>
+          <span id="downloads">webTorrents</span>
+          <span id="bigfiles">directRTC</span>
+        </div>
+        <div id="big_files_box">
+          <div id="big_files_list">
+            
+          </div>
+        </div>
+        <div id="download_list_box">
+            <table id="download_list">
+              <tr>
+                <td class="column_label">
+                filename
+                </td>
+                <td class="column_label">
+                filesize
+                </td>
+                <td class="column_label">
+                sender
+                </td>
+                <td class="column_label">
+                status
+                </td>
+              </tr>
+            </table>
+        </div>
+        <div id="file_list">
+            <table id="filelist">
+              <tr>
+                <td class="column_label">
+                stream
+                </td>
+                <td class="column_label" >
+                save
+                </td>
+                <td class="column_label">
+                filename
+                </td>
+                <td class="column_label">
+                filesize
+                </td>
+                <td class="column_label">
+                filetype
+                </td>
+              </tr>
+            </table>
+          <!-- <input type="file" id="select_file"> -->
+          <div id="messages"></div>
+
+          <div class="log"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="cam_box">
+      <div class="window_title"><span>&#xf008;</span><span class="close content">&#xf00d;</span></div>
+      <div id="video_player">
+          <video id="media_player-video" controls="controls" autoplay="autoplay">
+            <source src="" type="video/mp4">
+          </video>
+        </div>
+    </div>
+
+    <div id="pic_box">
+      <div class="window_title"><span>&#xf1c5;</span><span class="close content">&#xf00d;</span></div>
+      <div id="image_player">
+          <img src="" id="media_player-image" />
+       </div>
+    </div>
+
+    <div id="media_box">
+      <div class="window_title">
+        <span>&#xf001;</span>
+        <span class="maximize content">&#xf096;</span>
+        <span class="minimize content">&#xf068;</span>
+      </div>
+      <div class="content">
+       <div id="media_menu">
+          <span id="my_songs">myMusic</span>
+          <span id="my_movies">myMovies</span>
+          <span id="my_images">myPictures</span>
+        </div>
+        <div id="my_movies_box">
+          <div id="my_movies_list">
+            
+          </div>
+        </div>
+        <div id="my_images_box">
+          <div id="my_images_list">
+            
+          </div>
+        </div>
+        <div id="music-player">
+        <!-- comment -->
+          <audio id="audio" preload="auto" tabindex="0">
+            <source id="song" type="audio/mp3" src="">
+          </audio>
+
+          <div id="playlist_box">
+            <table id="playlist">
+              <tr>
+                <td class="column_label">artist</td>
+                <td class="column_label">title</td>
+                <td class="column_label">album</td>
+              </tr>
+            </table>
+          </div>
+          <div id="now_playing"></div>
+
+          <div id="audioplayer">
+            <div>
+              <button id="pButton" class="play"></button>
+              <div id="timeline">    
+                <div id="playhead"></div>
+              </div>
+              <input id="volume" min="0" max="1" step="0.01" type="range"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="chat_box">
+      <div class="window_title">
+        <span>&#xf1d7;</span>
+        <span class="maximize content">&#xf096;</span>
+        <span class="minimize content">&#xf068;</span>
+      </div>
+      <div class="content">
+        <div id="chat_menu">
+          <span id="chat_text">rText</span>
+          <span id="chat_audio">rAudio</span>
+          <span id="chat_video">rVideo</span>
+        </div>
+        <div id="rAudio_box">
+          <div id="global_audio">
+            <div id="viz">
+              <canvas id="analyser" width="1024" height="500"></canvas>
+              <canvas id="wavedisplay" width="1024" height="500"></canvas>
+            </div>
+            <div id="controls">
+              <img id="record" src="img/mic128.png" onclick="toggleRecording(this);">
+              <a id="save" href="#"><img src="img/save.svg"></a>
+            </div>
+          </div>
+        </div>
+        <div id="wrap">
+            <div id="global_chat">
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div id='send-div'>
+          <form id="send">
+            <input type="text" id="text" class="chat_text-input" placeholder="enter message" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class='window'>
+      
+    </div>
+
+    <!-- FROM WEBRTC COPY -->
+
+  <input type="file" id="invisible-file-input" multiple></div>
+
+  <script>
+
+  var invisibleInput = document.querySelector('#invisible-file-input');
+
+  $('#file-upload').on('click', function(e){
+    $('#invisible-file-input').click();
+  })
+
+console.log("%c //RTOS","background:red;font-size:200px")
+console.log("%c join us","background:black;font-size:30px;color:red;")
+
+  </script>
+
+
+    <script type="text/javascript" src="lib/file-io.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <!-- webtorrent -->
+    <script type="text/javascript" src="lib/webtorrent.js"></script>
+    <!-- file filtering -->
+    <script type="text/javascript" src="js/file-filter.js"></script>
+  </body>
+</html>
