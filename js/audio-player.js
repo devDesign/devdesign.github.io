@@ -12,7 +12,15 @@ $('document').ready(function(){
   });
 
   $('#pButton').on('click', function(){
-    play();
+    if (audio.paused) {
+      audio.play();
+      pButton.className = '';
+      pButton.className = 'pause';
+    } else {
+      audio.pause();
+      pButton.className = '';
+      pButton.className = 'play';
+    }
   });
 
   $('#volume').on('change', function(){
