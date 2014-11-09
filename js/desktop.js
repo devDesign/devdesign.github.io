@@ -523,6 +523,14 @@ switch (side)
     }
   
 }
+// focus resize
+document.addEventListener('focus',function(e){
+  setTimeout(function(){
+    console.log('focus');
+    get_viewpoint();
+  refreshGrid();  
+  },200);    
+}, true);
 
 // resize init date
 var rtime = new Date(23, 4, 1985, 12,00,00);
