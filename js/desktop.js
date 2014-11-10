@@ -11,10 +11,6 @@ $('document').ready(function(){
   var width = viewpoint[0];
   var barHeight = document.getElementById('nav').offsetHeight;
   var zIndex = 100;
-  $('<button/>',{id:'howler',text:'playsong'}).css({'position':'fixed',top:0}).appendTo('body');
-  $('#howler').on('click',function(){
-    sounds[0].stop().play()
-  })
   $('#file_list').hide();
   $('#big_files_box').hide();
   $('#stop-video-feed').hide();
