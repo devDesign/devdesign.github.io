@@ -145,7 +145,7 @@ function play_torrent_file(url, title, type, blob) {
   reader.onload = function(event) {
     ID3.loadTags(url, function() {
       var tags = ID3.getAllTags(url);
-      var songRow = $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td></tr>')
+      var songRow = $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td><td><a href='+url+'>'+tags.track.split("/")[0]+'</a></td><td><a href='+url+'>'+tags.year+'</a></td></tr>')
       songRow.appendTo('#playlist-tbody');
       $("#playlist").trigger('addRows',[songRow,true]); 
       initPlaylist(tags);
@@ -194,7 +194,7 @@ function play_torrent_file(url, title, type, blob) {
       }
       
     }, {
-      tags: ["title","artist","album","year"],
+      tags: ["title","artist","album","year","track"],
       dataReader: FileAPIReader(blob)
     });
   };

@@ -5,7 +5,7 @@ var vidBox;
 var wall;
 var height,width,barHeight,splitWidth,splitHeight,placeTop,placeBottom,placeRight,placeLeft,fullHeight,fullWidth;
 $('document').ready(function(){
-  $("#playlist").tablesorter({sortList: [[0,0],[3,0]]}); 
+  $("#playlist").tablesorter({sortList: [[0,0],[2,0],[3,0]]}); 
   wallfree();
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
@@ -139,7 +139,11 @@ $('document').ready(function(){
     get_viewpoint();
     thisWindow = $( this ).parent().parent();
     maxWindow = $(thisWindow);
-    $(thisWindow).css({"z-index":9999}).css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    $(thisWindow).css({"z-index":9999})
+    fileBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    mediaBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    chatBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+
     wall.fitWidth();
   });
   // minimize
@@ -149,9 +153,11 @@ $('document').ready(function(){
     get_viewpoint();
     thisWindow = $( this ).parent().parent();
     maxWindow = null
+    clearGrid();
+    attack_grid(fileBox,"rs");
+    attack_grid(chatBox,"rs");
+    attack_grid(mediaBox,"rs");
     $(thisWindow).css({"z-index":100});
-    retreatGrid($(thisWindow));
-    attack_grid($(thisWindow),backdoor);
   });
   // close window
   $(".close").on("click touchstart",function(){
@@ -186,11 +192,15 @@ $('document').ready(function(){
 
   //hammertime events
   function hammertimeBox(hammertime,target){
+    var zIndexx=999;
     hammertime.on("doubletap",function(){
     $('.maximize').hide();
     $('.minimize').show();
     get_viewpoint();
-    target.css({"z-index":9999}).css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    target.css({"z-index":999})
+    chatBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    mediaBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
+    fileBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     wall.fitWidth();
   })
   hammertime.on("press",function(){
@@ -199,6 +209,43 @@ $('document').ready(function(){
     get_viewpoint();
     retreatGrid(target);
     attack_grid(target,"bs");
+  })
+  hammertime.on("dragright swiperight",function(){
+    console.log("swipe");
+    if(target===chatBox){
+    target.css({'z-index':zIndexx--})
+    mediaBox.css({'z-index':zIndexx+2})
+    fileBox.css({'z-index':zIndexx++})
+    }
+    if(target===mediaBox){
+    target.css({'z-index':zIndexx--})
+    chatBox.css({'z-index':zIndexx++})
+    fileBox.css({'z-index':zIndexx+2})
+    }
+    if(target===fileBox){
+    target.css({'z-index':zIndexx--})
+    mediaBox.css({'z-index':zIndexx++})
+    chatBox.css({'z-index':zIndexx+2})
+    }
+  });
+  hammertime.on("dragleft swipeleft",function(){
+    console.log("swipe");
+    if(target===chatBox){
+    target.css({'z-index':zIndexx--})
+    mediaBox.css({'z-index':zIndexx++})
+    fileBox.css({'z-index':zIndexx+2})
+    }
+    if(target===mediaBox){
+    target.css({'z-index':zIndexx--})
+    chatBox.css({'z-index':zIndexx+2})
+    fileBox.css({'z-index':zIndexx++})
+    }
+    if(target===fileBox){
+    target.css({'z-index':zIndexx--})
+    mediaBox.css({'z-index':zIndexx+2})
+    chatBox.css({'z-index':zIndexx++})
+    }
+
   })
   }
 
@@ -314,66 +361,70 @@ function retreatGrid(jElement){
   if (horizontalGrid[0][0].id==jElement[0].id){
     horizontalGrid[0] = null
     backdoor = "ls";
-    if ( ls != null && bs == null){
-      ls.css( fullHeight ).css( placeTop );
+    if (ls){
+      ls.css( fullHeight ).css( placeTop ).css(splitWidth);
       horizontalGrid[0] = ls;
       ls = null;
       backdoor = "lbs";
-    } else if( rs != null && horizontalGrid[1] !=null && bs == null){
+    }
+    if( rs && horizontalGrid[1]){
         attack_grid(rs,'ls');
-        horizontalGrid[1].css( fullHeight ).css( placeTop );
+        horizontalGrid[1].css( fullHeight ).css( placeTop ).css(splitWidth);
         rs = null;
-      } else if(bs){
+      } 
+    if(bs){
         bs.css(placeLeft).css(fullHeight).css(placeTop).css(splitWidth);
-        horizontalGrid[1].css(fullHeight).css(placeTop).css(placeRight);
+        horizontalGrid[1].css(fullHeight).css(placeTop).css(splitWidth).css(placeRight);
         horizontalGrid[0]= bs;
         bs = null;
       }
-    } else if (ls){
+    }
+    if (ls){
       if(ls[0].id == jElement[0].id){
         ls = null
         backdoor = "ls";
-        if (horizontalGrid[0] != null){
-        horizontalGrid[0].css( fullHeight ).css( placeTop );
-        }
+        horizontalGrid[0].css( fullHeight ).css( placeTop ).css(splitWidth);
       }
   }
 // right side is dragged from snap
   if (horizontalGrid[1][0].id ==jElement[0].id){
     horizontalGrid[1] = null
     backdoor = "rs"
-    if ( rs != null && bs == null){
-      rs.css( fullHeight ).css( placeTop );
+    if (rs){
+      rs.css( fullHeight ).css( placeTop ).css(splitWidth);
       horizontalGrid[1] = rs;
       rs = null;
       backdoor = "rbs";
-    } else if ( ls != null && horizontalGrid[0] != null ){
-        nextAttack = ls;
+    }
+    if ( ls && horizontalGrid[0]){
+        attack_grid(ls,'rs');
         ls = null;
-        attack_grid(nextAttack,'rs');
-        horizontalGrid[0].css( fullHeight ).css( placeTop);
-    } else if(bs){
+        horizontalGrid[0].css( fullHeight ).css( placeTop).css(splitWidth);
+    }
+    if(bs){
         bs.css(placeRight).css(fullHeight).css(placeTop).css(splitWidth);
-        horizontalGrid[0].css(fullHeight).css(placeTop);
+        horizontalGrid[0].css(fullHeight).css(placeTop).css(splitWidth);
         horizontalGrid[1]= bs;
         bs = null;
       }
-  } else if(rs){
+  }
+  if(rs){
     if(rs[0].id == jElement[0].id){
       rs = null;
       backdoor = "rs"
-      if ( horizontalGrid[1] != null){
-        horizontalGrid[1].css( fullHeight ).css(placeTop);
+      if ( horizontalGrid[1]){
+        horizontalGrid[1].css( fullHeight ).css(placeTop).css(splitWidth);
       }
     } 
-  } else if(bs){
+  } 
+  if(bs){
     if(bs[0].id == jElement[0].id){
       bs = null;
       backdoor = "bs";
-      horizontalGrid[0].css(fullHeight).css(placeLeft).css(placeTop);
-      horizontalGrid[1].css(fullHeight).css(placeRight).css(placeTop);
+      horizontalGrid[0].css(fullHeight).css(placeLeft).css(placeTop).css(splitWidth);
+      horizontalGrid[1].css(fullHeight).css(placeRight).css(placeTop).css(splitWidth);
     }
-  }
+  } 
 }
 
 function delayDropzones(){
@@ -400,115 +451,39 @@ switch (side)
     {
     // user has thrown a window to right
       case "rs":
-      //if only 1 window is snapped right do this
-        if ( horizontalGrid[1] != null && rs == null && bs == null){
-          horizontalGrid[1].css( splitHeight ).css( placeBottom ).css( placeRight );
-          rs = jElement;
-          rs.css( splitHeight ).css( placeTop ).css( placeRight ).css(splitWidth);
-          break;
-        } 
-      // if 2 windows are snapped right do this
-        else if ( horizontalGrid[1] != null && rs != null && bs == null ){
-          jElement.css( splitHeight ).css( placeTop ).css( placeRight ).css(splitWidth);
-          rs.css( splitHeight ).css( placeBottom ).css( placeRight );
-          nextAttack = horizontalGrid[1];
-          horizontalGrid[1] = jElement;
-          attack_grid(nextAttack,"ls");
-          break;
-        } 
-        // if 1 window is snapped to bottom and 1 window is snapped to right or left
-        else if( (horizontalGrid[1] || horizontalGrid[0]) && rs == null && ls == null && bs){
-          // theres a window on the right so it should split hieght go left and bottom should split width and move left
-          if( horzontalGrid[1]){ 
-            horizontalGrid[1].css(splitHeight).css(placeTop).css(placeLeft); horizontalGrid[0] = horizontalGrid[1]; 
-            bs.css( splitWidth).css( placeBottom ).css(placeLeft);
-            ls = bs;
-            bs = null;
-          }
-          // theres a window on left so it should split hieght bottom should split width and move left
-          else if( horizontalGrid[0]){ 
-            horizontalGrid[0].css(splitHeight).css(placeTop).css(placeLeft);
-            bs.css( splitWidth).css( placeBottom ).css(placeLeft);
-            ls = bs;
-            bs = null;
-          }
-          jElement.css( splitWidth ).css( placeTop ).css( fullHeight ).css( placeRight );
-          horizontalGrid[1] = jElement;
-          break;
-        }
-        else{
-          horizontalGrid[1] = jElement;
-          horizontalGrid[1].css( placeRight ).css( placeTop ).css( fullHeight );
-          break;
-        }
+      if(horizontalGrid[0]){
+        horizontalGrid[0].css(splitHeight).css(placeBottom).css(splitWidth).css(placeLeft);
+        ls = horizontalGrid[0];
+      }
+      if(horizontalGrid[1]){
+        horizontalGrid[1].css(splitHeight).css(placeTop).css(splitWidth).css(placeLeft);
+        horizontalGrid[0] = horizontalGrid[1];
+      }
+        horizontalGrid[1]=jElement;
+        horizontalGrid[1].css(fullHeight).css(splitWidth).css(placeRight).css(placeTop)
+        break;
       case "ls":
-        if ( verticalGrid[0] != null ){
-          verticalGrid[0].css( splitWidth ).css( placeRight );
-          if ( horizontalGrid[1] != null){
-            horizontalGrid[1].css( splitHeight ).css( placeBottom );
-            if ( verticalGrid[1] != null ){
-              horizontalGrid[0] = jElement;
-              verticalGrid[1].css( splitWidth ).css( placeLeft );
-              horizontalGrid[0].css( splitHeight ).css( placeTop ).css( placeLeft ).css(splitWidth);
-              break;
-            }  
-          } 
-        }
-        if ( verticalGrid[1] != null ){
-          verticalGrid[1].css( splitWidth ).css( placeRight );
-          if ( horizontalGrid[1] != null ){
-            horizontalGrid[1].css( splitHeight ).css( placeTop )
-            if ( verticalGrid[0] != null ){
-              horizontalGrid[0] = jElement;
-              verticalGrid[0].css( splitWidth ).css( placeRight )
-              horizontalGrid[0].css( splitHeight ).css( placeTop).css( placeRight );
-                  break; 
-            }
-          }
-        }
-        if ( horizontalGrid[0] != null && ls == null ){
-          horizontalGrid[0].css( splitHeight ).css( placeBottom ).css( placeLeft );
-          ls = jElement;
-          ls.css( splitHeight ).css( placeTop ).css( placeLeft ).css(splitWidth);
-          break;
-        } else if ( horizontalGrid[0] != null && ls != null ){
-          jElement.css( splitHeight ).css( placeTop ).css( placeLeft );
-          ls.css( splitHeight ).css( placeBottom ).css( placeLeft );
-          nextAttack = horizontalGrid[0];
-          horizontalGrid[0] = jElement;
-          attack_grid(nextAttack,"rs");
-          break;
-        } else {
-          horizontalGrid[0] = jElement;
-          horizontalGrid[0].css( placeLeft ).css( placeTop ).css( fullHeight );
-          break;
-        }
-      // user has thrown window to the bottom  
+      if(horizontalGrid[1]){
+        horizontalGrid[1].css(splitHeight).css(placeBottom).css(splitWidth).css(placeRight);
+        rs = horizontalGrid[1];
+      }
+      if(horizontalGrid[0]){
+        horizontalGrid[0].css(splitHeight).css(placeTop).css(splitWidth).css(placeRight);
+        horizontalGrid[1] = horizontalGrid[0];
+      }
+        horizontalGrid[0]=jElement;
+        horizontalGrid[0].css(fullHeight).css(splitWidth).css(placeLeft).css(placeTop)
+        break;
       case "bs":
         if(jElement==$('#media_box')){
           $('#my_images_list').css(fullWidth);
           wall.fitWidth();
         }
-        // if there is a window on the bottom already and a window on the left or right
-        if(bs != null && (horizontalGrid[0] || horizontalGrid[1]) && ls==null && rs==null){
-          console.log('what?');
-          // if there is a window on the left or a window on the right they should split height 
-          if(horizontalGrid[0] &&  horizontalGrid[1] == null){
-            horizontalGrid[0].css( splitHeight ).css( placeTop ).css( placeLeft );            
-          } else if (horizontalGrid[1]){
-            horizontalGrid[1].css( splitHeight ).css( placeTop ).css( placeLeft);
-          }
-          bs.css(splitHeight).css(placeRight).css(placeTop).css(splitWidth);
-          bs = jElement;
-          bs.css(splitHeight).css(fullWidth).css(placeBottom).css(placeLeft);
-          break;
-        } else {
-          horizontalGrid[0].css(splitHeight).css(placeLeft).css(placeTop);
-          horizontalGrid[1].css(splitHeight).css(placeRight).css(placeTop);
-          jElement.css(splitHeight).css(placeBottom).css(placeLeft).css(fullWidth);
-          bs=jElement;
-          break;
-        }
+        horizontalGrid[0].css(splitHeight).css(placeLeft).css(placeTop).css(splitWidth);
+        horizontalGrid[1].css(splitHeight).css(placeRight).css(placeTop).css(splitWidth);
+        jElement.css(splitHeight).css(placeBottom).css(placeLeft).css(fullWidth);
+        bs=jElement;
+        break;
       case "lbs":
         horizontalGrid[0].css(splitHeight).css(placeTop).css(splitWidth).css(placeLeft);
         ls = horizontalGrid[0];

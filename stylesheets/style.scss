@@ -651,9 +651,9 @@ audio {
   pointer-events: none;
 }
 
-/* video{
-  width:100px;
-} */
+video{
+  z-index:99999;
+} 
 #media_player-video{
   position: absolute;
   width: 100%;
@@ -890,13 +890,7 @@ input[type="range"] {
 .png,.jpg,.jpeg,.gif,.mp4{
   cursor: pointer;
 }
-.fixed{
-  top:0;
-  position:fixed;
-  width:auto;
-  display:none;
-  border:none;
-}
+
 @media screen and (max-width: 600px) {
     #file_menu{
       display:none; 

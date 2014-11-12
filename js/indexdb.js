@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
     openRequest.onerror = function(e) {
         //Do something for the error
     }
+
  
 },false);
  
@@ -59,6 +60,28 @@ function  addSongBlobToIDB(url,filename,filetype,blob) {
         play_torrent_file(linkToFile, filename, filetype, blob);
     }
 }
+function  addTorrentIDB(torrent) {
+    console.log("About to add "+torrent.infoHash);
+ 
+    var transaction = db.transaction(["torrents"],"readwrite");
+    var store = transaction.objectStore("torrents");
+ 
+    //Define a person
+    var torrentinfo = {infoHash:torrent}
+ 
+    //Perform the add
+    var request = store.add(torrentinfo);
+ 
+    request.onerror = function(e) {
+        console.log("Error",e.target.error.name);
+        //some type of error handler
+    }
+ 
+    request.onsuccess = function(e) {
+
+    }
+}
+
 
 function addSongHistory(){
     var objectStore = db.transaction("songs").objectStore("songs");
@@ -70,7 +93,22 @@ function addSongHistory(){
         cursor.continue();
       }
       else {
-        
+
+      }
+    };
+}
+
+function addTorrentHistory(){
+    var objectStore = db.transaction("torrents").objectStore("torrents");
+
+    objectStore.openCursor().onsuccess = function(event) {
+      var cursor = event.target.result;
+      if (cursor) {
+        download(cursor.value.infoHash)
+        cursor.continue();
+      }
+      else {
+
       }
     };
 }
