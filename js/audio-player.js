@@ -145,13 +145,14 @@ function play_torrent_file(url, title, type, blob) {
   reader.onload = function(event) {
     ID3.loadTags(url, function() {
       var tags = ID3.getAllTags(url);
-     $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td></tr>').appendTo('#playlist');
-
+      var songRow = $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td></tr>')
+      songRow.appendTo('#playlist-tbody');
+      $("#playlist").trigger('addRows',[songRow,true]); 
       initPlaylist(tags);
       function initPlaylist(tag){
         current = 0;
         audio = $('#audio')[0];
-        playlist = $('#playlist');
+        playlist = $('#playlist-tbody');
         tracks = playlist.find('tr');
         len = tracks.length - 2;
         audio.volume = .70;

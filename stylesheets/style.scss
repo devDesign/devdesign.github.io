@@ -890,6 +890,13 @@ input[type="range"] {
 .png,.jpg,.jpeg,.gif,.mp4{
   cursor: pointer;
 }
+.fixed{
+  top:0;
+  position:fixed;
+  width:auto;
+  display:none;
+  border:none;
+}
 @media screen and (max-width: 600px) {
     #file_menu{
       display:none; 

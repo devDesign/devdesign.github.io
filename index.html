@@ -26,6 +26,9 @@
   <script src='./lib/howler.min.js'></script>
   <script src='./lib/webaudiobuffer.js'></script>
   <script src='./js/indexdb.js'></script>
+  <script src='./lib/jquery.tablesorter.min.js'></script>
+  <script src='./lib/fixtable.js'></script>
+
   
 <!--   <script src='./js/pointcloud.js'></script>
  -->
@@ -190,11 +193,16 @@
 
           <div id="playlist_box">
             <table id="playlist">
-              <tr>
-                <td class="column_label">artist</td>
-                <td class="column_label">title</td>
-                <td class="column_label">album</td>
-              </tr>
+              <thead>
+                <tr>
+                  <th class="column_label">artist</th>
+                  <th class="column_label">title</th>
+                  <th class="column_label">album</th>
+                </tr>
+              </thead>
+              <tbody id='playlist-tbody'>
+
+              </tbody>
             </table>
           </div>
           <div id="now_playing"></div>

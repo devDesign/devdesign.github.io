@@ -5,6 +5,7 @@ var vidBox;
 var wall;
 var height,width,barHeight,splitWidth,splitHeight,placeTop,placeBottom,placeRight,placeLeft,fullHeight,fullWidth;
 $('document').ready(function(){
+  $("#playlist").tablesorter({sortList: [[0,0],[3,0]]}); 
   wallfree();
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];

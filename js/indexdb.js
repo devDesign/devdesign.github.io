@@ -70,6 +70,7 @@ function addSongHistory(){
         cursor.continue();
       }
       else {
+        
       }
     };
 }
