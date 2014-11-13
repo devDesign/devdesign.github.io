@@ -115,16 +115,20 @@ function  addTorrentIDB(torrent) {
 
 function addSongHistory(){
     var objectStore = db.transaction("songs").objectStore("songs");
-
+    var url
     objectStore.openCursor().onsuccess = function(event) {
       var cursor = event.target.result;
+      
       if (cursor) {
         play_torrent_file(URL.createObjectURL(cursor.value.blob),cursor.value.filename,cursor.value.filetype,cursor.value.blob);
-        var blob=cursor.value.blob;
+        blob=cursor.value.blob;
+        url=URL.createObjectURL(cursor.value.blob);
+        console.log(url);
         blob.name=cursor.value.filename;
         cursor.continue();
       }
       else {
+        $('<audio id="audioplayer" controls preload="none" type="audio/mp3" src="'+url+'"></audio>').appendTo('#music-player')
 
       }
     };
@@ -135,14 +139,15 @@ function addFileHistory(){
 
     objectStore.openCursor().onsuccess = function(event) {
       var cursor = event.target.result;
-
+      var blob
       if (cursor) {
-        var blob=cursor.value.blob;
+        blob=cursor.value.blob;
         var url = URL.createObjectURL(cursor.value.blob)
         addFileRow(blob,cursor.value.filename,cursor.value.filetype);
         cursor.continue();
       }
       else {
+        
       }
 
     };
@@ -160,7 +165,7 @@ function seedSongHistory(){
       }
       else {
         console.log('adding'+songBlobs);
-      
+
       }
     
 }}
