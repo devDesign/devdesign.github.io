@@ -9,8 +9,8 @@
   font-family: "FontAwesome";
   src: url("../stylesheets/font-awesome/fonts/FontAwesome.otf"); }
 .border-module, #login-box, #chat_box, #file_box, #cam_box, #pic_box, #media_box, #chat_user_list, #users {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
+  border-bottom: 0px solid rgba(0, 0, 0, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); }
 
 html {
   font-family: "Aller", "FontAwesome";

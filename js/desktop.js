@@ -12,7 +12,7 @@ $('document').ready(function(){
   var width = viewpoint[0];
   var barHeight = document.getElementById('nav').offsetHeight;
   var zIndex = 100;
-  $('#file_list').hide();
+  $('#downloads_list_box').hide();
   $('#big_files_box').hide();
   $('#stop-video-feed').hide();
 

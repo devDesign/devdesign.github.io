@@ -160,3 +160,72 @@ function checkIfFile(file, successCallback, errorCallback){
     errorCallback();
   }
 }
+
+seed = function(blob){
+  client.seed(blob, function(torrent){
+
+    // UPLOADING TORRENT
+    fileList = []
+
+    var torrentSize = 0
+    torrent.files.forEach(function(file,index){
+      torrentSize += file.length
+      fileList.push(file.name)
+    });
+
+    sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length, "size": torrentSize, "fileList": fileList})
+
+    eachActiveConnection(function(c, $c) {
+      if (c.label === 'torrentz') {
+        c.send([torrent.infoHash,torrent.name,torrent.files.length,torrentSize,fileList]);
+      }
+    });
+
+    errorMessage('Torrent ready!')
+   
+    var newTorrentRow = $('<tr class="file-entry '+peer.id+'torrentz" id="'+torrent.infoHash+'">')
+
+    var nameCol = $('<td>')
+    var sizeCol = $('<td>')
+    var senderCol = $('<td>')
+    statusCol = $('<td id="'+torrent.infoHash+'-progress">')
+
+    if (blob.length == 1){
+      nameCol.html('<span class="progress-text"> Seeding: '+torrent.name+'</span>').appendTo(newTorrentRow)
+    } else {
+      nameCol.html('<span class="progress-text">Seeding: '+blob.length+' files</span>')
+      var torrentContents = $('<ul class="torrent-contents">')
+      var hiddenTorrentContents = $('<ul id="t'+torrent.infoHash+'-torrent-contents" class="torrent-contents">')
+      hiddenTorrentContents.hide();
+      fileList.forEach(function(name,index){
+        var fileItem = $('<li>').text(name)
+        fileItem.appendTo(hiddenTorrentContents);
+      });
+      torrentContents.appendTo(nameCol)
+      hiddenTorrentContents.appendTo(nameCol)
+      nameCol.appendTo(newTorrentRow);            
+    }
+    if(blob.length>1){
+      var morefiles = $('<li>').html("<a id='m"+torrent.infoHash+"moreFiles' class='more_files' href='javascript:void(0);'>-show files</a>")
+      morefiles.appendTo(torrentContents);
+      var hidefiles = $('<li>').html("<a id='h"+torrent.infoHash+"moreFiles' class='more_files' href='javascript:void(0);'>-hide</a>")
+      hidefiles.appendTo(hiddenTorrentContents);
+    }
+
+    sizeCol.text((torrentSize/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
+    senderCol.text(peer.id).appendTo(newTorrentRow)
+    statusCol.appendTo(newTorrentRow)
+
+    newTorrentRow.appendTo('#download_list');
+    onTorrent(torrent)
+    $("#m"+torrent.infoHash+"moreFiles").on('click',function(){
+        $(this).hide();
+        hiddenTorrentContents.show().css({'margin-top':'-1em'});
+      });
+    $("#h"+torrent.infoHash+"moreFiles").on('click',function(){
+      $("#m"+torrent.infoHash+"moreFiles").show()
+      hiddenTorrentContents.hide();
+    });
+  }); 
+}
+
