@@ -57,7 +57,8 @@ function play_torrent_file(url, title, type, blob) {
         tracks = playlist.find('tr');
         len = tracks.length - 1;
         audio.volume = .70;
-       playlist.find('a').click(function(e){
+       playlist.find('a').on('click',function(e){
+            audio.play();
             first++;
             $('.nowplaying').remove();
             e.preventDefault();

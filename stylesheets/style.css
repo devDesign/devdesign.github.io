@@ -65,8 +65,7 @@ a {
 
 #login-box {
   position: absolute;
-  display: flex;
-  flex-direction: column;
+  overflow-y: auto;
   top: 2em;
   bottom: 0em;
   z-index: 99999;
@@ -76,14 +75,16 @@ a {
   #login-box input {
     display: flex;
     margin: auto auto;
-    padding: .5em .5em .6em .5em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    padding: 1em .5em .6em .5em;
     border: 0px solid #eee;
     background-color: #363A4A;
     color: white;
-    box-sizing: border-box;
     border-radius: 7px;
     font-size: 1em; }
   #login-box button {
+    display: flex;
     margin: auto;
     height: 3em;
     border-radius: 7px;
@@ -104,6 +105,7 @@ a {
     flex-wrap: wrap;
     justify-content: center; }
   #login-box #mesh-logo {
+    display: flex;
     margin: auto auto;
     justify-content: center; }
 
