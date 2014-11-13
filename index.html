@@ -8,7 +8,6 @@
 
   <link rel="stylesheet" href="./stylesheets/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="./stylesheets/style.css" />
-    <link rel="stylesheet" href="./stylesheets/audio_recorder.css" />
 
   <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
   <script src="./js/audio-player.js"></script> 
@@ -24,20 +23,16 @@
   <script src='./js/three.min.js'></script>
   <script src='./lib/freewall.js'></script>
   <script src='./lib/howler.min.js'></script>
-  <script src='./lib/webaudiobuffer.js'></script>
   <script src='./js/indexdb.js'></script>
   <script src='./lib/jquery.tablesorter.min.js'></script>
-  <script src='./lib/fixtable.js'></script>
-  <script src='./buff.js'></script>
 
+<script src='./js/pointcloud.js'></script>
 
-  
-<!--   <script src='./js/pointcloud.js'></script>
- -->
 </head>
   <body>
-    <!-- <div id="pointcloud"></div>
-    -->
+
+     <div id="pointcloud"></div>
+    
     <div id="chat_user_list" class="chat_user_list">
       <div class="self">
         <img src="./images/person.png" height="20px" width="20px">
@@ -66,17 +61,7 @@
 
     </div>
 
-    <div id="login-box">
-      <div>
-        <div id="mesh-logo">
-          <img width="80px" height="80px" src="./images/mesh-logo.png"/>
-        </div>
-        <input type="text" id="username-text" placeholder="Nickname: " class="login-input" />
-        <input type="text" id="roomname-text" placeholder="Room:" class="login-input"/>
-        <button id="peerSubmit">CONNECT</button>
-    </div>
-  </div>
-  
+    
   <div id='rs' class='droppable'></div>
   <div id='ls' class='droppable'></div>
   <div id='bs' class='droppable'></div>
@@ -85,7 +70,9 @@
   <div id='desktop'>
     <div id="file_box" class="files">
       <div class="window_title">
-        <span>&#xf0f6;</span>
+        <span id="my_files">&#xf0f6;</span>
+        <span id="downloads">&#xf0ed;</span>
+        <span id="bigfiles">&#xf019;</span>
         <span class="lefthalf content"></span>
         <span class="righthalf content"></span>
         <span class="bottomhalf content"></span>
@@ -93,11 +80,6 @@
         <span class="minimize content">&#xf068;</span>
       </div>
       <div class="content">
-        <div id="file_menu">
-          <span id="my_files">myFiles</span>
-          <span id="downloads">webTorrents</span>
-          <span id="bigfiles">directRTC</span>
-        </div>
         <div id="big_files_box">
           <div id="big_files_list">
             
@@ -167,16 +149,13 @@
 
     <div id="media_box">
       <div class="window_title">
-        <span>&#xf001;</span>
+        <span id="my_songs">&#xf001;</span>
+        <span>&#xf008;</span>
+        <span id="my_images">&#xf03e;</span>
         <span class="maximize content">&#xf096;</span>
         <span class="minimize content">&#xf068;</span>
       </div>
       <div class="content">
-       <div id="media_menu">
-          <span id="my_songs">myMusic</span>
-          <span id="my_movies">myMovies</span>
-          <span id="my_images">myPictures</span>
-        </div>
         <div id="my_movies_box">
           <div id="my_movies_list">
             
@@ -189,9 +168,7 @@
         </div>
         <div id="music-player">
         <!-- comment -->
-          <audio id="audio" preload="none" tabindex="0">
-            <source id="song" type="audio/mp3" src="">
-          </audio>
+         
 
           <div id="playlist_box">
             <table id="playlist">
@@ -210,42 +187,40 @@
             </table>
           </div>
           <div id="now_playing"></div>
-
-          <div id="audioplayer">
-            <div>
-              <button id="pButton" class="play"></button>
-              <div id="timeline">    
-                <div id="playhead"></div>
-              </div>
-              <input id="volume" min="0" max="1" step="0.01" type="range"/>
-            </div>
-          </div> 
+          <audio id="audioplayer" controls preload="none">
+            <source id="song" type="audio/mp3" src="">
+          </audio>
         </div>
       </div>
     </div>
     <div id="chat_box">
       <div class="window_title">
         <span>&#xf1d7;</span>
+        <span>&#xf098;</span>
+        <span>&#xf03d;</span>
         <span class="maximize content">&#xf096;</span>
         <span class="minimize content">&#xf068;</span>
       </div>
       <div class="content">
-        <div id="chat_menu">
-          <span id="chat_text">rText</span>
-          <span id="chat_audio">rAudio</span>
-          <span id="chat_video">rVideo</span>
-        </div>
         <div id="wrap">
-            <div id="global_chat">
+          <div id="login-box"> 
+            <div id="mesh-logo">
+              <img width="80px" height="80px" src="./images/mesh-logo.png"/>
             </div>
-            <div class="clear"></div>
+            <input type="text" id="username-text" placeholder="Nickname: " class="login-input" />
+            <input type="text" id="roomname-text" placeholder="Room:" class="login-input"/>
+            <button id="peerSubmit">connect</button>
+          </div>
         </div>
-
+        <div id="global_chat">
+        </div>
+        <div class="clear"></div>
         <div id='send-div'>
           <form id="send">
             <input type="text" id="text" class="chat_text-input" placeholder="enter message" />
           </form>
         </div>
+
       </div>
     </div>
     <div class='window'>

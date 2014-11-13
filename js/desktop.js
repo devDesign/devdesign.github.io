@@ -47,10 +47,6 @@ $('document').ready(function(){
     if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
       return false;
     }
-    chatBox.show();
-    fileBox.show();
-    mediaBox.show();
-    camBox.show();
     $('#login-box').hide();
     connectToPeer();
     get_viewpoint();
@@ -68,10 +64,6 @@ $('document').ready(function(){
       if ((($.trim(peerName)) == '') || (($.trim(roomName)) == '')) {
         return false;
       }
-      chatBox.show();
-      fileBox.show();
-      mediaBox.show();
-     /* camBox.show();*/
       $('#login-box').hide();
       connectToPeer();
       get_viewpoint();
@@ -193,7 +185,7 @@ $('document').ready(function(){
   //hammertime events
   function hammertimeBox(hammertime,target){
     var zIndexx=999;
-    hammertime.on("doubletap",function(){
+/*    hammertime.on("doubletap",function(){
     $('.maximize').hide();
     $('.minimize').show();
     get_viewpoint();
@@ -202,7 +194,7 @@ $('document').ready(function(){
     mediaBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     fileBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     wall.fitWidth();
-  })
+  })*/
   hammertime.on("press",function(){
     $('.minimize').hide();
     $('.maximize').show();
@@ -256,7 +248,6 @@ $('document').ready(function(){
   var chatWindow = new Hammer(chatElement);
   setDrags(chatElement, chatBox);
   attack_grid(chatBox, "rs")
-  chatBox.hide();
   hammertimeBox(chatWindow,chatBox);
   // fileBox WINDOW
   var fileBox = $('#file_box');
@@ -264,7 +255,6 @@ $('document').ready(function(){
   var fileWindow = new Hammer(fileElement);
   setDrags(fileElement, fileBox);
   attack_grid(fileBox, "ls")
-  fileBox.hide();
   hammertimeBox(fileWindow,fileBox);
   // camBox WINDOW
   var camBox = $('#cam_box');
@@ -289,7 +279,6 @@ $('document').ready(function(){
   var mediaWindow = new Hammer(mediaElement);
   setDrags(mediaElement, mediaBox);
   attack_grid(mediaBox, "ls")
-  mediaBox.hide();
   hammertimeBox(mediaWindow,mediaBox);
   //set content click handler to change z-index
   $('.content').on('click', function() {
@@ -298,6 +287,14 @@ $('document').ready(function(){
       zIndex: zIndex
     });
   });
+
+  function onTop(jElement){
+    jElement.css({"z-index":2})
+    if(jElement != chatBox){chatBox.css({"z-index":1})}
+    if(jElement != mediaBox){mediaBox.css({"z-index":1})}
+    if(jElement != fileBox){fileBox.css({"z-index":1})}
+  }
+  
 
   //drag the chat
   function setDrags(element, jElement) {
@@ -310,10 +307,7 @@ $('document').ready(function(){
       'velocityMultiplier': 2.0,
       initiate: function() {
         $('.droppable').detach();
-        zIndex++;
-        jElement.css({
-          zIndex: zIndex
-        });
+        onTop(jElement);
       },
       'start':function(){
         get_viewpoint();

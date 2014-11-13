@@ -51,10 +51,10 @@ a {
   bottom: -100;
   right: -100; }
 
-audio {
+#audioplayer {
   position: absolute;
-  bottom: 0px;
-  width: 100%; }
+  width: 100%;
+  bottom: 0px; }
 
 #visualizer {
   top: 1.3em;
@@ -65,27 +65,25 @@ audio {
 
 #login-box {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  top: 2em;
+  bottom: 0em;
   z-index: 99999;
-  background-color: #363A4A;
-  padding: 2em;
-  border-radius: 7px; }
+  background-color: #424659;
+  margin: 0em;
+  width: 100%; }
   #login-box input {
     display: flex;
     margin: auto auto;
-    width: 100%;
-    margin-bottom: 2em;
     padding: .5em .5em .6em .5em;
     border: 0px solid #eee;
-    background-color: #424659;
+    background-color: #363A4A;
     color: white;
     box-sizing: border-box;
     border-radius: 7px;
     font-size: 1em; }
   #login-box button {
-    width: 100%;
+    margin: auto;
     height: 3em;
     border-radius: 7px;
     background-color: #E58C7D;
@@ -95,10 +93,18 @@ audio {
   #login-box button:hover {
     background-color: #e05a49;
     border-color: #df5645; }
-
-#mesh-logo {
-  text-align: center;
-  margin-bottom: 2em; }
+  #login-box #wrap {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 1em;
+    right: 1em;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; }
+  #login-box #mesh-logo {
+    margin: auto auto;
+    justify-content: center; }
 
 #nav {
   position: relative;
@@ -151,6 +157,9 @@ audio {
     padding: 3px;
     margin-left: 5px;
     color: #E58C7D; }
+  .window_title span:hover {
+    color: #5699C2;
+    cursor: pointer; }
   .window_title .maximize {
     cursor: pointer;
     position: absolute;
@@ -261,8 +270,11 @@ audio {
         color: #5699C2;
         background-color: #424659; }
     #file_box #file_menu .file_menu-active {
-      color: #E58C7D;
+      color: #AAA;
       background-color: #2D313D; }
+
+.file_menu-active {
+  color: #AAA; }
 
 #file_list {
   position: absolute;
@@ -628,6 +640,11 @@ video {
   position: absolute;
   right: 0; }
 
+#now_playering {
+  position: absolute;
+  bottom: 0em;
+  width: 100%; }
+
 .nowplaying {
   position: absolute;
   width: 100%;
@@ -657,80 +674,6 @@ video {
 
 .downloaded {
   color: #E58C7D !important; }
-
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 7.5em;
-  height: 20px;
-  margin-top: 10px;
-  margin-left: 10px;
-  float: left;
-  border-radius: 15px;
-  background: rgba(0, 0, 0, 0.3); }
-  input[type="range"]::-moz-range-track {
-    -moz-appearance: none;
-    width: 7.5em;
-    height: 20px;
-    margin-top: 10px;
-    float: left;
-    border-radius: 15px;
-    background: rgba(0, 0, 0, 0.3); }
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none !important;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    margin-top: 1px;
-    background: #E58C7D; }
-  input[type="range"]::-moz-range-thumb {
-    -moz-appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    margin-top: 1px;
-    background: #E58C7D; }
-
-#audioplayer {
-  height: 40px;
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  justify-content: center;
-  display: flex; }
-
-#audioplayer > div {
-  display: flex; }
-
-#pButton {
-  height: 40px;
-  width: 40px;
-  border: none;
-  background-size: 50% 50%;
-  background-repeat: no-repeat;
-  background-position: center;
-  float: left;
-  outline: none; }
-
-.play {
-  background: url("../images/play.png"); }
-
-.pause {
-  background: url("../images/pause.png"); }
-
-#timeline {
-  width: 35em;
-  height: 20px;
-  margin-top: 10px;
-  float: left;
-  border-radius: 15px;
-  background: rgba(0, 0, 0, 0.3); }
-
-#playhead {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  margin-top: 1px;
-  background: #E58C7D; }
 
 .column_label {
   background-color: #2D313D;
