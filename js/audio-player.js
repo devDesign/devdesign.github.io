@@ -87,7 +87,7 @@ function play_torrent_file(url, title, type, blob) {
         var songAlbum = $(link[0]).parent().parent().find('a')[2];
         nowPlaying = $(songArtist).text()+" - "+$(songTitle).text();
         $('<div />',{class:'nowplaying', text:nowPlaying}).appendTo('#now_playing');
-        player.src = link.attr('href');
+        player.children[0].src = link.attr('href');
         par = link.parent();
         par.addClass('active-file').siblings().removeClass('active-file');
         player.load();
