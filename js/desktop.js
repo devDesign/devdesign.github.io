@@ -6,13 +6,14 @@ var wall;
 var height,width,barHeight,splitWidth,splitHeight,placeTop,placeBottom,placeRight,placeLeft,fullHeight,fullWidth;
 $('document').ready(function(){
   $("#playlist").tablesorter({sortList: [[0,0],[2,0],[3,0]]}); 
+  $("#filelist").tablesorter({sortList: [[4,1]]}); 
   wallfree();
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
   var width = viewpoint[0];
   var barHeight = document.getElementById('nav').offsetHeight;
   var zIndex = 100;
-  $('#downloads_list_box').hide();
+  $('#download_list_box').hide();
   $('#big_files_box').hide();
   $('#stop-video-feed').hide();
 
@@ -177,8 +178,7 @@ $('document').ready(function(){
     var hammertime = new Hammer(element);
     hammertime.on('tap', function(event) {
       $(element).focus();
-      get_viewpoint();
-      refreshGrid();
+
     });
   });
 
@@ -247,14 +247,13 @@ $('document').ready(function(){
   chatBox.css(splitHeight).css(fullHeight).css(placeRight);
   var chatWindow = new Hammer(chatElement);
   setDrags(chatElement, chatBox);
-  attack_grid(chatBox, "rs")
+
   hammertimeBox(chatWindow,chatBox);
   // fileBox WINDOW
   var fileBox = $('#file_box');
   var fileElement = document.getElementById('file_box');
   var fileWindow = new Hammer(fileElement);
   setDrags(fileElement, fileBox);
-  attack_grid(fileBox, "ls")
   hammertimeBox(fileWindow,fileBox);
   // camBox WINDOW
   var camBox = $('#cam_box');
@@ -278,8 +277,11 @@ $('document').ready(function(){
   var mediaElement = document.getElementById('media_box');
   var mediaWindow = new Hammer(mediaElement);
   setDrags(mediaElement, mediaBox);
-  attack_grid(mediaBox, "ls")
   hammertimeBox(mediaWindow,mediaBox);
+
+  attack_grid(fileBox, "rs")
+  attack_grid(mediaBox, "rs")
+  attack_grid(chatBox, "rs")
   //set content click handler to change z-index
   $('.content').on('click', function() {
     zIndex++;

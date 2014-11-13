@@ -25,6 +25,7 @@
   <script src='./lib/howler.min.js'></script>
   <script src='./js/indexdb.js'></script>
   <script src='./lib/jquery.tablesorter.min.js'></script>
+  <script src='./lib/date.js'></script>
 
 <script src='./js/pointcloud.js'></script>
 
@@ -105,23 +106,30 @@
         </div>
         <div id="file_list">
             <table id="filelist">
+            <thead>
               <tr>
-                <td class="column_label">
-                stream
-                </td>
-                <td class="column_label" >
+                <th class="column_label">
+                delete
+                </th>
+                <th class="column_label" >
                 save
-                </td>
-                <td class="column_label">
-                filename
-                </td>
-                <td class="column_label">
-                filesize
-                </td>
-                <td class="column_label">
-                filetype
-                </td>
+                </th>
+                <th class="column_label">
+                fileName
+                </th>
+                <th class="column_label">
+                fileSize
+                </th>
+                <th class="column_label">
+                fileType
+                </th>
+                <th class="column_label">
+                createdAt
+                </th>
               </tr>
+              </thead>
+              <tbody id="filelist-tbody">
+              </tbody>
             </table>
           <!-- <input type="file" id="select_file"> -->
           <div id="messages"></div>

@@ -32,6 +32,8 @@ body {
     body h2 a {
       text-decoration: none;
       color: #E58C7D; }
+  body th {
+    cursor: pointer; }
 
 a {
   color: #96E57D; }
@@ -179,6 +181,8 @@ a {
     position: absolute;
     right: 0;
     margin-right: 5px; }
+  .window_title .file_menu-active {
+    color: #5699C2; }
 
 #chat_box {
   display: flex;
@@ -677,6 +681,10 @@ video {
 
 .downloaded {
   color: #E58C7D !important; }
+
+.delete {
+  cursor: pointer;
+  color: #E58C7D; }
 
 .column_label {
   background-color: #2D313D;

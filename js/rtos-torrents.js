@@ -85,6 +85,7 @@ onTorrent = function(torrent) {
           addSongBlobToIDB(url, file.name, file.type, realFile);
         }
         // newTorrentRow.appendTo('#filelist')
+
         addFilenamesToIDB(realFile,file.name,file.type)
         //binding the video box
         if(file.type == "video/mp4"){
@@ -146,7 +147,7 @@ onTorrent = function(torrent) {
       }))
   })
 }
-addFileRow = function(blob,filename,filetype){ 
+addFileRow = function(blob,filename,filetype,dateStringNow){ 
   var extname = path.extname(filename)
   var newTorrentRow = $('<tr class="file-entry">fuck</tr>')
   var streamCol = $('<td>')
@@ -154,6 +155,7 @@ addFileRow = function(blob,filename,filetype){
   var nameCol = $('<td>')
   var sizeCol = $('<td>')
   var typeCol = $('<td>')
+  var date = $('<td>')
   var icon = "&#xf15b;"
 
   if (extname == ".mp3"){
@@ -185,7 +187,7 @@ addFileRow = function(blob,filename,filetype){
   }
   linkToFile = URL.createObjectURL(blob)
 
-  streamCol.html('<span class="downloaded">&#xf1cc;</span>').appendTo(newTorrentRow)
+  streamCol.html('<span class="delete">&#xf00d;</span>').appendTo(newTorrentRow)
   downloadCol.html('<a download="'+filename+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
   if ( filetype ){
     nameCol.html('<div class="'+filetype.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
@@ -198,5 +200,8 @@ addFileRow = function(blob,filename,filetype){
   } else {
     typeCol.text(extname).appendTo(newTorrentRow)
   }
-  newTorrentRow.appendTo('#filelist')
+  date.html(dateStringNow)
+  date.appendTo(newTorrentRow);
+  newTorrentRow.appendTo('#filelist-tbody'); 
+  $("#filelist").trigger('addRows',[newTorrentRow,true]); 
 }

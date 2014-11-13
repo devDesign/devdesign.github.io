@@ -44,6 +44,9 @@ body {
       color: $orange-shade;
     }
   }
+  th{
+    cursor: pointer;
+  }
 }
 
 a {
@@ -215,6 +218,9 @@ a {
       position: absolute;
       right: 0;
       margin-right: 5px;
+    }
+    .file_menu-active{
+      color:$blue-shade;
     }
 }
 #chat_box {
@@ -810,6 +816,10 @@ video{
 }
 .downloaded {
   color: $orange-shade !important;
+}
+.delete{
+  cursor:pointer;
+  color:$orange-shade;
 }
 
 

@@ -249,12 +249,7 @@ var peerReconnecting = false;
           var torrentList = data[1]
 
           if ( torrentList.length > 0 ){          
-            $('#download_list_box').show()
-            $('#file_list').hide()
-            $('#big_files_box').hide()
-            $('#bigfiles').removeClass('file_menu-active');
-            $('#my_files').removeClass('file_menu-active');
-            $('#downloads').addClass('file_menu-active');
+
           }
 
 
@@ -328,13 +323,6 @@ var peerReconnecting = false;
     } else if (c.label === 'torrentz') {
 
       c.on('data', function(data) {
-
-        $('#download_list_box').show()
-        $('#file_list').hide()
-        $('#big_files_box').hide()
-        $('#bigfiles').removeClass('file_menu-active');        
-        $('#my_files').removeClass('file_menu-active');
-        $('#downloads').addClass('file_menu-active');
         loadPushedTorrents(data[0],data[1],data[2],data[3],data[4],c.peer);
       });
 

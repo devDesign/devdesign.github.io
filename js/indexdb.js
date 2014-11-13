@@ -66,6 +66,9 @@ function  addSongBlobToIDB(url,filename,filetype,blob) {
         play_torrent_file(linkToFile, filename, filetype, blob);
     }
 }
+function getDate(){
+    return new Date().format("m-dd HH:MM tt");
+}
 function  addFilenamesToIDB(blob,filename,filetype) {
     console.log("About to add "+filename);
     var transaction = db.transaction(["files"],"readwrite");
@@ -74,7 +77,8 @@ function  addFilenamesToIDB(blob,filename,filetype) {
     var file = {
         filename:filename,
         filetype:filetype,
-        blob:blob
+        blob:blob,
+        dateString:getDate()
     }
  
     //Perform the add
@@ -86,7 +90,12 @@ function  addFilenamesToIDB(blob,filename,filetype) {
     }
  
     request.onsuccess = function(e) {
-        addFileRow(blob,filename,filetype);
+        addFileRow(blob,filename,filetype,getDate());
+        $('.delete').on('click',function(){
+            var key = $(this).parent().siblings()[1];
+            deleteFile($(key).text().substr(1))
+            $(this).parent().parent().remove();
+        })
         
     }
 }
@@ -143,11 +152,15 @@ function addFileHistory(){
       if (cursor) {
         blob=cursor.value.blob;
         var url = URL.createObjectURL(cursor.value.blob)
-        addFileRow(blob,cursor.value.filename,cursor.value.filetype);
+        addFileRow(blob,cursor.value.filename,cursor.value.filetype,cursor.value.dateString);
         cursor.continue();
       }
       else {
-        
+        $('.delete').on('click',function(){
+            var key = $(this).parent().siblings()[1];
+            deleteFile($(key).text().substr(1))
+            $(this).parent().parent().remove();
+        })
       }
 
     };
@@ -169,3 +182,19 @@ function seedSongHistory(){
       }
     
 }}
+function deleteFile(key){
+    var request = db.transaction("files", "readwrite")
+                .objectStore("files")
+                .delete(key);
+    request.onsuccess = function(event) {
+    deleteSong(key)
+};
+}
+function deleteSong(key){
+    var request = db.transaction("songs", "readwrite")
+                .objectStore("songs")
+                .delete(key);
+    request.onsuccess = function(event) {
+   
+};
+}

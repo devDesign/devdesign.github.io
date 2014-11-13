@@ -56,12 +56,7 @@ function fileRouter(files){
           bigFile = true;
         } else {
           errorMessage("One large file at a time, stop upload to add a new one")
-          $('#file_list').hide();
-          $('#download_list_box').hide();
-          $('#big_files_box').show();
-          $('#bigfiles').addClass('file_menu-active');
-          $('#my_files').removeClass('file_menu-active');
-          $('#downloads').removeClass('file_menu-active');
+
         }
       } else {
         // do nothing, handled by dragDrop below
