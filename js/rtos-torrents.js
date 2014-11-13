@@ -81,9 +81,7 @@ onTorrent = function(torrent) {
 
         realFile = new Blob([buf],{type:file.type})
         var url = URL.createObjectURL(realFile);
-        if (file.type === "audio/mp3" || file.type === "audio/wav" ){
-          addSongBlobToIDB(url, file.name, file.type, realFile);
-        }
+
         // newTorrentRow.appendTo('#filelist')
 
         addFilenamesToIDB(realFile,file.name,file.type)
@@ -183,25 +181,30 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
     filetype = "image/jpeg"
     var icon = "&#xf1c5;"
   } else{
-    filetype= extname;
-  }
-  linkToFile = URL.createObjectURL(blob)
-
-  streamCol.html('<span class="delete">&#xf00d;</span>').appendTo(newTorrentRow)
-  downloadCol.html('<a download="'+filename+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
-  if ( filetype ){
-    nameCol.html('<div class="'+filetype.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
-  } else {
-    nameCol.html('<div class="FILEfile"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
-  }        
-  sizeCol.text((blob.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
-  if ( filetype ){
-    typeCol.text(filetype).appendTo(newTorrentRow)
-  } else {
-    typeCol.text(extname).appendTo(newTorrentRow)
-  }
-  date.html(dateStringNow)
-  date.appendTo(newTorrentRow);
-  newTorrentRow.appendTo('#filelist-tbody'); 
-  $("#filelist").trigger('addRows',[newTorrentRow,true]); 
+      filetype= extname;
+    }
+    linkToFile = URL.createObjectURL(blob)
+  
+    streamCol.html('<span class="delete">&#xf00d;</span>').appendTo(newTorrentRow)
+    downloadCol.html('<a download="'+filename+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
+    if ( filetype ){
+      nameCol.html('<div class="'+filetype.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
+    } else {
+      nameCol.html('<div class="FILEfile"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
+    }        
+    sizeCol.text((blob.size/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
+    if ( filetype ){
+      typeCol.text(filetype).appendTo(newTorrentRow)
+    } else {
+      typeCol.text(extname).appendTo(newTorrentRow)
+    }
+    
+    date.html(dateStringNow)
+    date.appendTo(newTorrentRow);
+    newTorrentRow.appendTo('#filelist-tbody'); 
+    $("#filelist").trigger('addRows',[newTorrentRow,true]);
+    
+    if(filetype.split('/')[0]=="audio"){
+      play_torrent_file(linkToFile, filename, filetype, blob);
+    }
 }

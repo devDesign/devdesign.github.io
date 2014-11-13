@@ -117,7 +117,6 @@ var peerReconnecting = false;
       $('#username-text').hide();
       $('#peerSubmit').hide();
       $('#id').show();
-      $('.glyph').show();
       $('#pid').text(id);
       if (peerReconnecting){
         // do nothing

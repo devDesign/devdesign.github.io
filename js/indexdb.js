@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         db = e.target.result;
         addFileHistory();
-        setTimeout(addSongHistory(),5000);
+
     }
  
     openRequest.onerror = function(e) {
@@ -187,7 +187,7 @@ function deleteFile(key){
                 .objectStore("files")
                 .delete(key);
     request.onsuccess = function(event) {
-    deleteSong(key)
+    
 };
 }
 function deleteSong(key){

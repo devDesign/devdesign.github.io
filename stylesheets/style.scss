@@ -45,6 +45,7 @@ body {
     }
   }
   th{
+    font-size: 0.5em;
     cursor: pointer;
   }
 }
@@ -839,6 +840,39 @@ video{
 }
 .png,.jpg,.jpeg,.gif,.mp4{
   cursor: pointer;
+}
+#room_info{ 
+  padding-top:1.5em;
+  text-align: center;
+  width:10em;
+  margin: auto;
+  color:#eee;
+  .room_name{
+    cursor: pointer;
+  }
+  table{
+    padding: 0;
+    width: 100%;
+  }
+  tr{
+    width: 100%;
+
+     &:hover{
+    box-shadow: inset 0 0 3px $black;
+    color:#eee;
+    }
+  }
+  th{
+    text-align: left;
+    font-size: .7em;
+
+  }
+  td{
+    text-align: left;
+    padding: 0.7em;
+   
+ 
+  }
 }
 
 @media screen and (max-width: 600px) {

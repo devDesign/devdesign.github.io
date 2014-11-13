@@ -100,7 +100,7 @@ dragDrop('body', function(files){
 
     errorMessage('Torrent ready!')
    
-    var newTorrentRow = $('<tr class="file-entry '+peer.id+'torrentz" id="'+torrent.infoHash+'">')
+    var newTorrentRow = $('<tr class="file-entry '+roomId+'torrentz" id="'+torrent.infoHash+'">')
 
     var nameCol = $('<td>')
     var sizeCol = $('<td>')
@@ -130,7 +130,7 @@ dragDrop('body', function(files){
     }
 
     sizeCol.text((torrentSize/(1024*1024)).toFixed(2)+"MB").appendTo(newTorrentRow)
-    senderCol.text(peer.id).appendTo(newTorrentRow)
+    senderCol.text(roomId).appendTo(newTorrentRow)
     statusCol.appendTo(newTorrentRow)
 
     newTorrentRow.appendTo('#download_list');

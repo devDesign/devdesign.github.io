@@ -4,9 +4,13 @@ var horizontalGrid = [null,null];
 var vidBox;
 var wall;
 var height,width,barHeight,splitWidth,splitHeight,placeTop,placeBottom,placeRight,placeLeft,fullHeight,fullWidth;
+var roomId="home";
 $('document').ready(function(){
+  $('.glyph').show();
+  $('<audio id="audioplayer" controls preload="none" type="audio/mp3" src=""></audio>').appendTo('#music-player')
   $("#playlist").tablesorter({sortList: [[0,0],[2,0],[3,0]]}); 
-  $("#filelist").tablesorter({sortList: [[4,1]]}); 
+  $("#filelist").tablesorter({sortList: [[4,1]]});
+  $("#room_info").tablesorter({sortList: [[0,0]]}); 
   wallfree();
   var viewpoint = get_viewpoint();
   var height = viewpoint[1];
@@ -132,7 +136,7 @@ $('document').ready(function(){
     get_viewpoint();
     thisWindow = $( this ).parent().parent();
     maxWindow = $(thisWindow);
-    $(thisWindow).css({"z-index":9999})
+    $(thisWindow).css({"z-index":2})
     fileBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     mediaBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     chatBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
@@ -150,7 +154,7 @@ $('document').ready(function(){
     attack_grid(fileBox,"rs");
     attack_grid(chatBox,"rs");
     attack_grid(mediaBox,"rs");
-    $(thisWindow).css({"z-index":100});
+    $(thisWindow).css({"z-index":1});
   });
   // close window
   $(".close").on("click touchstart",function(){
@@ -172,7 +176,7 @@ $('document').ready(function(){
     bs = null;
   }
 
-  //ultimate hammer focus on tap
+/*  //ultimate hammer focus on tap
   var inputfield = document.getElementsByTagName('input');
   [].slice.call(inputfield).forEach(function(element) {
     var hammertime = new Hammer(element);
@@ -181,10 +185,10 @@ $('document').ready(function(){
 
     });
   });
-
+*/
   //hammertime events
   function hammertimeBox(hammertime,target){
-    var zIndexx=999;
+    var zIndexx=1;
 /*    hammertime.on("doubletap",function(){
     $('.maximize').hide();
     $('.minimize').show();
@@ -202,7 +206,7 @@ $('document').ready(function(){
     retreatGrid(target);
     attack_grid(target,"bs");
   })
-  hammertime.on("dragright swiperight",function(){
+  hammertime.on("swiperight",function(){
     console.log("swipe");
     if(target===chatBox){
     target.css({'z-index':zIndexx--})
@@ -219,8 +223,8 @@ $('document').ready(function(){
     mediaBox.css({'z-index':zIndexx++})
     chatBox.css({'z-index':zIndexx+2})
     }
-  });
-  hammertime.on("dragleft swipeleft",function(){
+  },100);
+  hammertime.on("swipeleft",function(){
     console.log("swipe");
     if(target===chatBox){
     target.css({'z-index':zIndexx--})
@@ -282,13 +286,7 @@ $('document').ready(function(){
   attack_grid(fileBox, "rs")
   attack_grid(mediaBox, "rs")
   attack_grid(chatBox, "rs")
-  //set content click handler to change z-index
-  $('.content').on('click', function() {
-    zIndex++;
-    $(this).parent().css({
-      zIndex: zIndex
-    });
-  });
+
 
   function onTop(jElement){
     jElement.css({"z-index":2})
@@ -309,7 +307,7 @@ $('document').ready(function(){
       'velocityMultiplier': 2.0,
       initiate: function() {
         $('.droppable').detach();
-        onTop(jElement);
+        
       },
       'start':function(){
         get_viewpoint();
@@ -319,7 +317,7 @@ $('document').ready(function(){
         $('.minimize').hide();
         $('.maximize').show();
         jElement.css({'height':get_viewpoint()[1]*1/4}).css( {width: get_viewpoint()[0]/2} );
-        jElement.addClass('dragging_box');
+   
       },
       'rest':function(){  
         if (this.activeDropRegions.length== 1){
@@ -530,7 +528,6 @@ function resizeend() {
   } else {
     timeout = false;
     get_viewpoint();
-    zIndex = 100;
     refreshGrid();
   }               
 }

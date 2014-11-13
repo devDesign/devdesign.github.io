@@ -33,6 +33,7 @@ body {
       text-decoration: none;
       color: #E58C7D; }
   body th {
+    font-size: 0.5em;
     cursor: pointer; }
 
 a {
@@ -701,6 +702,29 @@ video {
 
 .png, .jpg, .jpeg, .gif, .mp4 {
   cursor: pointer; }
+
+#room_info {
+  padding-top: 1.5em;
+  text-align: center;
+  width: 10em;
+  margin: auto;
+  color: #eee; }
+  #room_info .room_name {
+    cursor: pointer; }
+  #room_info table {
+    padding: 0;
+    width: 100%; }
+  #room_info tr {
+    width: 100%; }
+    #room_info tr:hover {
+      box-shadow: inset 0 0 3px #2D313D;
+      color: #eee; }
+  #room_info th {
+    text-align: left;
+    font-size: .7em; }
+  #room_info td {
+    text-align: left;
+    padding: 0.7em; }
 
 @media screen and (max-width: 600px) {
   #file_menu {

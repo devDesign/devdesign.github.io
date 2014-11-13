@@ -69,7 +69,7 @@ var container;
 
                 renderer = new THREE.WebGLRenderer();
                 renderer.setClearColor(0x000000)
-                renderer.setSize(  parseInt(document.getElementById( 'media_box' ).offsetWidth), parseInt(document.getElementById( 'media_box' ).offsetHeight); );
+                renderer.setSize( window.offsetWidth, window.offsetHeight );
                 container.appendChild( renderer.domElement );
 
              

@@ -26,14 +26,10 @@
   <script src='./js/indexdb.js'></script>
   <script src='./lib/jquery.tablesorter.min.js'></script>
   <script src='./lib/date.js'></script>
-
-<script src='./js/pointcloud.js'></script>
+  <script src='./js/chat.js'></script>
 
 </head>
   <body>
-
-     <div id="pointcloud"></div>
-    
     <div id="chat_user_list" class="chat_user_list">
       <div class="self">
         <img src="./images/person.png" height="20px" width="20px">
@@ -50,9 +46,7 @@
       <div class="glyph">
         <i class="fa fa-refresh" id="reconnect-to-peers"></i>
       </div>
-      <div class="glyph">
-        <i class="fa fa-cloud-upload" id="file-upload"></i>
-      </div>
+
       <div class="glyph">
         <i class="fa fa-users" id="user-button"></i>
       </div>
@@ -73,6 +67,7 @@
       <div class="window_title">
         <span id="my_files" class="content">&#xf0f6;</span>
         <span id="downloads" class="content">&#xf0ed;</span>
+        <span id="file-upload" class='content'>&#xf0ee;</span>
         <span id="bigfiles" class="content">&#xf019;</span>
         <span class="lefthalf content"></span>
         <span class="righthalf content"></span>
@@ -90,10 +85,10 @@
             <table id="download_list">
               <tr>
                 <td class="column_label">
-                filename
+                file name
                 </td>
                 <td class="column_label">
-                filesize
+                file size
                 </td>
                 <td class="column_label">
                 sender
@@ -115,16 +110,16 @@
                 save
                 </th>
                 <th class="column_label">
-                fileName
+                file name
                 </th>
                 <th class="column_label">
-                fileSize
+                file size
                 </th>
                 <th class="column_label">
-                fileType
+                file type
                 </th>
                 <th class="column_label">
-                createdAt
+                created at
                 </th>
               </tr>
               </thead>
@@ -216,6 +211,17 @@
             <input type="text" id="username-text" placeholder="Nickname: " class="login-input" />
             <input type="text" id="roomname-text" placeholder="Room:" class="login-input"/>
             <button id="peerSubmit">connect</button>
+            <div id='rtos_info'>
+            
+            </div>
+            <table id="room_info">
+              <thead>
+                <th>room name</th>
+                <th>users</th>
+              </thead>
+              <tbody id="room_info-tbody">
+              </tbody>
+            </table>
           </div>
         </div>
         <div id="global_chat">
