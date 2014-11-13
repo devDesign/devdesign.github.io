@@ -90,8 +90,8 @@ function play_torrent_file(url, title, type, blob) {
         player.children[0].src = link.attr('href');
         par = link.parent();
         par.addClass('active-file').siblings().removeClass('active-file');
-        player.load();
         if(first>1){
+          player.load();
           player.play();
         }
       }
