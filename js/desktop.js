@@ -150,7 +150,7 @@ $('document').ready(function(){
     get_viewpoint();
     thisWindow = $( this ).parent().parent();
     maxWindow = $(thisWindow);
-    $(thisWindow).css({"z-index":10})
+    $(thisWindow).css({"z-index":2}).css(fullHeight).css(placeLeft).css(placeTop);
     fileBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     mediaBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     chatBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
@@ -281,17 +281,16 @@ $('document').ready(function(){
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
-  camBox.pep({
-    constrainTo:'#desktop',
-    'elementsWithInteraction': '.close'
-  });
+
+  camBox.draggable().resizable( {aspectRatio: true, maxHeight: get_viewpoint()[1]});
   vidBox = camBox;
   camBox.detach();
   // picBox WINDOW
   var picBox = $('#pic_box');
   var picElement = document.getElementById('pic_box');
   var picWindow = new Hammer(picElement);
-  picBox.pep({'elementsWithInteraction': '.close'});
+  picBox.draggable();
+  
   imgBox = picBox;
   picBox.detach();
   // mediaBox WINDOW

@@ -183,7 +183,6 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
           $('#pic_box').css({top:"1em",left:'1em'})
           var picture = $('#media_player-image')[0];
           picture.src = $(this).attr('src');
-          picture.height = get_viewpoint()[0]/2;
         } else {
           imgBox.appendTo('body');
           var picture = $('#media_player-image')[0];
@@ -192,7 +191,9 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
       })
 
       $(extname.toLowerCase()).on('click',function(){
+        $('#image_player').remove();
         if($('#pic_box')[0]){
+          $("<img id='media_player-image' />").appendTo('#image_player');
           $('#pic_box').css({top:"1em",left:'1em'})
           var picSrc = $(this).parent().parent().find('a')[0]
           var picture = $('#media_player-image')[0];
@@ -200,10 +201,12 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
           picture.height = get_viewpoint()[0]/2;
         } else {
           imgBox.appendTo('body');
+          $("<img id='media_player-image' />").appendTo('#image_player');
           var picSrc = $(this).parent().parent().find('a')[0]
           var picture = $('#media_player-image')[0];
           picture.src = $(picSrc).attr('href');
         }
+        $('#media_player-image').resizable( {aspectRatio: true, maxHeight: get_viewpoint()[1]});
       });
     }
 }
