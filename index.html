@@ -27,6 +27,7 @@
   <script src='./lib/jquery.tablesorter.min.js'></script>
   <script src='./lib/date.js'></script>
   <script src='./js/chat.js'></script>
+  <script src='./js/notifications.js'></script>
 
 </head>
   <body>
@@ -39,9 +40,7 @@
 
     <div id='nav'>
 
-      <div id="rtos">
-        <h2><a href="/client">RTOS</a></h2>
-      </div>
+
 
       <div class="glyph">
         <i class="fa fa-refresh" id="reconnect-to-peers"></i>
@@ -51,12 +50,16 @@
       </div>
       <div class="glyph">
         <i class="fa fa-users" id="user-button"></i>
+        <div id="userList"></div>
       </div>
       <div class="glyph">
         <i class="fa fa-video-camera" id="start-video-feed"></i><i class="fa fa-times-circle" id="stop-video-feed"></i>
       </div>
+      <div class="glyph">
+        <i class="fa fa-gear " id="settings"></i>
+      </div>
 
-    </div>
+    </div> 
 
     
   <div id='rs' class='droppable'></div>
@@ -205,7 +208,9 @@
     </div>
     <div id="chat_box">
       <div class="window_title">
+      <div id ="textChat" class ='content'>
         <span class="content">&#xf1d7;</span>
+      </div>
         <span class="content">&#xf098;</span>
         <span class="content">&#xf03d;</span>
         <span class="maximize content">&#xf096;</span>
@@ -214,12 +219,12 @@
       <div class="content">
         <div id="wrap">
           <div id="login-box"> 
-            <div id="mesh-logo">
-              <img width="80px" height="80px" src="./images/mesh-logo.png"/>
-            </div>
+
+
             <input type="text" id="username-text" placeholder="Nickname: " class="login-input" />
             <input type="text" id="roomname-text" placeholder="Room:" class="login-input"/>
             <button id="peerSubmit">connect</button>
+
             <div id='rtos_info'>
             
             </div>

@@ -68,19 +68,20 @@ var peerReconnecting = false;
     // FUCK
     peer.on('connection', connect);
 
-    peer.on('connection', function(c){
+/*    peer.on('connection', function(c){
       if ( c.label === "loadRoom" ) {
+        
         setTimeout(function(){
           c.send([sessionMessages,sessionTorrents]);
         },2000)
       }
-    });
+    });*/
 
     peer.on('call', function(call) {
 
       call.answer();
       call.on('close',function(){
-        console.log("FUCK");
+
       });
       call.on('stream', function(remoteStream) {
         $('<video id="v' + call.peer + 'cam" class="mousecam">').appendTo('#' + call.peer + 'mouse');
@@ -167,6 +168,7 @@ var peerReconnecting = false;
 
   // Initialize a peer connection open necessary dataChannels and streams
   function connectToUser(requestedPeer) {
+
     if (!connectedPeers[requestedPeer]) {
       // Open cursor following channel
       createChannel({label: 'mouse', reliable: false}, requestedPeer)
@@ -211,8 +213,6 @@ var peerReconnecting = false;
             if (c.label === 'videoFeed') {
               var call = peer.call(c.peer, stream);
               openStreams.push(c.peer);
-              console.log("call:"+call);
-              console.log("c.peer:"+c.peer)
             }
           })
         }, function(err) {
@@ -223,7 +223,7 @@ var peerReconnecting = false;
 
   // Handle open channel between users
   function connect(c) {
-
+    
     var globalChat = $('#global_chat');
 
     if(c.label === 'loadRoom') {
@@ -231,13 +231,17 @@ var peerReconnecting = false;
       if ( peerReconnecting ){
         // do nothing
       } else {
+        setTimeout(function(){
+          c.send([sessionMessages,sessionTorrents]);
+        },400)
         c.on('data', function(data){
 
           if ( isRoomLoaded ){
             //
           } else {
-            var messageList = data[0]
-            messageList.forEach(function(message,index){
+            sessionMessages= data[0]
+            sessionMessages.forEach(function(message,index){
+              newDataNotification('chat','#textChat','chatNotification',chatNotification);
               globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
             '</div>');
               globalChat.scrollTop(globalChat.prop("scrollHeight"));
@@ -259,7 +263,7 @@ var peerReconnecting = false;
               }
             })
             if(torrentValid == true){
-              newDataNotification("torrentz");
+              newDataNotification(c.label,'#downloads','torrentNotification',torrentNotification);
               torrentValidation.push(torrent["infoHash"]);
               loadPushedTorrents(torrent["infoHash"],torrent["name"],torrent["length"],torrent["size"],torrent["fileList"],c.peer)
             }
@@ -268,10 +272,11 @@ var peerReconnecting = false;
       }
     // Handle a chat connection.
     } else if (c.label === 'chat') {
+      
       var chatbox = $('<div class="peerUsername"></div>').addClass('connection').addClass('active').attr('id', c.peer);
       var header = $('<div></div>').html(c.peer).appendTo(chatbox);
       var messages = $('<div><em>'+c.peer+' connected.</em></div>').addClass('messages');
-
+      
       chatbox.append(header);
       globalChat.append(messages);
 
@@ -280,7 +285,7 @@ var peerReconnecting = false;
 
       // Append message to chat
       c.on('data', function(data) {
-     
+        newDataNotification('chat','#textChat','chatNotification',chatNotification);
         globalChat.append('<div><span class="peer" style="color:'+data[1]+'">' + c.peer + '</span>: ' + data[0] +
           '</div>');
         globalChat.scrollTop(globalChat.prop("scrollHeight"));
@@ -298,6 +303,8 @@ var peerReconnecting = false;
         if ($('.connection').length === 0) {
           $('.filler').show();
         }
+        userNotification = userNotification - 2;
+        newDataNotification('user','#userList','userNotification',userNotification);
         var messages = $('<div><em>'+c.peer+' disconnected.</em></div>').addClass('messages');
         globalChat.append(messages);
         // remove disconnecting users torrents
@@ -312,21 +319,21 @@ var peerReconnecting = false;
         //   url: 'http://allthetime.io/rtos/rooms?userName=' + c.peer,
         //   async: false
         // });        
-        delete peer.connections[c.peer]
-        delete connectedPeers[c.peer];
+        //delete peer.connections[c.peer]
+        //delete connectedPeers[c.peer];
       });
 
     // when info hash is received!  
     } else if (c.label === 'torrentz') {
 
       c.on('data', function(data) {
-        newDataNotification(c.label);
+        newDataNotification(c.label,'#downloads','torrentNotification',torrentNotification);
         loadPushedTorrents(data[0],data[1],data[2],data[3],data[4],c.peer);
       });
 
     // Send mouse position of moving mouse to user
     } else if (c.label === 'mouse') {
-
+      newDataNotification('user','#userList','userNotification',userNotification);
       $('<div id="' + c.peer + 'mouse" class="mouse">').appendTo('body');
       
       c.on('data', function(data) {
@@ -348,12 +355,8 @@ var peerReconnecting = false;
         }  
       });
     }
-
     connectedPeers[c.peer] = 1;
   }
-
-
-
 
   // Event handlers that open and close connections
 /*

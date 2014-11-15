@@ -2,14 +2,10 @@ var rs,ls,ts,bs,maxWindow,nextAttack,backdoor;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
 var vidBox;
-var newDataNotification
 var wall;
 var height,width,barHeight,splitWidth,splitHeight,placeTop,placeBottom,placeRight,placeLeft,fullHeight,fullWidth;
 var roomId="home";
-var torrentNotification = 0;
-var fileNotification= 0;
-var songNotification = 0;
-var imageNotification = 0;
+
 
 $('document').ready(function(){
   var viewpoint = get_viewpoint();
@@ -269,6 +265,10 @@ $('document').ready(function(){
   chatBox.css(splitHeight).css(fullHeight).css(placeRight);
   var chatWindow = new Hammer(chatElement);
   setDrags(chatElement, chatBox);
+  chatBox.on('click',function(){
+    chatNotification=0;
+    $('#chatNotification').remove();
+  })
 
   hammertimeBox(chatWindow,chatBox);
   // fileBox WINDOW
@@ -370,50 +370,6 @@ $('document').ready(function(){
     e.preventDefault();
     $('#chat_user_list').toggle();
   });
-
-  newDataNotification = function(label){
-    if(label=="torrentz"){
-      if($('#downloads')[0].className != "content file_menu-active"){
-        torrentNotification++
-        if($('#torrentNotification')[0]){
-          $('#torrentNotification').html(torrentNotification)
-        } else {
-          $('<span/>',{id:'torrentNotification',class:"data_notification"}).html(torrentNotification).appendTo('#downloads');
-        }
-      }
-    }
-    if(label=="file"){
-      if($('#my_files')[0].className != "content file_menu-active"){
-        fileNotification++
-        if($('#fileNotification')[0]){
-          $('#fileNotification').html(fileNotification)
-        } else {
-          $('<span/>',{id:'fileNotification',class:"data_notification"}).html(fileNotification).appendTo('#my_files');
-        }
-      }
-    }
-    if(label=="image"){
-      if($('#my_images')[0].className != "content file_menu-active"){
-        imageNotification++
-        if($('#imageNotification')[0]){
-          $('#imageNotification').html(imageNotification)
-        } else {
-          $('<span/>',{id:'imageNotification',class:"data_notification"}).html(imageNotification).appendTo('#my_images');
-        }
-      }
-    }
-    if(label=="song"){
-      if($('#my_songs')[0].className != "content file_menu-active"){
-        songNotification++
-        if($('#songNotification')[0]){
-          $('#songNotification').html(songNotification)
-        } else {
-          $('<span/>',{id:'songNotification',class:"data_notification"}).html(songNotification).appendTo('#my_songs');
-        }
-      }
-    }
-  }
-
 });
 
 function retreatGrid(jElement){

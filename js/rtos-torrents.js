@@ -90,7 +90,8 @@ onTorrent = function(torrent) {
       }))
   })
 }
-addFileRow = function(blob,filename,filetype,dateStringNow){ 
+addFileRow = function(blob,filename,filetype,dateStringNow){
+  newDataNotification("file",'#my_files','fileNotification',fileNotification); 
   var extname = path.extname(filename)
   var newTorrentRow = $('<tr class="file-entry">fuck</tr>')
   var streamCol = $('<td>')
@@ -146,15 +147,14 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
     
     date.html(dateStringNow)
     date.appendTo(newTorrentRow);
-    newDataNotification('file');
     newTorrentRow.appendTo('#filelist-tbody'); 
     $("#filelist").trigger('addRows',[newTorrentRow,true]);
     
     if(filetype.split('/')[0]=="audio"){
-      newDataNotification('song');
+      newDataNotification('song','#my_songs','songNotification',songNotification);
       play_torrent_file(linkToFile, filename, filetype, blob);
     }
-    
+
     if(filetype == "video/mp4"){
       $(".mp4").on('click',function(){
         if($('#cam_box')[0]){
@@ -172,10 +172,8 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
       })
     }
 
-
-
     if(filetype.split('/')[0] == "image"){
-      newDataNotification('image');
+      newDataNotification("image",'#my_images','imageNotification',imageNotification);
       var newimage = $('<img class="thumb" />');
       newimage[0].src = linkToFile;
       newimage[0].width = 100;
@@ -192,6 +190,7 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
           picture.src = $(this).attr('src');
         }
       })
+
       $(extname.toLowerCase()).on('click',function(){
         if($('#pic_box')[0]){
           $('#pic_box').css({top:"1em",left:'1em'})
@@ -204,8 +203,7 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
           var picSrc = $(this).parent().parent().find('a')[0]
           var picture = $('#media_player-image')[0];
           picture.src = $(picSrc).attr('href');
-
         }
-      })
+      });
     }
 }
