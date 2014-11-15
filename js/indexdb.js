@@ -1,6 +1,7 @@
 var db;
 var songBlobs = [];
 var f;
+var nowPlayingLocalUrl;
  
 function indexedDBOk() {
     return "indexedDB" in window;
@@ -90,11 +91,15 @@ function  addFilenamesToIDB(blob,filename,filetype) {
     }
  
     request.onsuccess = function(e) {
+
         addFileRow(blob,filename,filetype,getDate());
+
         $('.delete').on('click',function(){
+
             var key = $(this).parent().siblings()[1];
             deleteFile($(key).text().substr(1))
             $(this).parent().parent().remove();
+
         })
         
     }
@@ -129,12 +134,14 @@ function addSongHistory(){
       var cursor = event.target.result;
       
       if (cursor) {
+
         play_torrent_file(URL.createObjectURL(cursor.value.blob),cursor.value.filename,cursor.value.filetype,cursor.value.blob);
         blob=cursor.value.blob;
         url=URL.createObjectURL(cursor.value.blob);
         console.log(url);
         blob.name=cursor.value.filename;
         cursor.continue();
+
       }
       else {
      
@@ -190,4 +197,22 @@ function deleteFile(key){
     request.onsuccess = function(event) {
     
     };
+}
+function getSongUrl(filename){
+    var filename = filename;
+    var objectStore = db.transaction("files").objectStore("files");
+
+        objectStore.openCursor().onsuccess = function(event) {
+          var cursor = event.target.result;
+          if (cursor) {
+            
+            if(cursor.value.filename == filename){
+                nowPlayingLocalUrl = URL.createObjectURL(cursor.value.blob);
+            }
+            cursor.continue();
+          }
+          else {
+            $('<span><a href="'+nowPlayingLocalUrl+'" target="new"> &#xf10b</a></span>').prependTo('.nowplaying');
+          }
+        };
 }
