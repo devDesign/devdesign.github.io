@@ -211,7 +211,6 @@ function getSongUrl(filename){
                 nowPlayingLocalUrl = URL.createObjectURL(cursor.value.blob);
                  $('<span><a href="'+nowPlayingLocalUrl+'" target="new"> &#xf10b</a></span>').prependTo('.nowplaying');
                  songAdded=true;
-                 cursor.end();
             }
             cursor.continue();
           }

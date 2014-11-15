@@ -94,16 +94,18 @@ function play_torrent_file(url, title, type, blob) {
       }
       
       function run(link, player){
+ 
         var songArtist = $(link[0]).parent().parent().find('a')[0];
         var songTitle = $(link[0]).parent().parent().find('a')[1];
         var songAlbum = $(link[0]).parent().parent().find('a')[2];
-        getSongUrl(title);
+        
         nowPlaying = $(songArtist).text()+" - "+$(songTitle).text();
         $('<div />',{class:'nowplaying', text:nowPlaying}).appendTo('#now_playing');
         $('<span><a href="'+link.attr('href')+'" download="'+title+'"> &#xf063</a></span>').prependTo('.nowplaying');      
         player.src = link.attr('href');
         par = link.parent();
         par.addClass('active-file').siblings().removeClass('active-file');
+        
         if(first>-1){
           player.load();
           player.play();
