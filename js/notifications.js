@@ -9,7 +9,6 @@ $(document).ready(function(){
   newDataNotification = function(label,menuElement,notificationElement,notificationNumber){
     var nElement = $('#'+notificationElement);
     var mElement = $(menuElement);
-
     if(mElement[0].className != "content file_menu-active"){
 
       notificationNumber++
@@ -23,15 +22,23 @@ $(document).ready(function(){
       {
         case 'chat':
         chatNotification = notificationNumber;
+        break;
         case 'torrentz':
+        console.log(torrentNotification);
         torrentNotification = notificationNumber;
+        break;
         case 'file':
         fileNotification = notificationNumber;
+        break;
         case 'image':
         imageNotification = notificationNumber;
+        break;
         case 'user':
         userNotification = notificationNumber;
+        break;
       }
+    notificationNumber=0;
     }
+    
   }
 });

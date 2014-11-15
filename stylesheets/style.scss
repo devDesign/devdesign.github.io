@@ -94,7 +94,6 @@ a {
   overflow-y:auto;
   top:2em;
   bottom:0em;
-  z-index: 99999;
   background-color: $black-shade;
   margin: 0em;
   width: 100%;
@@ -245,7 +244,6 @@ a {
   flex-direction: column;
   flex: 1 50%;
   color: white;
-  z-index: 99;
   background-color: $black-shade;
   box-sizing: border-box;
   top: 0px;

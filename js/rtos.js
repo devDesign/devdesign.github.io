@@ -233,17 +233,16 @@ var peerReconnecting = false;
       } else {
         setTimeout(function(){
           c.send([sessionMessages,sessionTorrents]);
-        },400)
+        },4000)
         c.on('data', function(data){
 
           if ( isRoomLoaded ){
             //
           } else {
             sessionMessages= data[0]
+            newDataNotification('chat','#textChat','chatNotification',sessionMessages.length);
             sessionMessages.forEach(function(message,index){
-              newDataNotification('chat','#textChat','chatNotification',chatNotification);
-              globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] +
-            '</div>');
+              globalChat.append('<div><span class="peer" style="color:'+message['color']+'">' + message['peer'] + '</span>: ' + message['message'] + '</div>');
               globalChat.scrollTop(globalChat.prop("scrollHeight"));
             });
             isRoomLoaded = true;

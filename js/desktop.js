@@ -150,7 +150,7 @@ $('document').ready(function(){
     get_viewpoint();
     thisWindow = $( this ).parent().parent();
     maxWindow = $(thisWindow);
-    $(thisWindow).css({"z-index":2})
+    $(thisWindow).css({"z-index":10})
     fileBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     mediaBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
     chatBox.css(fullWidth).css(fullHeight).css(placeLeft).css(placeTop);
@@ -325,10 +325,11 @@ $('document').ready(function(){
       'velocityMultiplier': 2.0,
       initiate: function() {
         $('.droppable').detach();
+        onTop(jElement);
         
       },
       'start':function(){
-        jElement.addClass('dragging_box')
+        
         get_viewpoint();
         delayDropzones();
         retreatGrid(jElement);
@@ -354,14 +355,11 @@ $('document').ready(function(){
           attack_grid(jElement,"bs");
           }
         }
-        jElement.removeClass('dragging_box');
       },
       'easing': function() {
+        onTop(jElement);
         //var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
-        if (dropCount >= 1){
-          jElement.removeClass('dragging_box')
-        }
       }
     });
   }

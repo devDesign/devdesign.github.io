@@ -74,7 +74,6 @@ a {
   overflow-y: auto;
   top: 2em;
   bottom: 0em;
-  z-index: 99999;
   background-color: #424659;
   margin: 0em;
   width: 100%;
@@ -199,7 +198,6 @@ a {
   flex-direction: column;
   flex: 1 50%;
   color: white;
-  z-index: 99;
   background-color: #424659;
   box-sizing: border-box;
   top: 0px;
