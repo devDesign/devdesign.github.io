@@ -98,6 +98,7 @@ a {
   margin: 0em;
   width: 100%;
   padding-top: 100px;
+  z-index: 4;
   @extend .border-module;
   input {
     display: flex;
@@ -564,7 +565,6 @@ a {
 #global_chat {
   position: absolute;
   bottom: 1.8em;
-  z-index: -1;
   overflow-y: auto;
   top: 1.6em;
   width: 100%;
@@ -812,6 +812,16 @@ video{
   color: $orange-shade;
   font-size: 0.8em;
   margin: auto;
+  span{
+    margin-right: 1em;
+    a{
+      color:$orange-shade;
+      text-decoration: none;
+      &:hover{
+        color:$blue-shade;
+      }
+    }
+  }
 }
 #pointcloud {
   position: fixed;

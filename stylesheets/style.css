@@ -77,7 +77,8 @@ a {
   background-color: #424659;
   margin: 0em;
   width: 100%;
-  padding-top: 100px; }
+  padding-top: 100px;
+  z-index: 4; }
   #login-box input {
     display: flex;
     margin: auto auto;
@@ -454,7 +455,6 @@ a {
 #global_chat {
   position: absolute;
   bottom: 1.8em;
-  z-index: -1;
   overflow-y: auto;
   top: 1.6em;
   width: 100%; }
@@ -670,6 +670,13 @@ video {
   color: #E58C7D;
   font-size: 0.8em;
   margin: auto; }
+  .nowplaying span {
+    margin-right: 1em; }
+    .nowplaying span a {
+      color: #E58C7D;
+      text-decoration: none; }
+      .nowplaying span a:hover {
+        color: #5699C2; }
 
 #pointcloud {
   position: fixed;

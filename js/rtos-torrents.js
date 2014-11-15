@@ -16,7 +16,7 @@ onTorrent = function(torrent) {
 
   sessionTorrents.push({"infoHash": torrent.infoHash , "name": torrent.name, "length": torrent.files.length, "size": torrentSize, "fileList": fileList});
   
-  if(path.extname(torrent.files[0].name)===".mp4" && torrent.swarm._peers.undefined != null){
+  if((path.extname(torrent.files[0].name)===".mp4" || path.extname(torrent.files[0].name)===".webm") && torrent.swarm._peers.undefined != null){
     var file = torrent.files[0]
     var video = vidBox.find('video')[0];
     video.controls = true
@@ -59,6 +59,9 @@ onTorrent = function(torrent) {
             var icon = "&#xf001;"
           } else if (extname == ".mp4"){
             file.type = "video/mp4"
+            var icon = "&#xf008;"
+          } else if (extname == ".mp4"){
+            file.type = "video/webm"
             var icon = "&#xf008;"
           } else if (extname.toLowerCase() == ".png"){
             file.type = "image/png"
@@ -111,6 +114,9 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
   } else if (extname == ".mp4"){
     filetype = "video/mp4"
     var icon = "&#xf008;"
+  } else if (extname == ".webm"){
+    filetype = "video/webm"
+    var icon = "&#xf008;"
   } else if (extname.toLowerCase() == ".png"){
     filetype = "image/png"
     var icon = "&#xf1c5;"
@@ -134,7 +140,7 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
     streamCol.html('<span class="delete">&#xf00d;</span>').appendTo(newTorrentRow)
     downloadCol.html('<a download="'+filename+'" href="'+linkToFile+'"><span class="downloaded">&#xf063;</span></a>').appendTo(newTorrentRow)
     if ( filetype ){
-      nameCol.html('<div class="'+filetype.split('/')[1]+'"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
+      nameCol.html('<div class="'+filetype.split('/')[0]+'"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
     } else {
       nameCol.html('<div class="FILEfile"><span class="file_list-icon">'+icon+'</span>'+filename+"</div>").appendTo(newTorrentRow);
     }        
@@ -155,9 +161,9 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
       play_torrent_file(linkToFile, filename, filetype, blob);
     }
 
-    if(filetype == "video/mp4"){
-      $(".mp4").on('click',function(){
-        if($('#cam_box')[0]){
+    if(filetype.split('/')[0] == "video"){
+      $(".video").on('click',function(){
+        if($('cam_box')[0] == "nopppe"){
           var vidSrc = $(this).parent().parent().find('a')[0]
           var video = $('#media_player-video')[0];
           console.log($(vidSrc).attr('href'));

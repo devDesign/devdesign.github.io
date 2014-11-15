@@ -19,6 +19,7 @@ $('document').ready(function(){
   $('#stop-video-feed').hide();
   $('.glyph').show();
   $('<audio id="audioplayer" controls preload="none" type="audio/mp3" src=""></audio>').appendTo('#music-player')
+  $('audio')[0].volume = 0.7;
   $("#playlist").tablesorter({sortList: [[0,0],[2,0],[3,0]]}); 
   $("#filelist").tablesorter({sortList: [[4,1]]});
   $("#room_info").tablesorter({sortList: [[0,0]]}); 
@@ -281,7 +282,6 @@ $('document').ready(function(){
   var camBox = $('#cam_box');
   var camElement = document.getElementById('cam_box');
   var camWindow = new Hammer(camElement);
-
   camBox.draggable().resizable( {aspectRatio: true, maxHeight: get_viewpoint()[1]});
   vidBox = camBox;
   camBox.detach();

@@ -55,29 +55,41 @@ function play_torrent_file(url, title, type, blob) {
         audio = $('#audioplayer')[0];
         playlist = $('#playlist-tbody');
         tracks = playlist.find('tr');
-        len = tracks.length - 1;
-        audio.volume = .70;
-       playlist.find('a').on('click',function(e){
-            audio.play();
-            first++;
-            $('.nowplaying').remove();
-            e.preventDefault();
-            link = $(this);
-            current = link.parent().parent().index();
-            run(link, audio);
+        len = tracks.length;
+
+        
+        playlist.find('a').on('click',function(e){
+          
+          e.preventDefault();
+          audio.play();
+          first++;
+          $('.nowplaying').remove();
+          link = $(this);
+          current = link.parent().parent().index();
+          run(link, audio);
+
         });
+
         audio.addEventListener('ended',function(e){
-            $('.nowplaying').remove();
-            first++;
-            current++;
-            if(current == len){
-                current = 0;
-                link = playlist.find('a')[0];
-            }else{
-                var row = playlist.find('tr')[current]
-                link = $(row).find('td').find('a')[1];    
-            }
-            run($(link),audio);
+
+          $('.nowplaying').remove();
+          first++;
+          current++;
+          
+          if(current == len){
+
+            current = 0;
+            var row = playlist.find('tr')[current];
+            link = $(row).find('td').find('a')[1]; 
+          
+          }else{
+          
+              var row = playlist.find('tr')[current];
+              link = $(row).find('td').find('a')[1];    
+          
+          }
+          
+          run($(link),audio);
         });
       }
       
@@ -87,10 +99,13 @@ function play_torrent_file(url, title, type, blob) {
         var songAlbum = $(link[0]).parent().parent().find('a')[2];
         nowPlaying = $(songArtist).text()+" - "+$(songTitle).text();
         $('<div />',{class:'nowplaying', text:nowPlaying}).appendTo('#now_playing');
+        $('<span><a href="'+link.attr('href')+'" download="'+title+'"> &#xf063</a></span>').prependTo('.nowplaying');
+        $('<span><a href="'+link.attr('href')+'" target="new"> &#xf10b</a></span>').prependTo('.nowplaying');
+
         player.src = link.attr('href');
         par = link.parent();
         par.addClass('active-file').siblings().removeClass('active-file');
-        if(first>1){
+        if(first>-1){
           player.load();
           player.play();
         }
