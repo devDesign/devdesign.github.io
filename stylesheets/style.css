@@ -160,12 +160,17 @@ a {
   width: 100%;
   background-color: #363A4A; }
   .window_title span {
-    padding: 3px;
     margin-left: 5px;
     color: #E58C7D; }
   .window_title span:hover {
     color: #5699C2;
     cursor: pointer; }
+  .window_title .data_notification {
+    color: #5699C2;
+    position: absolute;
+    padding-left: 1px;
+    top: 1.5em;
+    font-size: .7em; }
   .window_title .maximize {
     cursor: pointer;
     position: absolute;
@@ -182,7 +187,7 @@ a {
     position: absolute;
     right: 0;
     margin-right: 5px; }
-  .window_title .file_menu-active {
+  .window_title .file_menu-active span {
     color: #5699C2; }
 
 #chat_box {
@@ -262,6 +267,7 @@ a {
         color: #5699C2;
         background-color: #424659; }
     #file_box #file_menu #downloads {
+      position: absolute;
       cursor: pointer;
       margin: 0;
       padding-right: 2em;

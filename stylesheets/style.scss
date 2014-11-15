@@ -192,13 +192,19 @@ a {
   width: 100%;
   background-color: $grey-shade;
     span {
-      padding: 3px;
       margin-left: 5px;
       color: $orange-shade;
     }
     span:hover{
       color:$blue-shade;
       cursor: pointer;
+    }
+    .data_notification{
+      color:$blue-shade;
+      position: absolute;
+      padding-left:1px;
+      top:1.5em;
+      font-size: .7em;
     }
 
     .maximize {
@@ -221,7 +227,9 @@ a {
       margin-right: 5px;
     }
     .file_menu-active{
-      color:$blue-shade;
+      span{
+        color:$blue-shade;
+      }
     }
 }
 #chat_box {
@@ -314,6 +322,7 @@ a {
       }
     }
     #downloads{
+      position: absolute;
       cursor: pointer;
       margin: 0;
       padding-right: 2em;
@@ -874,6 +883,8 @@ video{
  
   }
 }
+
+
 
 @media screen and (max-width: 600px) {
     #file_menu{

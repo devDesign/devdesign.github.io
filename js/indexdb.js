@@ -137,7 +137,7 @@ function addSongHistory(){
         cursor.continue();
       }
       else {
-        $('<audio id="audioplayer" controls preload="none" type="audio/mp3" src="'+url+'"></audio>').appendTo('#music-player')
+     
 
       }
     };
@@ -182,19 +182,12 @@ function seedSongHistory(){
       }
     
 }}
+
 function deleteFile(key){
     var request = db.transaction("files", "readwrite")
                 .objectStore("files")
                 .delete(key);
     request.onsuccess = function(event) {
     
-};
-}
-function deleteSong(key){
-    var request = db.transaction("songs", "readwrite")
-                .objectStore("songs")
-                .delete(key);
-    request.onsuccess = function(event) {
-   
-};
+    };
 }

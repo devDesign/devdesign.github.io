@@ -86,62 +86,7 @@ onTorrent = function(torrent) {
 
         addFilenamesToIDB(realFile,file.name,file.type)
         //binding the video box
-        if(file.type == "video/mp4"){
-          $(".mp4").on('click',function(){
-            if($('#cam_box')[0]){
-              var vidSrc = $(this).parent().parent().find('a')[0]
-              var video = $('#media_player-video')[0];
-              console.log($(vidSrc).attr('href'));
-              video.src = $(vidSrc).attr('href');
-            } else {
-              vidBox.appendTo('body');
-              var vidSrc = $(this).parent().parent().find('a')[0]
-              var video = $('#media_player-video')[0];
-              console.log($(vidSrc).attr('href'));
-              video.src = $(vidSrc).attr('href');
-            }
-          })
-        }
 
-        if(file.type == undefined){
-          var fileType = extname
-        } else {
-          var fileType = file.type
-        }
-
-        if(fileType.split('/')[0] == "image"){
-          var newimage = $('<img class="thumb" />');
-          newimage[0].src = linkToFile;
-          newimage[0].width = 100;
-          newimage.appendTo('#my_images_list');
-          $('.thumb').on('click',function(){
-            if($('#pic_box')[0]){
-              $('#pic_box').css({top:"1em",left:'1em'})
-              var picture = $('#media_player-image')[0];
-              picture.src = $(this).attr('src');
-              picture.height = get_viewpoint()[0]/2;
-            } else {
-              imgBox.appendTo('body');
-              var picture = $('#media_player-image')[0];
-              picture.src = $(this).attr('src');
-            }
-          })
-          $(extname.toLowerCase()).on('click',function(){
-            if($('#pic_box')[0]){
-              $('#pic_box').css({top:"1em",left:'1em'})
-              var picSrc = $(this).parent().parent().find('a')[0]
-              var picture = $('#media_player-image')[0];
-              picture.src = $(picSrc).attr('href');
-              picture.height = get_viewpoint()[0]/2;
-            } else {
-              imgBox.appendTo('body');
-              var picSrc = $(this).parent().parent().find('a')[0]
-              var picture = $('#media_player-image')[0];
-              picture.src = $(picSrc).attr('href');
-
-            }
-          })
-        }
       }))
   })
 }
@@ -201,10 +146,66 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
     
     date.html(dateStringNow)
     date.appendTo(newTorrentRow);
+    newDataNotification('file');
     newTorrentRow.appendTo('#filelist-tbody'); 
     $("#filelist").trigger('addRows',[newTorrentRow,true]);
     
     if(filetype.split('/')[0]=="audio"){
+      newDataNotification('song');
       play_torrent_file(linkToFile, filename, filetype, blob);
+    }
+    
+    if(filetype == "video/mp4"){
+      $(".mp4").on('click',function(){
+        if($('#cam_box')[0]){
+          var vidSrc = $(this).parent().parent().find('a')[0]
+          var video = $('#media_player-video')[0];
+          console.log($(vidSrc).attr('href'));
+          video.src = $(vidSrc).attr('href');
+        } else {
+          vidBox.appendTo('body');
+          var vidSrc = $(this).parent().parent().find('a')[0]
+          var video = $('#media_player-video')[0];
+          console.log($(vidSrc).attr('href'));
+          video.src = $(vidSrc).attr('href');
+        }
+      })
+    }
+
+
+
+    if(filetype.split('/')[0] == "image"){
+      newDataNotification('image');
+      var newimage = $('<img class="thumb" />');
+      newimage[0].src = linkToFile;
+      newimage[0].width = 100;
+      newimage.appendTo('#my_images_list');
+      $('.thumb').on('click',function(){
+        if($('#pic_box')[0]){
+          $('#pic_box').css({top:"1em",left:'1em'})
+          var picture = $('#media_player-image')[0];
+          picture.src = $(this).attr('src');
+          picture.height = get_viewpoint()[0]/2;
+        } else {
+          imgBox.appendTo('body');
+          var picture = $('#media_player-image')[0];
+          picture.src = $(this).attr('src');
+        }
+      })
+      $(extname.toLowerCase()).on('click',function(){
+        if($('#pic_box')[0]){
+          $('#pic_box').css({top:"1em",left:'1em'})
+          var picSrc = $(this).parent().parent().find('a')[0]
+          var picture = $('#media_player-image')[0];
+          picture.src = $(picSrc).attr('href');
+          picture.height = get_viewpoint()[0]/2;
+        } else {
+          imgBox.appendTo('body');
+          var picSrc = $(this).parent().parent().find('a')[0]
+          var picture = $('#media_player-image')[0];
+          picture.src = $(picSrc).attr('href');
+
+        }
+      })
     }
 }

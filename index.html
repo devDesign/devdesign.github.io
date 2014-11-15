@@ -46,7 +46,9 @@
       <div class="glyph">
         <i class="fa fa-refresh" id="reconnect-to-peers"></i>
       </div>
-
+      <div class="glyph">
+        <i id="file-upload" class='fa fa-cloud-upload'></i>
+      </div>
       <div class="glyph">
         <i class="fa fa-users" id="user-button"></i>
       </div>
@@ -65,9 +67,12 @@
   <div id='desktop'>
     <div id="file_box" class="files">
       <div class="window_title">
-        <span id="my_files" class="content">&#xf0f6;</span>
-        <span id="downloads" class="content">&#xf0ed;</span>
-        <span id="file-upload" class='content'>&#xf0ee;</span>
+        <div id="my_files" class="content file_menu-active">
+          <span id="my_filesicon" class="content">&#xf0f6;</span>
+        </div>
+        <div id="downloads" class="content">
+          <span id="downloadsicon" class="content">&#xf0ed;</span>
+        </div>
         <span id="bigfiles" class="content">&#xf019;</span>
         <span class="lefthalf content"></span>
         <span class="righthalf content"></span>
@@ -152,9 +157,13 @@
 
     <div id="media_box">
       <div class="window_title">
-        <span id="my_songs" class="content">&#xf001;</span>
+        <div id="my_songs" class="content file_menu-active">
+          <span id="my_songsicon" class="content">&#xf001;</span>
+        </div>
         <span class="content">&#xf008;</span>
-        <span id="my_images" class="content">&#xf03e;</span>
+        <div id="my_images" class="content">
+          <span id="my_imagesicon" class="content">&#xf03e;</span>
+        </div>
         <span class="maximize content">&#xf096;</span>
         <span class="minimize content">&#xf068;</span>
       </div>

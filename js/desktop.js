@@ -2,24 +2,31 @@ var rs,ls,ts,bs,maxWindow,nextAttack,backdoor;
 var verticalGrid = [null,null];
 var horizontalGrid = [null,null];
 var vidBox;
+var newDataNotification
 var wall;
 var height,width,barHeight,splitWidth,splitHeight,placeTop,placeBottom,placeRight,placeLeft,fullHeight,fullWidth;
 var roomId="home";
+var torrentNotification = 0;
+var fileNotification= 0;
+var songNotification = 0;
+var imageNotification = 0;
+
 $('document').ready(function(){
+  var viewpoint = get_viewpoint();
+  var height = viewpoint[1];
+  var width = viewpoint[0];
+  var barHeight = document.getElementById('nav').offsetHeight;
+  var zIndex = 100;
+  
+  $('#download_list_box').hide();
+  $('#big_files_box').hide();
+  $('#stop-video-feed').hide();
   $('.glyph').show();
   $('<audio id="audioplayer" controls preload="none" type="audio/mp3" src=""></audio>').appendTo('#music-player')
   $("#playlist").tablesorter({sortList: [[0,0],[2,0],[3,0]]}); 
   $("#filelist").tablesorter({sortList: [[4,1]]});
   $("#room_info").tablesorter({sortList: [[0,0]]}); 
   wallfree();
-  var viewpoint = get_viewpoint();
-  var height = viewpoint[1];
-  var width = viewpoint[0];
-  var barHeight = document.getElementById('nav').offsetHeight;
-  var zIndex = 100;
-  $('#download_list_box').hide();
-  $('#big_files_box').hide();
-  $('#stop-video-feed').hide();
 
   // login
   $('#username-text').on('keyup', function() {
@@ -32,6 +39,7 @@ $('document').ready(function(){
       $('#username-text').css("box-shadow", "none");
     }
   })
+
   $('#roomname-text').on('keyup', function() {
     var isValid = /^[a-zA-Z0-9]+$/
     var data = $(this).val();
@@ -41,6 +49,7 @@ $('document').ready(function(){
       $('#roomname-text').css("box-shadow", "inset 0 0 5px red");
     }
   })
+
   $('#peerSubmit').on('click', function() {
     var peerName = $('#username-text').val();
     var roomName = $('#roomname-text').val();
@@ -57,6 +66,7 @@ $('document').ready(function(){
     get_viewpoint();
     refreshGrid();
   });
+
   $('.login-input').on('keyup', function(e) {
     if(e.keyCode === 13){
       var peerName = $('#username-text').val();
@@ -78,6 +88,8 @@ $('document').ready(function(){
 
   // file system tabs
   $('#downloads').on('click',function(){
+    torrentNotification = 0;
+    $('#torrentNotification').remove();
     $('#my_files').removeClass('file_menu-active');
     $('#bigfiles').removeClass('file_menu-active');
     $(this).addClass('file_menu-active');
@@ -86,6 +98,8 @@ $('document').ready(function(){
     $('#download_list_box').show();
   });
   $('#my_files').on('click',function(){
+    fileNotification = 0;
+    $('#fileNotification').remove();
     $('#downloads').removeClass('file_menu-active');
     $('#bigfiles').removeClass('file_menu-active');
     $(this).addClass('file_menu-active');
@@ -105,6 +119,8 @@ $('document').ready(function(){
 
     // media player tabs
   $('#my_songs').on('click',function(){
+    songNotification = 0;
+    $('#songNotification').remove();
     $('#my_images').removeClass('file_menu-active');
     $('#my_movies').removeClass('file_menu-active');
     $(this).addClass('file_menu-active');
@@ -113,6 +129,8 @@ $('document').ready(function(){
     $('#music-player').show();
   });
   $('#my_images').on('click',function(){
+    imageNotification = 0;
+    $('#imageNotification').remove();
     $('#my_songs').removeClass('file_menu-active');
     $('#my_movies').removeClass('file_menu-active');
     $(this).addClass('file_menu-active');
@@ -310,6 +328,7 @@ $('document').ready(function(){
         
       },
       'start':function(){
+        jElement.addClass('dragging_box')
         get_viewpoint();
         delayDropzones();
         retreatGrid(jElement);
@@ -326,15 +345,17 @@ $('document').ready(function(){
           else if( dropRegion ==="ls" ){ attack_grid(jElement,"ls") }
           else if( dropRegion ==="bs" ){ attack_grid(jElement,"bs") }  
         }
-       if (this.activeDropRegions.length >= 2){
-        if (element.offsetLeft<100){
-          attack_grid(jElement,"lbs")
-        } else if (element.offsetLeft > get_viewpoint()[1]/1.5){
-          attack_grid(jElement,"rbs")
-        } else{
-        attack_grid(jElement,"bs");
+         if (this.activeDropRegions.length >= 2){
+          if (element.offsetLeft<100){
+            attack_grid(jElement,"lbs")
+          } else if (element.offsetLeft > get_viewpoint()[1]/1.5){
+            attack_grid(jElement,"rbs")
+          } else{
+          attack_grid(jElement,"bs");
+          }
         }
-      }},
+        jElement.removeClass('dragging_box');
+      },
       'easing': function() {
         //var dropRegion = this.activeDropRegions[0][0].id;
         var dropCount = this.activeDropRegions.length;
@@ -344,10 +365,55 @@ $('document').ready(function(){
       }
     });
   }
+
   $('#user-button').bind('click touchstart', function(e) {
     e.preventDefault();
     $('#chat_user_list').toggle();
   });
+
+  newDataNotification = function(label){
+    if(label=="torrentz"){
+      if($('#downloads')[0].className != "content file_menu-active"){
+        torrentNotification++
+        if($('#torrentNotification')[0]){
+          $('#torrentNotification').html(torrentNotification)
+        } else {
+          $('<span/>',{id:'torrentNotification',class:"data_notification"}).html(torrentNotification).appendTo('#downloads');
+        }
+      }
+    }
+    if(label=="file"){
+      if($('#my_files')[0].className != "content file_menu-active"){
+        fileNotification++
+        if($('#fileNotification')[0]){
+          $('#fileNotification').html(fileNotification)
+        } else {
+          $('<span/>',{id:'fileNotification',class:"data_notification"}).html(fileNotification).appendTo('#my_files');
+        }
+      }
+    }
+    if(label=="image"){
+      if($('#my_images')[0].className != "content file_menu-active"){
+        imageNotification++
+        if($('#imageNotification')[0]){
+          $('#imageNotification').html(imageNotification)
+        } else {
+          $('<span/>',{id:'imageNotification',class:"data_notification"}).html(imageNotification).appendTo('#my_images');
+        }
+      }
+    }
+    if(label=="song"){
+      if($('#my_songs')[0].className != "content file_menu-active"){
+        songNotification++
+        if($('#songNotification')[0]){
+          $('#songNotification').html(songNotification)
+        } else {
+          $('<span/>',{id:'songNotification',class:"data_notification"}).html(songNotification).appendTo('#my_songs');
+        }
+      }
+    }
+  }
+
 });
 
 function retreatGrid(jElement){

@@ -251,9 +251,6 @@ var peerReconnecting = false;
 
           }
 
-
-
-
           torrentList.forEach(function(torrent,index){
             var torrentValid = true
             torrentValidation.forEach(function(validInfoHash,index){
@@ -262,6 +259,7 @@ var peerReconnecting = false;
               }
             })
             if(torrentValid == true){
+              newDataNotification("torrentz");
               torrentValidation.push(torrent["infoHash"]);
               loadPushedTorrents(torrent["infoHash"],torrent["name"],torrent["length"],torrent["size"],torrent["fileList"],c.peer)
             }
@@ -322,6 +320,7 @@ var peerReconnecting = false;
     } else if (c.label === 'torrentz') {
 
       c.on('data', function(data) {
+        newDataNotification(c.label);
         loadPushedTorrents(data[0],data[1],data[2],data[3],data[4],c.peer);
       });
 
