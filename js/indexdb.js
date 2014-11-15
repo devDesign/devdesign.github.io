@@ -205,14 +205,18 @@ function getSongUrl(filename){
         objectStore.openCursor().onsuccess = function(event) {
           var cursor = event.target.result;
           if (cursor) {
-            
-            if(cursor.value.filename == filename){
+            var songAdded=false;
+            if(cursor.value.filename == filename && songAdded == false){
+
                 nowPlayingLocalUrl = URL.createObjectURL(cursor.value.blob);
+                 $('<span><a href="'+nowPlayingLocalUrl+'" target="new"> &#xf10b</a></span>').prependTo('.nowplaying');
+                 songAdded=true;
+                 cursor.end();
             }
             cursor.continue();
           }
           else {
-            $('<span><a href="'+nowPlayingLocalUrl+'" target="new"> &#xf10b</a></span>').prependTo('.nowplaying');
+           
           }
         };
 }
