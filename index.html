@@ -1,285 +1,208 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-  <title>RTOS</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Language" content="en-us">
+<!doctype html><title>devDesign</title>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="./stylesheets/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./stylesheets/style.css" />
-  <link rel="stylesheet" href="./lib/jquery-ui.css" />
+<script src="./tquery-bundle.min.js"></script>
+<script src="./fonts/droid/droid_serif_bold.typeface.js"></script>
+<script src="./threex.domevent.js"></script>
+<script src="./tquery.domevent.js"></script>
+<script src="./tquery-text.js"></script>
+<script src="./tquery.mesh.linkify.js"></script>
+<script src="./tquery.createfog.js"></script>
+<script src="./fonts/helvetiker_regular.typeface.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
-  <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
-   <script src='./lib/jquery-ui.js'></script>
-  <script src="./js/audio-player.js"></script> 
-  <script src="./lib/peer.js"></script>
-  <script src="./js/desktop.js"></script>
-  <script type="text/javascript" src="./js/rtos.js"></script>
-  <script src="./lib/idb.filesystem.min.js"></script>
-  <script src="./lib/webrtc-data.io.js"></script>
-  <script src='./lib/pep.js'></script>
-  <script src='./lib/hammer.min.js'></script>
-  <script src='./lib/id3.min.js'></script>
-  <script src='./lib/id3v2.js'></script>
-  <script src='./js/three.min.js'></script>
-  <script src='./lib/freewall.js'></script>
-  <script src='./lib/howler.min.js'></script>
-  <script src='./js/indexdb.js'></script>
-  <script src='./lib/jquery.tablesorter.min.js'></script>
-  <script src='./lib/date.js'></script>
-  <script src='./js/chat.js'></script>
-  <script src='./js/notifications.js'></script>
-  
+<body>
+	<style>
 
-</head>
-  <body>
-    <div id="chat_user_list" class="chat_user_list">
-      <div class="self">
-        <img src="./images/person.png" height="20px" width="20px">
-        <span id="pid"></span>
-      </div>
-    </div>
+		#content{ 
+			font-family: 'Ubuntu', sans-serif;
+			text-align: center;
+		 }
 
-    <div id='nav'>
+		 table{
+		 	margin: auto;
+		 }
 
+	</style>
 
+	<script>
 
-      <div class="glyph">
-        <i class="fa fa-refresh" id="reconnect-to-peers"></i>
-      </div>
-      <div class="glyph">
-        <i id="file-upload" class='fa fa-cloud-upload'></i>
-      </div>
-      <div class="glyph">
-        <i class="fa fa-users" id="user-button"></i>
-        <div id="userList"></div>
-      </div>
-      <div class="glyph">
-        <i class="fa fa-video-camera" id="start-video-feed"></i><i class="fa fa-times-circle" id="stop-video-feed"></i>
-      </div>
-      <div class="glyph">
-        <i class="fa fa-gear " id="settings"></i>
-      </div>
+ 	var viewportwidth = window.innerWidth;
+	var viewportheight = window.innerHeight;
+	$('#stats').remove();
+	var world	= tQuery.createWorld().boilerplate({stats:false}).start();
 
-    </div> 
+	world.addFogExp2({density: 0.01});
+		
+	world.removeCameraControls();
+	
+	world.enableDomEvent();	
 
-    
-  <div id='rs' class='droppable'></div>
-  <div id='ls' class='droppable'></div>
-  <div id='bs' class='droppable'></div>
-  <div id='lbs' class='droppable'></div>
+	var camera = world.tCamera();
+	var camstart = 1.7;
+	camera.position['y'] = camstart;
+	camera.position['z'] = 8;
 
-  <div id='desktop'>
-    <div id="file_box" class="files">
-      <div class="window_title">
-        <div id="my_files" class="content file_menu-active">
-          <span id="my_filesicon" class="content">&#xf0f6;</span>
-        </div>
-        <div id="downloads" class="content">
-          <span id="downloadsicon" class="content">&#xf0ed;</span>
-        </div>
-        <span id="bigfiles" class="content">&#xf019;</span>
-        <span class="lefthalf content"></span>
-        <span class="righthalf content"></span>
-        <span class="bottomhalf content"></span>
-        <span class="maximize content">&#xf096;</span>
-        <span class="minimize content">&#xf068;</span>
-      </div>
-      <div class="content">
-        <div id="big_files_box">
-          <div id="big_files_list">
-            
-          </div>
-        </div>
-        <div id="download_list_box">
-            <table id="download_list">
-              <tr>
-                <td class="column_label">
-                file name
-                </td>
-                <td class="column_label">
-                file size
-                </td>
-                <td class="column_label">
-                sender
-                </td>
-                <td class="column_label">
-                status
-                </td>
-              </tr>
-            </table>
-        </div>
-        <div id="file_list">
-            <table id="filelist">
-            <thead>
-              <tr>
-                <th class="column_label">
-                delete
-                </th>
-                <th class="column_label" >
-                save
-                </th>
-                <th class="column_label">
-                file name
-                </th>
-                <th class="column_label">
-                file size
-                </th>
-                <th class="column_label">
-                file type
-                </th>
-                <th class="column_label">
-                created at
-                </th>
-              </tr>
-              </thead>
-              <tbody id="filelist-tbody">
-              </tbody>
-            </table>
-          <!-- <input type="file" id="select_file"> -->
-          <div id="messages"></div>
+	tQuery.createAmbientLight().addTo(world).color(0x666666);
+	tQuery.createDirectionalLight().addTo(world).position(1,1,-1).color(0xffffff).intensity(1);
 
-          <div class="log"></div>
-        </div>
-      </div>
-    </div>
+	var container	= tQuery.createObject3D().addTo(world).positionY(-.5 + camstart)
+	var set	= tQuery.createObject3D().addTo(world)
 
-    <div id="cam_box">
-      <div class="window_title"><span>&#xf008;</span><span class="close">&#xf00d;</span></div>
-      <div id="video_player">
-          <video id="media_player-video" controls="controls" autoplay="autoplay" loop>
-            <source src="" >
-          </video>
-        </div>
-    </div>
+	var fog = new THREE.Fog( '#0xFFFFFF', 10, 100 );	
 
-    <div id="pic_box">
-      <div class="window_title"><span>&#xf1c5;</span><span class="close">&#xf00d;</span></div>
-      <div id="image_player">
-          <img src="" id="media_player-image" />
-       </div>
-    </div>
+	var titleMaterial  = new THREE.MeshNormalMaterial({
+    				ambient  : 0x444444, 
+    				color  : 0xFFFFFF,
+  		});
 
-    <div id="media_box">
-      <div class="window_title">
-        <div id="my_songs" class="content file_menu-active">
-          <span id="my_songsicon" class="content">&#xf001;</span>
-        </div>
-        <span class="content">&#xf008;</span>
-        <div id="my_images" class="content">
-          <span id="my_imagesicon" class="content">&#xf03e;</span>
-        </div>
-        <span class="maximize content">&#xf096;</span>
-        <span class="minimize content">&#xf068;</span>
-      </div>
-      <div class="content">
-        <div id="my_movies_box">
-          <div id="my_movies_list">
-            
-          </div>
-        </div>
-        <div id="my_images_box">
-          <div id="my_images_list">
-            
-          </div>
-        </div>
-        <div id="music-player">
-        <!-- comment -->
-         
+	var backBox = function(){
 
-          <div id="playlist_box">
-            <table id="playlist">
-              <thead>
-                <tr>
-                  <th class="column_label">artist</th>
-                  <th class="column_label">title</th>
-                  <th class="column_label">album</th>
-                  <th class="column_label">track</th>
-                  <th class="column_label">year</th>
-                </tr>
-              </thead>
-              <tbody id='playlist-tbody'>
+		for(var i=-10;i<10;i++){
 
-              </tbody>
-            </table>
-          </div>
-          <div id="now_playing"></div>
-          
-        </div>
-      </div>
-    </div>
-    <div id="chat_box">
-      <div class="window_title">
-      <div id ="textChat" class ='content'>
-        <span class="content">&#xf1d7;</span>
-      </div>
-        <span class="content">&#xf098;</span>
-        <span class="content">&#xf03d;</span>
-        <span class="maximize content">&#xf096;</span>
-        <span class="minimize content">&#xf068;</span>
-      </div>
-      <div class="content">
-        <div id="wrap">
-          <div id="login-box"> 
+			var min = -100;
+			var max = i;
+			
+			var random = Math.floor(Math.random() * (max - min + 1)) + min;
+			
+			for(var i3=-5;i3>-20;i3-=10){
+				
+				tQuery.createCylinder(10,10,100000)
+							.scaleBy(1/8)
+							.positionY(-20)
+							.positionX(i*10+5)
+							.positionZ(i3*10)
+							.rotateX(1)
+							.addTo(set).setPhongMaterial();
+
+			}
+
+			if(i!=0){
+				
+				for(var i2=-1;i2<1;i2++){
+					
+					tQuery.createCylinder(10,10,100000)
+							.scaleBy(1/8)
+							.positionY(i2*40)
+							.positionX(i*10)
+							.positionZ(-50)
+							.rotateX(-1)
+							.addTo(set).setPhongMaterial();
+
+					}
+				}
+		}
+
+	}
+	backBox();
+
+	var light	= new THREE.DirectionalLight(0xFFFFFF, 3);
+	light.position.set(0, 0.6, -1).normalize();
+	world.tScene().add(light);
+
+	var windowScroll = -0.4;
+	var left = 0;
+	var topMouse = 0;
+	var loaded=false;
+
+ 	$("<div/>",{ id: "content" }).html(
+ 		
+ 		"<h1>devDesign.io</h1>"+
+ 		"<h2>Dev Guha</h2>"+
+ 		"<img src='devDesign.png' height='80px' width='80px'  />"+
+ 		"<h3><a href='mailto:marlyguha@gmail.com'>marlyguha@gmail.com</a></h3>"+
+ 		"<h3><a href='https://github.com/devDesign'>github.com/devDesign</a></h3>"+
+ 		"<h3><a href='https://www.dropbox.com/sh/vfryfl978k7cz6f/AACESZIj2G4etMnpCDs7Bpvea?dl=0'>resume</a></h3>"+
+ 		"<br />"+
+ 		"<h4>projects:</h4>"+
+ 		"<table><tr><td>"+
+ 		"<h3>RTOS</h3>"+
+ 		"<a href='http://devdesign.github.io/rtos.html'>link</a>&nbsp;<a href='https://github.com/devDesign/devdesign.github.io'>code</a>"+
+ 		"</td><td>"+
+ 		"<h3>karmaCloud</h3>"+
+ 		"<a href='http://karmacloud.herokuapp.com/'>link</a>&nbsp;<a href='https://github.com/devDesign/karmacloud'>code</a>"+
+ 		"</td></tr><tr><td>"+
+ 		"<h3>warMath</h3>"+
+ 		"<a href='https://github.com/devDesign/warMath'>code</a>"+
+ 		"</td><td>"+
+ 		"<h3>mathFigher2</h3>"+
+ 		"<a href='https://github.com/devDesign/mathFighter2'>code</a>"+
+ 		"</td><td>"+
+ 		"</tr></table>"
+
+ 		).css({ position:'absolute', top:viewportheight, width:'100%', 'background-color':'rgba(255,255,255,0.7)', display:'none'}).appendTo('body').fadeIn();
+
+ 	var lastScroll = 0
+	
+	window.addEventListener("scroll",  function(evt) {
+		windowScroll = window.pageYOffset/600
+
+ 		if( window.pageYOffset<lastScroll ){
+
+ 			camera.position['y'] = windowScroll
+
+ 		} else {
+
+ 			camera.position['y'] = windowScroll
+
+ 		}
+
+ 		if ( camera.position['y']< camstart ){
 
 
-            <input type="text" id="username-text" placeholder="Nickname: " class="login-input" />
-            <input type="text" id="roomname-text" placeholder="Room:" class="login-input"/>
-            <button id="peerSubmit">connect</button>
+ 			container.positionY(camera.position['y']+4.9);
+ 		
+ 		}
 
-            <div id='rtos_info'>
-            
-            </div>
-            <table id="room_info">
-              <thead>
-                <th>room name</th>
-                <th>users</th>
-              </thead>
-              <tbody id="room_info-tbody">
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div id="global_chat">
-        </div>
-        <div class="clear"></div>
-        <div id='send-div'>
-          <form id="send">
-            <input type="text" id="text" class="chat_text-input" placeholder="enter message" />
-          </form>
-        </div>
+ 		if ( camera.position['y']> 0 ){
+ 		
 
-      </div>
-    </div>
-    <div class='window'>
-      
-    </div>
+ 			container.positionY(camera.position['y']-0.5);
+ 		
+ 		}
+ 		 lastScroll = window.pageYOffset
 
-    <!-- FROM WEBRTC COPY -->
+ 		//camera.lookAt({x:0,y:0,z:0})
 
-  <input type="file" id="invisible-file-input" multiple></div>
+	},false);
 
-  <script>
+	window.addEventListener("mousemove",  function(evt) {
+		var delta = 0.00008;
+		getView();
 
-  var invisibleInput = document.querySelector('#invisible-file-input');
+		if(evt.y > topMouse){
 
-  $('#file-upload').on('click', function(e){
-    $('#invisible-file-input').click();
-  })
+			//rotate bottom
+			camera.rotateX(-delta)
 
-console.log("%c //RTOS","background:red;font-size:200px")
-console.log("%c join us","background:black;font-size:30px;color:red;")
+		} else{
+	
+			//rotate top
+			camera.rotateX(delta)
 
-  </script>
+		}
 
+		topMouse = evt.y;
+		left = evt.x;
 
-    <script type="text/javascript" src="lib/file-io.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-    <!-- webtorrent -->
-    <script type="text/javascript" src="lib/webtorrent.js"></script>
-    <!-- file filtering -->
-    <script type="text/javascript" src="js/file-filter.js"></script>
-    <script type="text/javascript" src="js/rtos-torrents.js"></script>
-  </body>
-</html>
+	},false);
+					
+ 	var look = function(point){
+
+ 		camera.lookAt(point);
+ 		//do stuff
+
+ 	}
+
+ 	var getView = function(){
+ 		
+ 		viewportwidth = window.innerWidth,
+     	viewportheight = window.innerHeight
+ 		return[viewportheight,viewportwidth]
+
+ 	} 
+
+ 	$('html, body').css('overflowY', 'auto'); 
+ 	$('canvas').css('position', 'fixed');
+
+</script></body>

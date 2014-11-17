@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>RTOS</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Language" content="en-us">
+
+  <link rel="stylesheet" href="./stylesheets/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./stylesheets/style.css" />
+  <link rel="stylesheet" href="./lib/jquery-ui.css" />
+
+  <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+   <script src='./lib/jquery-ui.js'></script>
+  <script src="./js/audio-player.js"></script> 
+  <script src="./lib/peer.js"></script>
+  <script src="./js/desktop.js"></script>
+  <script type="text/javascript" src="./js/rtos.js"></script>
+  <script src="./lib/idb.filesystem.min.js"></script>
+  <script src="./lib/webrtc-data.io.js"></script>
+  <script src='./lib/pep.js'></script>
+  <script src='./lib/hammer.min.js'></script>
+  <script src='./lib/id3.min.js'></script>
+  <script src='./lib/id3v2.js'></script>
+  <script src='./js/three.min.js'></script>
+  <script src='./lib/freewall.js'></script>
+  <script src='./lib/howler.min.js'></script>
+  <script src='./js/indexdb.js'></script>
+  <script src='./lib/jquery.tablesorter.min.js'></script>
+  <script src='./lib/date.js'></script>
+  <script src='./js/chat.js'></script>
+  <script src='./js/notifications.js'></script>
+  
+
+</head>
+  <body>
+    <div id="chat_user_list" class="chat_user_list">
+      <div class="self">
+        <img src="./images/person.png" height="20px" width="20px">
+        <span id="pid"></span>
+      </div>
+    </div>
+
+    <div id='nav'>
+
+
+
+      <div class="glyph">
+        <i class="fa fa-refresh" id="reconnect-to-peers"></i>
+      </div>
+      <div class="glyph">
+        <i id="file-upload" class='fa fa-cloud-upload'></i>
+      </div>
+      <div class="glyph">
+        <i class="fa fa-users" id="user-button"></i>
+        <div id="userList"></div>
+      </div>
+      <div class="glyph">
+        <i class="fa fa-video-camera" id="start-video-feed"></i><i class="fa fa-times-circle" id="stop-video-feed"></i>
+      </div>
+      <div class="glyph">
+        <i class="fa fa-gear " id="settings"></i>
+      </div>
+
+    </div> 
+
+    
+  <div id='rs' class='droppable'></div>
+  <div id='ls' class='droppable'></div>
+  <div id='bs' class='droppable'></div>
+  <div id='lbs' class='droppable'></div>
+
+  <div id='desktop'>
+    <div id="file_box" class="files">
+      <div class="window_title">
+        <div id="my_files" class="content file_menu-active">
+          <span id="my_filesicon" class="content">&#xf0f6;</span>
+        </div>
+        <div id="downloads" class="content">
+          <span id="downloadsicon" class="content">&#xf0ed;</span>
+        </div>
+        <span id="bigfiles" class="content">&#xf019;</span>
+        <span class="lefthalf content"></span>
+        <span class="righthalf content"></span>
+        <span class="bottomhalf content"></span>
+        <span class="maximize content">&#xf096;</span>
+        <span class="minimize content">&#xf068;</span>
+      </div>
+      <div class="content">
+        <div id="big_files_box">
+          <div id="big_files_list">
+            
+          </div>
+        </div>
+        <div id="download_list_box">
+            <table id="download_list">
+              <tr>
+                <td class="column_label">
+                file name
+                </td>
+                <td class="column_label">
+                file size
+                </td>
+                <td class="column_label">
+                sender
+                </td>
+                <td class="column_label">
+                status
+                </td>
+              </tr>
+            </table>
+        </div>
+        <div id="file_list">
+            <table id="filelist">
+            <thead>
+              <tr>
+                <th class="column_label">
+                delete
+                </th>
+                <th class="column_label" >
+                save
+                </th>
+                <th class="column_label">
+                file name
+                </th>
+                <th class="column_label">
+                file size
+                </th>
+                <th class="column_label">
+                file type
+                </th>
+                <th class="column_label">
+                created at
+                </th>
+              </tr>
+              </thead>
+              <tbody id="filelist-tbody">
+              </tbody>
+            </table>
+          <!-- <input type="file" id="select_file"> -->
+          <div id="messages"></div>
+
+          <div class="log"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="cam_box">
+      <div class="window_title"><span>&#xf008;</span><span class="close">&#xf00d;</span></div>
+      <div id="video_player">
+          <video id="media_player-video" controls="controls" autoplay="autoplay" loop>
+            <source src="" >
+          </video>
+        </div>
+    </div>
+
+    <div id="pic_box">
+      <div class="window_title"><span>&#xf1c5;</span><span class="close">&#xf00d;</span></div>
+      <div id="image_player">
+          <img src="" id="media_player-image" />
+       </div>
+    </div>
+
+    <div id="media_box">
+      <div class="window_title">
+        <div id="my_songs" class="content file_menu-active">
+          <span id="my_songsicon" class="content">&#xf001;</span>
+        </div>
+        <span class="content">&#xf008;</span>
+        <div id="my_images" class="content">
+          <span id="my_imagesicon" class="content">&#xf03e;</span>
+        </div>
+        <span class="maximize content">&#xf096;</span>
+        <span class="minimize content">&#xf068;</span>
+      </div>
+      <div class="content">
+        <div id="my_movies_box">
+          <div id="my_movies_list">
+            
+          </div>
+        </div>
+        <div id="my_images_box">
+          <div id="my_images_list">
+            
+          </div>
+        </div>
+        <div id="music-player">
+        <!-- comment -->
+         
+
+          <div id="playlist_box">
+            <table id="playlist">
+              <thead>
+                <tr>
+                  <th class="column_label">artist</th>
+                  <th class="column_label">title</th>
+                  <th class="column_label">album</th>
+                  <th class="column_label">track</th>
+                  <th class="column_label">year</th>
+                </tr>
+              </thead>
+              <tbody id='playlist-tbody'>
+
+              </tbody>
+            </table>
+          </div>
+          <div id="now_playing"></div>
+          
+        </div>
+      </div>
+    </div>
+    <div id="chat_box">
+      <div class="window_title">
+      <div id ="textChat" class ='content'>
+        <span class="content">&#xf1d7;</span>
+      </div>
+        <span class="content">&#xf098;</span>
+        <span class="content">&#xf03d;</span>
+        <span class="maximize content">&#xf096;</span>
+        <span class="minimize content">&#xf068;</span>
+      </div>
+      <div class="content">
+        <div id="wrap">
+          <div id="login-box"> 
+
+
+            <input type="text" id="username-text" placeholder="Nickname: " class="login-input" />
+            <input type="text" id="roomname-text" placeholder="Room:" class="login-input"/>
+            <button id="peerSubmit">connect</button>
+
+            <div id='rtos_info'>
+            
+            </div>
+            <table id="room_info">
+              <thead>
+                <th>room name</th>
+                <th>users</th>
+              </thead>
+              <tbody id="room_info-tbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="global_chat">
+        </div>
+        <div class="clear"></div>
+        <div id='send-div'>
+          <form id="send">
+            <input type="text" id="text" class="chat_text-input" placeholder="enter message" />
+          </form>
+        </div>
+
+      </div>
+    </div>
+    <div class='window'>
+      
+    </div>
+
+    <!-- FROM WEBRTC COPY -->
+
+  <input type="file" id="invisible-file-input" multiple></div>
+
+  <script>
+
+  var invisibleInput = document.querySelector('#invisible-file-input');
+
+  $('#file-upload').on('click', function(e){
+    $('#invisible-file-input').click();
+  })
+
+console.log("%c //RTOS","background:red;font-size:200px")
+console.log("%c join us","background:black;font-size:30px;color:red;")
+
+  </script>
+
+
+    <script type="text/javascript" src="lib/file-io.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <!-- webtorrent -->
+    <script type="text/javascript" src="lib/webtorrent.js"></script>
+    <!-- file filtering -->
+    <script type="text/javascript" src="js/file-filter.js"></script>
+    <script type="text/javascript" src="js/rtos-torrents.js"></script>
+  </body>
+</html>
