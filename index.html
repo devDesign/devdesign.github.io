@@ -40,6 +40,10 @@
     a:hover{
       color:#666;
     }
+    table{
+      position: absolute;
+      text-align: left;
+    }
 
 		#content{ 
       top:50%;
@@ -48,6 +52,18 @@
       width: 100%;
       background-color: rgba(255,255,255,0.3);
       transition: all 0.3s;
+    }
+
+    #crosshair{ 
+      position: absolute;
+      top:50%;
+      transform:translate(0,-50%);
+      width: 100%;
+      display: none;
+    }
+
+    #controls2{
+      right:0;
     }
 
     #projects{ 
@@ -164,6 +180,109 @@
     }
 
 	</style>
+  <div id="crosshair">
+   <img src='devDesign.png' height='80px' width='80px'  />
+   <table id='controls'>
+    <tr>
+      <td>
+      w
+      </td>
+      <td>
+      forward
+      </td>
+    </tr>
+    <tr>
+      <td>
+      s
+      </td>
+      <td>
+      back
+      </td>
+    </tr>
+    <tr>
+      <td>
+      a
+      </td>
+      <td>
+      left
+      </td>
+    </tr>
+    <tr>
+      <td>
+      d
+      </td>
+      <td>
+      right
+      </td>
+    </tr>
+    <tr>
+      <td>
+      q
+      </td>
+      <td>
+      up
+      </td>
+    </tr>
+    <tr>
+      <td>
+      e
+      </td>
+      <td>
+      down
+      </td>
+    </tr>
+  </table>
+     <table id='controls2'>
+    <tr>
+      <td>
+      i
+      </td>
+      <td>
+      rotate up
+      </td>
+    </tr>
+    <tr>
+      <td>
+      k
+      </td>
+      <td>
+      rotate down
+      </td>
+    </tr>
+    <tr>
+      <td>
+      l
+      </td>
+      <td>
+      rotate left
+      </td>
+    </tr>
+    <tr>
+      <td>
+      j
+      </td>
+      <td>
+      rotate right
+      </td>
+    </tr>
+    <tr>
+      <td>
+      u
+      </td>
+      <td>
+      rotate clockwise
+      </td>
+    </tr>
+    <tr>
+      <td>
+      o
+      </td>
+      <td>
+      rotate counter-clockwise
+      </td>
+    </tr>
+  </table>     
+  </div>
 
   <div id='content'>
     <h1>devDesign.io</h1>
@@ -422,7 +541,7 @@
   },false);
 
   window.addEventListener("mousemove",  function(evt) {
-    var delta = 0.00008;
+    var delta = 0.0001;
     getView();
 
     if(evt.y > topMouse){
@@ -503,21 +622,83 @@
 
   $(window).on('hashchange', function(e) {
     
-    if(window.location.href.substr(-1,1) != '#'){
+    if(window.location.href.substr(-1,1) == 'l'){
 
+      $('#crosshair').fadeOut();
       $('#projects').fadeOut(undefined,function(){
     
         $('#content').css({left:0}).fadeIn();
     
       })
     
-    }else{
+    }else if(window.location.href.substr(-1,1) == '#'){
 
       $('#content').css({left:-3000});
       $("#projects").fadeIn();
+      $('#crosshair').fadeOut();
+
+    }else if(window.location.href.substr(-1,1) == 'y'){
+
+      $('#content').fadeOut();
+      $("#projects").fadeOut();
+      $('#crosshair').fadeIn();
+
     }
 
   });
+
+var map = [];
+var tango = 0.2
+onkeydown = onkeyup = function(e){
+    map[e.keyCode] = e.type == 'keydown';
+
+    //foward back left right
+    if(map['87'] && map['65']){
+      camera.position['z'] += -tango;
+      camera.position['x'] += -tango;
+    } else if(map['87'] && map['68']){
+      camera.position['z'] += -tango;
+      camera.position['x'] += tango;
+    } else if(map['83'] && map['65']){
+      camera.position['z'] += tango;
+      camera.position['x'] += -tango;
+    } else if(map['83'] && map['68']){
+      camera.position['z'] += tango;
+      camera.position['x'] += tango;
+    } else if(map['87']){
+      camera.position['z'] += -tango;
+    } else if(map['83']){
+      camera.position['z'] += tango;
+    } else if(map['68']){
+      camera.position['x'] += tango;
+    } else if(map['65']){
+      camera.position['x'] += -tango;
+    }
+
+    //up down
+    if(map['81']){
+      camera.position['y'] += tango;
+    } else if(map['69']){
+      camera.position['y'] += -tango;
+    }
+
+    //rotate 
+    if(map['73']){
+      camera.rotateX(tango/10);
+    } else if(map['75']){
+      camera.rotateX(-tango/10);
+    } else if(map['74']){
+      camera.rotateY(tango/10);
+    } else if(map['76']){
+      camera.rotateY(-tango/10);
+    } else if(map['85']){
+      camera.rotateZ(tango/10);
+    } else if(map['79']){
+      camera.rotateZ(-tango/10);
+    }
+    return false;
+}
+
  
 </script>
 </body>
