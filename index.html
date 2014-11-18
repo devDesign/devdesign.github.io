@@ -14,195 +14,543 @@
 <body>
 	<style>
 
-		#content{ 
-			font-family: 'Ubuntu', sans-serif;
-			text-align: center;
-		 }
+    body{
 
-		 table{
-		 	margin: auto;
-		 }
+      font-family: 'Ubuntu', sans-serif;
+      text-align: center;
+
+    }
+    h3{
+      margin: 0;
+      padding: 5px;
+    }
+    ul{
+      list-style: none;
+      padding: 0;
+    }
+    a{
+      color:black;
+    }
+    a:link{
+      color:black;
+    }
+    a:visited{
+      color:black;
+    }
+    a:hover{
+      color:#666;
+    }
+
+		#content{ 
+      top:50%;
+      transform:translate(0,-50%);
+      position: absolute;
+      width: 100%;
+      background-color: rgba(255,255,255,0.3);
+      
+    }
+
+    #projects{ 
+
+      position: absolute;
+      width: 100%;
+      background-color: rgba(0,0,0,0.4);
+      color:white;
+      display:none;
+
+    }
+
+    #rtos{ 
+
+      width: 100%;
+      background-color: rgba(100,0,0,0.4);
+      color:white;
+
+    }
+
+    #rtosContent{ 
+
+      display: none;
+
+    }
+
+    #rtosTitle{
+
+      cursor: pointer;
+
+    }
+
+    #karmaCloud{ 
+
+      width: 100%;
+      background-color: rgba(0,0,100,0.4);
+      color:white;
+
+    }
+
+    #karmaCloudContent{ 
+
+      display: none;
+
+    }
+
+    #karmaCloudTitle{
+
+      cursor: pointer;
+      
+    }
+
+    #movieBox{ 
+
+      width: 100%;
+      background-color: rgba(0,0,0,0.4);
+      color:white;
+
+    }
+
+    #movieBoxContent{ 
+
+      display: none;
+
+    }
+
+    #movieBoxTitle{
+
+      cursor: pointer;
+
+    }
+
+    #warMath{ 
+
+      width: 100%;
+      background-color: rgba(0,50,0,0.4);
+      color:white;
+
+    }
+
+    #warMathContent{ 
+
+      display: none;
+
+    }
+
+    #warMathTitle{
+
+      cursor: pointer;
+
+    }
+
+
+    #mathFighter{ 
+
+      width: 100%;
+      background-color: rgba(50,50,0,0.4);
+      color:white;
+
+    }
+
+    #mathFighterContent{ 
+
+      display: none;
+
+    }
+
+    #mathFighterTitle{
+
+      cursor: pointer;
+
+    }
 
 	</style>
 
-	<script>
+  <div id='content'>
+    <h1>devDesign.io</h1>
+    <h2>Dev Guha</h2>
+    <img src='devDesign.png' height='80px' width='80px'  />
+    <h3><a href='mailto:marlyguha@gmail.com'>marlyguha@gmail.com</a></h3>
+    <h3><a href='https://github.com/devDe<hign'>github.com/devDesign</a></h3>
+    <h3><a href='https://www.dropbox.com/sh/vfryfl978k7cz6f/AACESZIj2G4etMnpCDs7Bpvea?dl=0' target='new'>resume</a></h3>
+    <h3><a href='#' id="projectsLink">projects</a></h3>
+    <br />
+  </div>
 
- 	var viewportwidth = window.innerWidth;
-	var viewportheight = window.innerHeight;
-	$('#stats').remove();
-	var world	= tQuery.createWorld().boilerplate({stats:false}).start();
+  <div id="projects">
+    <h1>projects</h1>
+    <div id='rtos'>
+      <h3 id="rtosTitle">R.T.O.S.</h3>
+      <div id="rtosContent">  
+        <p>R.T.O.S is a multimedia streaming engine</p>
+        <img src="rtos1.jpg" />
+        <p>R.T.O.S allows for P2P .mp4 video streaming</p>
+        <img src='rtos2.jpg' />
+        <p>R.T.O.S is a mp3 player with a sortable playlist 
+        <br> save your mp3 library into your web browser and share with your friends</p>
+        <img src='rtos3.jpg' />
+        <p>R.T.O.S is a webtorrent powered P2P file sharing app, 
+        <br>torrents seeded and downloaded 100% in the browser</p>
+        <img src='rtos4.jpg' />
+        <p>R.T.O.S also features:
+        <br> webcam chat, chat rooms, photo library, file library, and direct RTC transfers.<br>
+        all chat and torrent data transfered peer to peer. 
+        <br>our server only provides the initial handshakes</p>  
+        <h4>technology</h4>
+        <ul>
+          <li>RTC</li>
+          <li>websockets</li>
+          <li>javascript</li>
+          <li>node</li>
+          <li>webtorrent</li>
+        </ul>
+        <a href="http://devdesign.github.io/rtos.html">link</a>
+        <br>
+        <a href='https://github.com/devDesign/devdesign.github.io/'>code</a>
+        <br />
+        <br />
+      </div>
+    </div>
+    <div id="karmaCloud">
+      <h3 id="karmaCloudTitle">karmaCloud</h3>
+      <div id="karmaCloudContent">
+        <p>karmaCloud is a social communication platform made for users to help one another</p>
+        <img src="karmacloud1.jpg" />
+        <p>users can share their stories along with a location to the karmaCloud</p>
+        <img src='karmacloud2.jpg' />
+        <p>users can browse the karmaCloud map,<br>
+        comment on stories and give each other 'karma' points</p>
+        <img src='karmacloud3.jpg' />
+        <p>users have karamaCloud profile pages with transaction and message histories</p>
+        <img src='karmacloud4.jpg' />
+        <h4>technology</h4>
+        <ul>
+          <li>Sinatra</li>
+          <li>postgresql</li>
+          <li>javascript</li>
+          <li>google maps api</li>
+        </ul>
+    
+      <a href="http://karmacloud.herokuapp.com">link</a>
+      <br><a href="https://github.com/devDesign/karmaCloud/">code</a>
+      <br>
+      <br>
+      </div>
+    </div>
+    <div id="movieBox">
+      <h3 id="movieBoxTitle">movieBox3d</h3>
+      <div id="movieBoxContent">
+        <p>movieBox3d is a slick movie database</p>
+        <img src="moviebox1.jpg" />
+        <p>movieBox3d can fetch any movie</p>
+        <img src='moviebox2.jpg' />
+        <p>movieBox3d displays cast information, plot, trailers, and local showtimes</p>
+        <p>movieBox3d also features:<br>
+        search<br>user reviews,<br> and admin user features such as account ghosting</p>
+        <h4>technology</h4>
+        <ul>
+          <li>ruby on rails</li>
+          <li>postgresql</li>
+          <li>javascript</li>
+          <li>ajax</li>
+          <li>three.js</li>
+          <li>many api gateways</li>
 
-	world.addFogExp2({density: 0.01});
-		
-	world.removeCameraControls();
-	
-	world.enableDomEvent();	
+        </ul>
+    
+      <a href="http://moviebox3d.herokuapp.com">link</a>
+      <br><a href="https://github.com/devDesign/movieBox3d/">code</a>
+      <br>
+      <br>
+      </div>
+    </div>
+    <div id="warMath">
+      <h3 id="warMathTitle">warMath</h3>
+      <div id="warMathContent">
+        <img src='warmath1.png' />
+        <p>warcraft in ruby <br>
+        text based math game</p>
+        <img src='warmath4.png' />
+        <p>peasants mine gold, chop lumber, and build farms using math</p>
+        <img src='warmath2.png' />
+        <p>chose and create a party from your army</p>
+        <img src="warmath3.png" />
+        <p>battle the orcs</p>
+        <p>warMath also features save/load game<br>
+        would like to recreate in webGl/rtc</p>
+        <a href="https://github.com/devDesign/warMath/">code</a>
+        <br><br>
+      </div>
+    </div>
 
-	var camera = world.tCamera();
-	var camstart = 1.7;
-	camera.position['y'] = camstart;
-	camera.position['z'] = 8;
+    <div id="mathFighter">
+      <h3 id="mathFighterTitle">mathFighter</h3>
+      <div id="mathFighterContent">
+        <p>street fighter 2 in ruby <br>
+        text based math figher game</p>
+        <img src='mathFighter1.png' />
+        <p>chose your fighter</p>
+        <img src='mathFighter3.png' />
+        <p>damage based on speed and difficulty</p>
+        <img src="mathFighter4.png" />
+        <p>special moves!</p>
+        <p>mathFighter was a learning experiment<br>
+        </p>
+        <a href="https://github.com/devDesign/mathFighter2/">code</a>
+        <br><br>
+      </div>
+    </div>
+  </div>
+  <script>
 
-	tQuery.createAmbientLight().addTo(world).color(0x666666);
-	tQuery.createDirectionalLight().addTo(world).position(1,1,-1).color(0xffffff).intensity(1);
+  var viewportwidth = window.innerWidth;
+  var viewportheight = window.innerHeight;
+  $('#stats').remove();
+  var world = tQuery.createWorld().boilerplate({stats:false}).start();
 
-	var container	= tQuery.createObject3D().addTo(world).positionY(-.5 + camstart)
-	var set	= tQuery.createObject3D().addTo(world)
+  world.addFogExp2({density: 0.01});
+    
+  world.removeCameraControls();
+  
+  world.enableDomEvent(); 
 
-	var fog = new THREE.Fog( '#0xFFFFFF', 10, 100 );	
+  var camera = world.tCamera();
+  var camstart = 1.7;
+  camera.position['y'] = camstart;
+  camera.position['z'] = 8;
 
-	var titleMaterial  = new THREE.MeshNormalMaterial({
-    				ambient  : 0x444444, 
-    				color  : 0xFFFFFF,
-  		});
+  tQuery.createAmbientLight().addTo(world).color(0x666666);
+  tQuery.createDirectionalLight().addTo(world).position(1,1,-1).color(0xffffff).intensity(1);
 
-	var backBox = function(){
+  var container = tQuery.createObject3D().addTo(world).positionY(-.5 + camstart)
+  var set = tQuery.createObject3D().addTo(world)
 
-		for(var i=-10;i<10;i++){
+  var titleMaterial  = new THREE.MeshNormalMaterial({
+            ambient  : 0x444444, 
+            color  : 0xFFFFFF,
+      });
 
-			var min = -100;
-			var max = i;
-			
-			var random = Math.floor(Math.random() * (max - min + 1)) + min;
-			
-			for(var i3=-5;i3>-20;i3-=10){
-				
-				tQuery.createCylinder(10,10,100000)
-							.scaleBy(1/8)
-							.positionY(-20)
-							.positionX(i*10+5)
-							.positionZ(i3*10)
-							.rotateX(1)
-							.addTo(set).setPhongMaterial();
+  var backBox = function(){
 
-			}
+    for(var i=-10;i<10;i++){
 
-			if(i!=0){
-				
-				for(var i2=-1;i2<1;i2++){
-					
-					tQuery.createCylinder(10,10,100000)
-							.scaleBy(1/8)
-							.positionY(i2*40)
-							.positionX(i*10)
-							.positionZ(-50)
-							.rotateX(-1)
-							.addTo(set).setPhongMaterial();
+      var min = -100;
+      var max = i;
+      
+      var random = Math.floor(Math.random() * (max - min + 1)) + min;
+      
+      for(var i3=-5;i3>-20;i3-=10){
+        
+        tQuery.createCylinder(10,10,100000)
+              .scaleBy(1/8)
+              .positionY(-20)
+              .positionX(i*10+5)
+              .positionZ(i3*10)
+              .rotateX(1)
+              .addTo(set).setPhongMaterial();
 
-					}
-				}
-		}
+      }
 
-	}
-	backBox();
+      if(i!=0){
+        
+        for(var i2=-1;i2<1;i2++){
+          
+          tQuery.createCylinder(10,10,100000)
+              .scaleBy(1/8)
+              .positionY(i2*40)
+              .positionX(i*10)
+              .positionZ(-50)
+              .rotateX(-1)
+              .addTo(set).setPhongMaterial();
 
-	var light	= new THREE.DirectionalLight(0xFFFFFF, 3);
-	light.position.set(0, 0.6, -1).normalize();
-	world.tScene().add(light);
+          }
+        }
+    }
 
-	var windowScroll = -0.4;
-	var left = 0;
-	var topMouse = 0;
-	var loaded=false;
+  }
+  backBox();
 
- 	$("<div/>",{ id: "content" }).html(
- 		
- 		"<h1>devDesign.io</h1>"+
- 		"<h2>Dev Guha</h2>"+
- 		"<img src='devDesign.png' height='80px' width='80px'  />"+
- 		"<h3><a href='mailto:marlyguha@gmail.com'>marlyguha@gmail.com</a></h3>"+
- 		"<h3><a href='https://github.com/devDesign'>github.com/devDesign</a></h3>"+
- 		"<h3><a href='https://www.dropbox.com/sh/vfryfl978k7cz6f/AACESZIj2G4etMnpCDs7Bpvea?dl=0'>resume</a></h3>"+
- 		"<br />"+
- 		"<h4>projects:</h4>"+
- 		"<table><tr><td>"+
- 		"<h3>RTOS</h3>"+
- 		"<a href='http://devdesign.github.io/rtos.html'>link</a>&nbsp;<a href='https://github.com/devDesign/devdesign.github.io'>code</a>"+
- 		"</td><td>"+
- 		"<h3>karmaCloud</h3>"+
- 		"<a href='http://karmacloud.herokuapp.com/'>link</a>&nbsp;<a href='https://github.com/devDesign/karmacloud'>code</a>"+
- 		"</td></tr><tr><td>"+
- 		"<h3>warMath</h3>"+
- 		"<a href='https://github.com/devDesign/warMath'>code</a>"+
- 		"</td><td>"+
- 		"<h3>mathFigher2</h3>"+
- 		"<a href='https://github.com/devDesign/mathFighter2'>code</a>"+
- 		"</td><td>"+
- 		"</tr></table>"
+  var light = new THREE.DirectionalLight(0xFFFFFF, 3);
+  light.position.set(0, 0.6, -1).normalize();
+  world.tScene().add(light);
 
- 		).css({ position:'absolute', top:viewportheight, width:'100%', 'background-color':'rgba(255,255,255,0.7)', display:'none'}).appendTo('body').fadeIn();
+  var windowScroll = -0.4;
+  var left = 0;
+  var topMouse = 0;
+  var loaded=false;
 
- 	var lastScroll = 0
-	
-	window.addEventListener("scroll",  function(evt) {
-		windowScroll = window.pageYOffset/600
+  $("#content").fadeIn('slow',function(){
+    
+    var contentHeight = document.getElementById('content').offsetTop
+    $("#projects").css({top:  $('#content').height()/2 + contentHeight });
+ 
+  });
 
- 		if( window.pageYOffset<lastScroll ){
+ 
+  var lastScroll = 0
+  
+  window.addEventListener("scroll",  function(evt) {
+    windowScroll = window.pageYOffset/600
 
- 			camera.position['y'] = windowScroll
+    if( window.pageYOffset<lastScroll ){
 
- 		} else {
+      camera.position['y'] = windowScroll
 
- 			camera.position['y'] = windowScroll
+    } else {
 
- 		}
+      camera.position['y'] = windowScroll
 
- 		if ( camera.position['y']< camstart ){
+    }
+
+    if ( camera.position['y']< camstart ){
 
 
- 			container.positionY(camera.position['y']+4.9);
- 		
- 		}
+      container.positionY(camera.position['y']+4.9);
+    
+    }
 
- 		if ( camera.position['y']> 0 ){
- 		
+    if ( camera.position['y']> 0 ){
+    
 
- 			container.positionY(camera.position['y']-0.5);
- 		
- 		}
- 		 lastScroll = window.pageYOffset
+      container.positionY(camera.position['y']-0.5);
+    
+    }
+     lastScroll = window.pageYOffset
 
- 		//camera.lookAt({x:0,y:0,z:0})
+    //camera.lookAt({x:0,y:0,z:0})
 
-	},false);
+  },false);
 
-	window.addEventListener("mousemove",  function(evt) {
-		var delta = 0.00008;
-		getView();
+  window.addEventListener("mousemove",  function(evt) {
+    var delta = 0.00008;
+    getView();
 
-		if(evt.y > topMouse){
+    if(evt.y > topMouse){
 
-			//rotate bottom
-			camera.rotateX(-delta)
+      //rotate bottom
+      camera.rotateX(-delta)
 
-		} else{
-	
-			//rotate top
-			camera.rotateX(delta)
+    } else{
+  
+      //rotate top
+      camera.rotateX(delta)
 
-		}
+    }
 
-		topMouse = evt.y;
-		left = evt.x;
+    topMouse = evt.y;
+    left = evt.x;
 
-	},false);
-					
- 	var look = function(point){
+  },false);
+          
+  var look = function(point){
 
- 		camera.lookAt(point);
- 		//do stuff
+    camera.lookAt(point);
+    //do stuff
 
- 	}
+  }
 
- 	var getView = function(){
- 		
- 		viewportwidth = window.innerWidth,
-     	viewportheight = window.innerHeight
- 		return[viewportheight,viewportwidth]
+  var getView = function(){
+    
+    viewportwidth = window.innerWidth,
+      viewportheight = window.innerHeight
+    return[viewportheight,viewportwidth]
 
- 	} 
+  } 
 
- 	$('html, body').css('overflowY', 'auto'); 
- 	$('canvas').css('position', 'fixed');
+  $('html, body').css('overflowY', 'auto'); 
+  $('canvas').css({'position':'fixed','z-index':-1});
+  
+  $("#projectsLink").on('click',function(e){
 
-</script></body>
+    e.preventDefault();
+    $('#projects').fadeIn();
+
+  })
+
+  var rtosShow = false;
+  var karmaCloudShow = false;
+  var movieBoxShow = false;
+  var warMathShow = false;
+  var mathFighterShow = false;
+
+  $('#rtosTitle').on('click',function(){
+    
+    if(rtosShow==false){
+    
+      $('#rtosContent').fadeIn();
+      rtosShow =true;
+    
+    } else{
+    
+      $('#rtosContent').fadeOut();
+      rtosShow = false;
+    
+    }
+  
+  })
+
+  $('#karmaCloudTitle').on('click',function(){
+     
+    if(karmaCloudShow==false){
+    
+      $('#karmaCloudContent').fadeIn();
+      karmaCloudShow =true;
+    
+    } else{
+    
+      $('#karmaCloudContent').fadeOut();
+      karmaCloudShow = false;
+    
+    }
+
+  })
+
+   $('#movieBoxTitle').on('click',function(){
+     
+    if(movieBoxShow==false){
+    
+      $('#movieBoxContent').fadeIn();
+      movieBoxShow =true;
+    
+    } else{
+    
+      $('#movieBoxContent').fadeOut();
+      movieBoxShow = false;
+    
+    }
+
+  })
+
+  $('#warMathTitle').on('click',function(){
+     
+    if(warMathShow==false){
+    
+      $('#warMathContent').fadeIn();
+      warMathShow =true;
+    
+    } else{
+    
+      $('#warMathContent').fadeOut();
+      warMathShow = false;
+    
+    }
+
+  })
+
+  $('#mathFighterTitle').on('click',function(){
+     
+    if(mathFighterShow==false){
+    
+      $('#mathFighterContent').fadeIn();
+      mathFighterShow =true;
+    
+    } else{
+    
+      $('#mathFighterContent').fadeOut();
+      mathFighterShow = false;
+    
+    }
+
+  })
+
+
+ 
+</script>
+</body>
