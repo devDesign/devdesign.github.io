@@ -622,16 +622,7 @@
 
   $(window).on('hashchange', function(e) {
     
-    if(window.location.href.substr(-1,1) == 'l'){
-
-      $('#crosshair').fadeOut();
-      $('#projects').fadeOut(undefined,function(){
-    
-        $('#content').css({left:0}).fadeIn();
-    
-      })
-    
-    }else if(window.location.href.substr(-1,1) == '#'){
+  if(window.location.href.substr(-1,1) == '#'){
 
       $('#content').css({left:-3000});
       $("#projects").fadeIn();
@@ -643,6 +634,15 @@
       $("#projects").fadeOut();
       $('#crosshair').fadeIn();
 
+    } else{
+
+      $('#crosshair').fadeOut();
+      $('#projects').fadeOut(undefined,function(){
+    
+        $('#content').css({left:0}).fadeIn();
+    
+      })
+    
     }
 
   });
