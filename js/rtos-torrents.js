@@ -86,8 +86,15 @@ onTorrent = function(torrent) {
         var url = URL.createObjectURL(realFile);
 
         // newTorrentRow.appendTo('#filelist')
-
-        addFilenamesToIDB(realFile,file.name,file.type)
+        if(file.type.split('/')[0] != "audio" )
+          addFilenamesToIDB(realFile,file.name,file.type)
+        if(file.type.split('/')[0]=="audio"){
+          newDataNotification('song','#my_songs','songNotification',songNotification);
+          play_torrent_file(url, file.name, file.type, realFile);
+          addFileRow(realFile,file.name,file.type,getDate())
+        } else{
+          addFilenamesToIDB(realFile,file.name,file.type)
+        }
         //binding the video box
 
       }))
@@ -156,10 +163,7 @@ addFileRow = function(blob,filename,filetype,dateStringNow){
     newTorrentRow.appendTo('#filelist-tbody'); 
     $("#filelist").trigger('addRows',[newTorrentRow,true]);
     
-    if(filetype.split('/')[0]=="audio"){
-      newDataNotification('song','#my_songs','songNotification',songNotification);
-      play_torrent_file(linkToFile, filename, filetype, blob);
-    }
+
 
     if(filetype.split('/')[0] == "video"){
       $(".video").on('click',function(){

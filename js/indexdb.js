@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function() {
  
     openRequest.onsuccess = function(e) {
         console.log("running onsuccess");
-        
         db = e.target.result;
         addFileHistory();
 
@@ -40,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
  
 },false);
  
-function  addSongBlobToIDB(url,filename,filetype,blob) {
+function  addSongBlobToIDB(tags,blob,filename) {
     console.log("About to add "+filename);
  
     var transaction = db.transaction(["songs"],"readwrite");
@@ -48,8 +47,8 @@ function  addSongBlobToIDB(url,filename,filetype,blob) {
  
     //Define a person
     var songBlob = {
+        tags:tags,
         filename:filename,
-        filetype:filetype,
         blob:blob
     }
  
@@ -62,9 +61,7 @@ function  addSongBlobToIDB(url,filename,filetype,blob) {
     }
  
     request.onsuccess = function(e) {
-        linkToFile = URL.createObjectURL(blob)
         console.log("e");
-        play_torrent_file(linkToFile, filename, filetype, blob);
     }
 }
 function getDate(){
@@ -134,12 +131,14 @@ function addSongHistory(){
       var cursor = event.target.result;
       
       if (cursor) {
-
-        play_torrent_file(URL.createObjectURL(cursor.value.blob),cursor.value.filename,cursor.value.filetype,cursor.value.blob);
+        filename =cursor.value.filename;
+        tags=cursor.value.tags;
         blob=cursor.value.blob;
         url=URL.createObjectURL(cursor.value.blob);
-        console.log(url);
-        blob.name=cursor.value.filename;
+        var songRow = $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td><td><a href='+url+'>'+tags.track.split("/")[0]+'</a></td><td><a href='+url+'>'+tags.year+'</a></td></tr>')
+        songRow.appendTo('#playlist-tbody');
+        initPlaylist(tags,filename);
+        addFileRow(blob,filename,"audio/mp3",getDate())
         cursor.continue();
 
       }
@@ -151,6 +150,7 @@ function addSongHistory(){
 }
 
 function addFileHistory(){
+    addSongHistory();
     var objectStore = db.transaction("files").objectStore("files");
 
     objectStore.openCursor().onsuccess = function(event) {
@@ -207,7 +207,6 @@ function getSongUrl(filename){
           if (cursor) {
             var songAdded=false;
             if(cursor.value.filename == filename && songAdded == false){
-
                 nowPlayingLocalUrl = URL.createObjectURL(cursor.value.blob);
                  $('<span><a href="'+nowPlayingLocalUrl+'" target="new"> &#xf10b</a></span>').prependTo('.nowplaying');
                  songAdded=true;
