@@ -137,6 +137,7 @@ function addSongHistory(){
         url=URL.createObjectURL(cursor.value.blob);
         var songRow = $('<tr class="file-entry"><td><a href='+url+'>'+tags.artist+'</a></td><td><a href='+url+'>'+tags.title+'</a></td><td><a href='+url+'>'+tags.album+'</a></td><td><a href='+url+'>'+tags.track.split("/")[0]+'</a></td><td><a href='+url+'>'+tags.year+'</a></td></tr>')
         songRow.appendTo('#playlist-tbody');
+        $("#playlist").trigger('addRows',[songRow,true]); 
         initPlaylist(tags,filename);
         addFileRow(blob,filename,"audio/mp3",getDate())
         cursor.continue();
