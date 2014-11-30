@@ -49,7 +49,8 @@ function  addSongBlobToIDB(tags,blob,filename) {
     var songBlob = {
         tags:tags,
         filename:filename,
-        blob:blob
+        blob:blob,
+        date: getDate()
     }
  
     //Perform the add
@@ -139,7 +140,7 @@ function addSongHistory(){
         songRow.appendTo('#playlist-tbody');
         $("#playlist").trigger('addRows',[songRow,true]); 
         initPlaylist(tags,filename);
-        addFileRow(blob,filename,"audio/mp3",getDate())
+        addFileRow(blob,filename,"audio/mp3",cursor.value.date)
         cursor.continue();
 
       }
