@@ -1,9 +1,9 @@
 var sounds = [];
+var current;
+var audio;
+var playlist;
+var tracks;
 $('document').ready(function(){
-
-  $('#audio').bind('ended', function() {
-   $('.nowplaying').remove()
-  });
 
   $('#audio').bind('play', function(e) {
     $('.nowplaying').remove();
@@ -21,10 +21,7 @@ $('document').ready(function(){
 });
 
 function play_torrent_file(url, title, type, blob) {
-  var audio;
-  var playlist;
-  var tracks;
-  var current;
+
   var first;
   reader = new FileReader();
   
@@ -61,7 +58,6 @@ function play_torrent_file(url, title, type, blob) {
 }
 
 function initPlaylist(tag,filename){
-  first = 0
   current = 0;
   audio = $('#audioplayer')[0];
   playlist = $('#playlist-tbody');
@@ -73,18 +69,16 @@ function initPlaylist(tag,filename){
     
     e.preventDefault();
     audio.play();
-    first++;
     $('.nowplaying').remove();
     link = $(this);
     current = link.parent().parent().index();
-    run(link, audio);
+    run(link, audio, filename);
 
   });
 
   audio.addEventListener('ended',function(e){
 
     $('.nowplaying').remove();
-    first++;
     current++;
     
     if(current == len){
@@ -94,31 +88,27 @@ function initPlaylist(tag,filename){
       link = $(row).find('td').find('a')[1]; 
     
     }else{
-    
+       
         var row = playlist.find('tr')[current];
         link = $(row).find('td').find('a')[1];    
     
     }
     
-    run($(link),audio. filename);
+    run($(link),audio, filename);
   });
 }
 
 function run(link, player, filename){
-
   var songArtist = $(link[0]).parent().parent().find('a')[0];
   var songTitle = $(link[0]).parent().parent().find('a')[1];
   var songAlbum = $(link[0]).parent().parent().find('a')[2];
-  
+  var songNum = $(link[0]).parent().parent().find('a')[3];
   nowPlaying = $(songArtist).text()+" - "+$(songTitle).text();
   $('<div />',{class:'nowplaying', text:nowPlaying}).appendTo('#now_playing');
-  $('<span><a href="'+link.attr('href')+'" download="'+filename+'"> &#xf063</a></span>').prependTo('.nowplaying');      
-  player.src = link.attr('href');
+  $('<span><a href="'+link.attr('href')+'" download="'+songArtist.innerText+' - ' + songAlbum.innerText +' - '+ songNum.innerText +' - ' + songTitle.innerText +'-RTOS.mp3"> &#xf063</a></span>').prependTo('.nowplaying');      
+  $('#audioplayer')[0].src = link.attr('href');
   par = link.parent();
   par.addClass('active-file').siblings().removeClass('active-file');
-  
-  if(first>-1){
-    player.load();
-    player.play();
-  }
+  player.load();
+  player.play();
 }
